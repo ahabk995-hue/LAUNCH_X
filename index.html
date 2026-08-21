@@ -1,25 +1,107 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ur" dir="rtl">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LAUNCH X</title>
-    <style>
-        body { font-family: Arial; background: #f2f2f2; text-align: center; padding: 20px; }
-        .header { background: #0066ff; color: white; padding: 20px; border-radius: 10px; }
-        .btn { background: #00cc66; color: white; padding: 15px; margin: 10px; border-radius: 8px; text-decoration: none; display: block; font-weight: bold; }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PRIME_X Dashboard</title>
+<style>
+  *{margin:0; padding:0; box-sizing:border-box; font-family:'Segoe UI'}
+  body{background:#0f0f0f; color:#fff; text-align:center; padding:20px}
+  .box{background:#1a1a1a; padding:25px; border-radius:15px; max-width:450px; margin:20px auto}
+  .btn{background:#00ff88; color:#000; padding:12px 25px; border:none; border-radius:8px; font-size:16px; font-weight:bold; cursor:pointer; margin:8px; width:90%}
+  input{width:90%; padding:12px; margin:8px; border-radius:8px; border:none; background:#333; color:#fff}
+  .hidden{display:none}
+  .task{background:#222; padding:15px; border-radius:10px; margin:10px 0; text-align:right}
+  .loader{border:4px solid #333; border-top:4px solid #00ff88; border-radius:50%; width:40px; height:40px; animation:spin 1s linear infinite; margin:20px auto}
+  @keyframes spin {0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); }}
+</style>
 </head>
 <body>
-    <div class="header">
-        <h1>LAUNCH X</h1>
-        <p>Earn with Referrals</p>
-    </div>
-    
-    <h2>Join Now</h2>
-    <a href="https://docs.google.com/forms/d/e/1FAIpQLSemyQ4j1K9vm5IfM-P4mGcZMGbPhN8wfsO39ccxObt7pwRxLA/viewform" target="_blank" class="btn">Get Started</a>
-    
-    <h2>WhatsApp Support</h2>
-    <a href="https://wa.me/923316053482" target="_blank" class="btn">0331-6053482</a>
+
+<h1>🚀 PRIME_X</h1>
+
+<!-- 1. SIGNUP BOX -->
+<div class="box" id="signupBox">
+  <h2>Account بنائیں</h2>
+  <input type="text" id="name" placeholder="اپنا نام">
+  <input type="email" id="email" placeholder="ای میل">
+  <input type="tel" id="phone" placeholder="واٹس ایپ نمبر">
+  <button class="btn" onclick="submitForm()">Get Started</button>
+</div>
+
+<!-- 2. VERIFICATION LOADER -->
+<div class="box hidden" id="verifyBox">
+  <h2>1 منٹ ویریفیکیشن...</h2>
+  <div class="loader"></div>
+  <p>آپ کا اکاؤنٹ تیار کیا جا رہا ہے</p>
+</div>
+
+<!-- 3. DASHBOARD -->
+<div class="box hidden" id="dashboardBox">
+  <h2>خوش آمدید <span id="userName"></span>!</h2>
+  <p>بیلنس: <b>0.00 PKR</b></p>
+  <hr style="margin:15px 0; border-color:#333">
+  
+  <h3>📋 آج کے Tasks</h3>
+  
+  <div class="task">
+    <b>Task 1: YouTube Video Watch</b>
+    <p>یہ ویڈیو 30 سیکنڈ دیکھیں + لائک کریں</p>
+    <button class="btn" onclick="watchVideo()">Video دیکھیں</button>
+  </div>
+
+  <div class="task">
+    <b>Task 2: Ad Watch</b>
+    <p>اشتہار دیکھیں اور 10 پوائنٹس حاصل کریں</p>
+    <button class="btn" onclick="watchAd()">Ad دیکھیں</button>
+  </div>
+
+  <div class="task">
+    <b>Task 3: Picture Review</b>
+    <p>روزانہ 10 تصاویر ریٹ کریں</p>
+    <button class="btn" onclick="reviewPics()">شروع کریں</button>
+  </div>
+</div>
+
+<script>
+function submitForm(){
+  let name = document.getElementById('name').value;
+  let email = document.getElementById('email').value;
+  let phone = document.getElementById('phone').value;
+  if(!name || !email){ alert("نام اور ای میل لازمی ہے"); return; }
+  
+  localStorage.setItem('user', JSON.stringify({name,email,phone}));
+  
+  document.getElementById('signupBox').classList.add('hidden');
+  document.getElementById('verifyBox').classList.remove('hidden');
+  
+  // 1 منٹ بعد ڈیش بورڈ کھول دو
+  setTimeout(() => {
+    document.getElementById('verifyBox').classList.add('hidden');
+    document.getElementById('dashboardBox').classList.remove('hidden');
+    document.getElementById('userName').innerText = name;
+  }, 60000); // 60000ms = 1 منٹ
+}
+
+function watchVideo(){
+  window.open("https://youtube.com", "_blank");
+  alert("ویڈیو دیکھنے کے بعد 15 پوائنٹس مل جائیں گے");
+}
+function watchAd(){
+  alert("Ad چل رہا ہے... 10 پوائنٹس ایڈ ہو گئے");
+}
+function reviewPics(){
+  alert("تصاویر والا پیج یہاں کھلے گا");
+}
+
+// اگر پہلے سے Login ہے تو سیدھا ڈیش بورڈ
+if(localStorage.getItem('user')){
+  let user = JSON.parse(localStorage.getItem('user'));
+  document.getElementById('signupBox').classList.add('hidden');
+  document.getElementById('dashboardBox').classList.remove('hidden');
+  document.getElementById('userName').innerText = user.name;
+}
+</script>
+
 </body>
 </html>
