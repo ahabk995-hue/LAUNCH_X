@@ -1,255 +1,377 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Launch X</title>
-  <style>
-    :root{--bg:#0b0f14;--card:#111827;--muted:#94a3b8;--text:#e5e7eb;--brand:#3b82f6;--brand2:#22c55e;--warn:#f59e0b;--red:#ef4444;--purple:#7c3aed}
-    *{box-sizing:border-box}body{margin:0;font-family:system-ui;background:linear-gradient(180deg,#0b0f14,#0a0a0a);color:var(--text)}
-    .container{max-width:900px;margin:0 auto;padding:24px}
-    .card{background:var(--card);border:1px solid #1f2937;border-radius:16px;padding:20px;box-shadow:0 8px 24px rgba(0,0,0,.3)}
-    h1{font-size:28px;margin:0 0 8px} p{color:var(--muted);margin:0 0 16px}
-    .btn{display:flex;align-items:center;justify-content:center;gap:8px;padding:20px;border-radius:16px;border:1px solid #243244;background:#0f172a;color:#fff;text-decoration:none;font-weight:700;cursor:pointer;font-size:16px;text-align:center}
-    .btn:hover{transform:translateY(-2px);background:#1e293b}
-    .btn.brand{background:var(--brand);border-color:#1d4ed8}
-    .btn.green{background:var(--brand2);border-color:#15803d}
-    .btn.red{background:var(--red);border-color:#dc2626}
-    .btn.yellow{background:var(--warn);border-color:#b45309;color:#111}
-    .btn.purple{background:var(--purple);border-color:#6d28d9}
-    .grid{display:grid;gap:16px}
-    .grid-2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
-    input,button,select{font:inherit}
-    .field{display:flex;flex-direction:column;gap:8px;margin-bottom:12px}
-    .field input, .field select{padding:12px 14px;border-radius:10px;border:1px solid #243244;background:#0b1220;color:#fff;width:100%}
-    .pass-wrap{position:relative}
-    .eye-btn{position:absolute;right:12px;top:50%;transform:translateY(-50%);background:none;border:none;color:#94a3b8;cursor:pointer;font-size:18px}
-    .hidden{display:none}
-    .timer{font-size:22px;font-weight:800;letter-spacing:.5px}
-    .video-frame{width:100%;aspect-ratio:9/16;border:0;border-radius:12px;background:#000}
-    .checkbox{display:flex;align-items:center;gap:10px;margin:12px 0;font-size:14px}
-    .header{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px}
-    .btn-logout{padding:10px 16px;font-size:14px;width:auto;background:#ef4444;border-color:#dc2626;border-radius:10px}
-    .error{color:#ef4444;font-size:14px;margin-top:8px}
-    .success{color:#22c55e;font-size:14px;margin-top:8px}
-    .balance-box{background:linear-gradient(135deg,#3b82f6,#22c55e);padding:20px;border-radius:12px;text-align:center;margin-bottom:16px}
-    .balance-amount{font-size:36px;font-weight:900;color:#fff}
-    .balance-label{font-size:14px;color:#e5e7eb;opacity:0.9}
-    .note{font-size:12px;color:var(--muted)}
-    .warn-note{font-size:13px;color:#f59e0b;background:#1e293b;padding:10px;border-radius:8px;margin-bottom:12px}
-    .footer-copy{display:flex;justify-content:space-between;align-items:center;margin-top:20px;padding-top:16px;border-top:1px solid #243244;font-size:12px;color:var(--muted)}
-    .copy-btn{padding:6px 12px;font-size:12px;width:auto;background:#1e293b}
-    .user-card{background:#0b1220;padding:12px;border-radius:10px;margin-bottom:10px;border:1px solid #243244}
-    .deposit-box{background:linear-gradient(135deg,#f59e0b,#ef4444);padding:20px;border-radius:12px;text-align:center;margin-bottom:16px}
-    .ref-box{background:#0b1220;padding:14px;border-radius:10px;margin-top:16px;border:1px dashed #3b82f6}
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Launch X - By Abdul Reham</title>
+<style>
+    * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Arial, sans-serif; }
+    body { background: linear-gradient(135deg, #00C853, #00E676); color: white; text-align: center; padding: 20px; min-height: 100vh; }
+  .topbar { display:flex; justify-content:space-between; align-items:center; max-width: 500px; margin: 0 auto 15px; padding: 0 10px; }
+  .topbar.user { font-size:18px; font-weight:bold; }
+  .topbar.bal { font-size:18px; color:#FFD600; font-weight:bold; }
+  .topbar.logout { background:red; color:white; border:none; padding:8px 12px; border-radius:6px; cursor:pointer; font-weight:bold; }
+    h1 { margin-bottom: 20px; font-size: 28px; }
+ .box { background: #1B1B1B; padding: 25px; border-radius: 15px; max-width: 500px; margin: 20px auto; box-shadow: 0 0 20px rgba(0,0,0,0.3); }
+ .btn { background: #00E676; color: #000; border: none; padding: 15px; border-radius: 10px; font-weight: bold; cursor: pointer; width: 100%; margin-top: 10px; font-size: 16px; transition: 0.3s; }
+ .btn:hover { background: #00C853; }
+ .btn:disabled { background: #555; color: #999; cursor: not-allowed; }
+ .btn2 { background: #1B1B1B; color: white; border: 2px solid #00E676; padding: 20px 10px; border-radius: 12px; cursor: pointer; font-size: 14px; font-weight: bold; width: 48%; margin: 5px; transition: 0.3s; }
+ .btn2:hover { background: #00E676; color: #000; }
+ .btn2:disabled { border-color: #555; color: #777; cursor: not-allowed; background: #1B1B1B; }
+    input { width:100%; padding:12px; border:none; border-radius:8px; margin-bottom:15px; background:#333; color:white; font-size: 15px; outline: none; }
+    input:focus { border: 2px solid #00E676; }
+ .user-card { background:#333; padding:15px; border-radius:10px; margin:10px 0; text-align:left; }
+ .activate-btn { background:#00E676; color:#000; border:none; padding:8px 15px; border-radius:5px; cursor:pointer; font-weight:bold; }
+ .footer { margin-top:30px; font-size:12px; opacity:0.7; }
+ .grid { display:flex; flex-wrap:wrap; justify-content:center; }
+ .refer-box { background:#333; padding:15px; border-radius:10px; margin-top:15px; word-break:break-all; }
+ .balance-show { font-size:22px; color:#00E676; margin-bottom:15px; }
+ .pic-box { background:#222; padding:10px; border-radius:10px; margin:10px 0; }
+ .pic-box img { width:100%; height:120px; object-fit:cover; border-radius:8px; }
+ .stars { margin-top:8px; }
+ .star { font-size:24px; color:#555; cursor:pointer; display:inline-block; transition: 0.2s; }
+ .star:hover { transform: scale(1.2); }
+ .star.active { color:#FFD600; }
+ .pending-box { background: #FF3D00; padding: 20px; border-radius: 10px; margin: 20px auto; max-width: 400px; }
+</style>
 </head>
 <body>
-  <div class="container">
-    <section id="home" class="card">
-      <h1>Welcome to <span style="color:#3b82f6">Launch X</span></h1>
-      <p>Entry Fee: 300 PKR - Manual Approval</p>
-      <div class="grid">
-        <button class="btn green" id="toRegister">Create Account</button>
-        <button class="btn brand" id="toLogin">Login</button>
-        <button class="btn purple" id="toAdmin">🔐 Admin Panel</button>
-      </div>
-    </section>
 
-    <section id="register" class="card hidden">
-      <h1>Create Account</h1>
-      <form id="regForm" class="grid">
-        <div class="field"><label>Full Name</label><input name="name" required/></div>
-        <div class="field"><label>Email</label><input name="email" type="email" required/></div>
-        <div class="field"><label>Phone</label><input name="number" type="tel" required/></div>
-        <div class="field"><label>Referral Email</label><input name="referral" placeholder="Optional"/></div>
-        <div class="field"><label>Password</label><input name="password" type="password" required/></div>
-        <button class="btn green" type="submit">Sign Up</button>
-        <div class="success hidden" id="regSuccess"></div>
-      </form>
-      <button class="btn" id="backHome1" style="margin-top:12px">← Back</button>
-    </section>
+<!-- 1. MAIN SCREEN -->
+<div id="mainScreen" class="box">
+    <h1>Launch X</h1>
+    <p style="margin-bottom:15px">Owner: Abdul Reham</p>
+    <a href="https://wa.me/923316035482" target="_blank"><button class="btn">📞 WhatsApp Support: 0331-6035482</button></a>
+    <button class="btn" onclick="showSignup()">Create New Account</button>
+    <button class="btn" onclick="showLogin()">Login</button>
+    <button class="btn" onclick="showAdminLogin()" style="background:#FFD600">Admin Panel</button>
+    <p class="footer">© 2026 Launch X - Abdul Reham</p>
+</div>
 
-    <section id="login" class="card hidden">
-      <h1>Login</h1>
-      <form id="loginForm" class="grid">
-        <div class="field"><label>Email</label><input name="email" type="email" required/></div>
-        <div class="field"><label>Password</label><input name="password" type="password" required/></div>
-        <button class="btn brand" type="submit">Login</button>
-        <div class="error hidden" id="loginError">Wrong Email or Password!</div>
-      </form>
-      <button class="btn" id="backHome2" style="margin-top:12px">← Back</button>
-    </section>
+<!-- 2. SIGNUP SCREEN -->
+<div id="signupScreen" class="box" style="display:none">
+    <h2>Create Account</h2>
+    <input id="name" type="text" placeholder="Enter Name">
+    <input id="email" type="email" placeholder="Enter Email">
+    <input id="signupPass" type="password" placeholder="Set Password">
+    <input id="number" type="number" placeholder="Enter Phone Number">
+    <button class="btn" onclick="submitSignup()">Submit</button>
+    <p onclick="showMain()" style="margin-top:10px;cursor:pointer">Back</p>
+</div>
 
-    <section id="deposit" class="card hidden">
-      <h1>Entry Fee: 300 PKR</h1>
-      <div class="deposit-box"><div class="balance-amount">300 PKR</div></div>
-      <p class="warn-note">Easypaisa: 03368881011 - Abdul Rehan</p>
-      <form id="depositForm" class="grid">
-        <div class="field"><label>Transaction ID</label><input name="txid" required/></div>
-        <button class="btn green" type="submit">I Have Deposited</button>
-        <div class="success hidden" id="depositSuccess">Request Sent! Wait for Admin Approval</div>
-      </form>
-    </section>
+<!-- 3. PAYMENT SCREEN -->
+<div id="paymentScreen" class="box" style="display:none">
+    <h2>Account Activation Fee</h2>
+    <p>Send <b>300 PKR</b> to:</p>
+    <h3 style="color:#00E676">EasyPaisa / JazzCash: 0331-6035482</h3>
+    <input id="txnId" type="text" placeholder="Enter Transaction ID">
+    <button class="btn" onclick="submitPayment()">Submit for Verification</button>
+</div>
 
-    <section id="pending" class="card hidden">
-      <h1>Approval Pending</h1>
-      <p class="warn-note">Admin approval ka wait karein</p>
-    </section>
+<!-- 4. LOGIN SCREEN -->
+<div id="loginScreen" class="box" style="display:none">
+    <h2>Login</h2>
+    <input id="loginEmail" type="email" placeholder="Enter Email">
+    <input id="loginPass" type="password" placeholder="Enter Password">
+    <button class="btn" onclick="submitLogin()">Login</button>
+    <p onclick="showMain()" style="margin-top:10px;cursor:pointer">Back</p>
+</div>
 
-    <section id="dashboard" class="card hidden">
-      <div class="header"><h1>Dashboard</h1><button class="btn-logout" id="logoutBtn">LOGOUT</button></div>
-      <p>Welcome: <b><span id="userName"></span></b></p>
-      <div class="balance-box"><div class="balance-label">Your Balance $</div><div class="balance-amount" id="balance">$0.00</div></div>
-      <div class="grid-2">
-        <button class="btn brand" id="watchVideo">WATCH VIDEO</button>
-        <button class="btn green" id="inviteFriend">INVITE FRIEND</button>
-        <button class="btn yellow" id="addEarn">ADD EARN</button>
-        <button class="btn red" id="withdrawBtn">WITHDRAW</button>
-      </div>
-      <div class="ref-box hidden" id="refBox">
-        <h3>Your Referral Link</h3>
-        <input id="refLink" readonly style="width:100%"/>
-      </div>
-    </section>
+<!-- 5. PENDING SCREEN -->
+<div id="pendingScreen" class="box" style="display:none">
+    <div class="pending-box">
+        <h2>Approval Pending</h2>
+        <p>Admin approval ka wait karein</p>
+    </div>
+    <button class="btn" onclick="showMain()" style="background:#555">Back to Home</button>
+</div>
 
-    <section id="admin" class="card hidden">
-      <h1>🔐 Admin Panel</h1>
-      
-      <h3>✋ Manual Approve User</h3>
-      <div class="grid">
-        <div class="field"><label>User Email</label><input id="manualEmail" placeholder="user@gmail.com"/></div>
-        <button class="btn green" id="manualApprove">Approve This User - Add 300</button>
-        <div class="success hidden" id="manualSuccess"></div>
-      </div>
+<!-- 6. DASHBOARD -->
+<div id="dashboard" style="display:none">
+    <div class="topbar">
+        <div class="user" id="userName">User</div>
+        <div class="bal" id="topBalance">$0.00</div>
+        <button class="logout" onclick="logout()">Logout</button>
+    </div>
+    <h1>Welcome</h1>
+    <div class="box">
+        <h3>Your Balance</h3>
+        <h2 id="balance" style="color:#00E676;font-size:36px">$0.00</h2>
+    </div>
+    <div class="grid">
+        <button class="btn2" id="watchBtn" onclick="watchAndEarn()"><span style="font-size:24px">▶️</span><br>Watch Video<br>+$0.05</button>
+        <button class="btn2" onclick="showWithdraw()"><span style="font-size:24px">💵</span><br>Withdraw</button>
+        <button class="btn2" onclick="copyReferral()"><span style="font-size:24px">🔗</span><br>Copy Link</button>
+        <button class="btn2" onclick="showReferral()"><span style="font-size:24px">👥</span><br>Invite Friend</button>
+        <button class="btn2" id="rateBtn" onclick="showPictureTask()"><span style="font-size:24px">⭐</span><br>Rate Pictures<br>+$0.10</button>
+    </div>
+</div>
 
-      <h3 style="margin-top:20px">👥 All Users</h3>
-      <div id="usersList"></div>
-      <button class="btn" id="backHomeAdmin" style="margin-top:12px">← Back</button>
-    </section>
-  </div>
+<!-- 7. WITHDRAW SCREEN -->
+<div id="withdrawScreen" class="box" style="display:none">
+    <h2>Withdraw</h2>
+    <p class="balance-show" id="withdrawBalance">Your Balance: $0.00</p>
+    <p>Minimum Withdraw: <b>$3.00</b></p>
+    <input id="withdrawMethod" type="text" placeholder="EasyPaisa / JazzCash Number">
+    <input id="withdrawAmount" type="number" placeholder="Enter Amount $">
+    <button class="btn" onclick="submitWithdraw()">Request Withdraw</button>
+    <button class="btn" onclick="showDashboard()" style="background:#555">Back</button>
+</div>
+
+<!-- 8. PICTURE RATING TASK -->
+<div id="pictureTask" class="box" style="display:none">
+    <h2>Rate 10 Pictures - Earn $0.10</h2>
+    <p id="taskStatus">Rate all pictures to earn</p>
+    <div id="pictureList"></div>
+    <button class="btn" onclick="showDashboard()" style="background:#555">Back</button>
+</div>
+
+<!-- 9. WATCH VIDEO TASK -->
+<div id="watchTask" class="box" style="display:none">
+    <h2>Complete Task - Earn $0.05</h2>
+    <div style="background:#333; padding:10px; border-radius:8px; margin:8px 0; text-align:left;">✅ 1. You must Subscribe the Channel</div>
+    <div style="background:#333; padding:10px; border-radius:8px; margin:8px 0; text-align:left;">✅ 2. You must Watch Complete Video</div>
+    <div style="background:#333; padding:10px; border-radius:8px; margin:8px 0; text-align:left;">✅ 3. You must Like the Video</div>
+    <a href="https://video-lemon-chi.vercel.app" target="_blank" style="background:#00E676; color:#000; padding:12px; border-radius:8px; margin:15px 0; display:block; text-decoration:none; font-weight:bold;">CLICK HERE TO WATCH VIDEO</a>
+    <button class="btn" onclick="completeTask()">I Completed All Tasks</button>
+    <button class="btn" onclick="showDashboard()" style="background:#555">Back</button>
+</div>
+
+<!-- 10. REFERRAL SCREEN -->
+<div id="referralScreen" class="box" style="display:none">
+    <h2>Invite Friends - Earn 70 PKR</h2>
+    <p>Har friend ke join hone par aapko 70 PKR milenge</p>
+    <div class="refer-box">
+        <p><b>Your Referral Link:</b></p>
+        <p id="referLink"></p>
+    </div>
+    <button class="btn" onclick="copyReferral()">Copy Link</button>
+    <button class="btn" onclick="showDashboard()" style="background:#555">Back</button>
+</div>
+
+<!-- 11. ADMIN PANEL -->
+<div id="adminPanel" class="box" style="display:none">
+    <h2>Admin Panel - Abdul Reham</h2>
+    <div id="userList"></div>
+    <button class="btn" onclick="showMain()">Back</button>
+</div>
+
+<!-- 12. ADMIN LOGIN -->
+<div id="adminLogin" class="box" style="display:none">
+    <h2>Admin Login</h2>
+    <input id="adminPass" type="password" placeholder="Enter Admin Password">
+    <button class="btn" onclick="checkAdmin()">Login</button>
+    <p onclick="showMain()" style="margin-top:10px;cursor:pointer">Back</p>
+</div>
 
 <script>
-  const $ = id => document.getElementById(id);
-  const SITE_URL = "https://launch-x-f7n5.vercel.app/";
-  const REF_REWARD = 0.25;
-  
-  function show(id){ ['home','register','login','deposit','pending','dashboard','admin'].forEach(s => $(s).classList.add('hidden')); $(id).classList.remove('hidden'); }
-  function getUsers(){ return JSON.parse(localStorage.getItem('users')) || []; }
-  function saveUsers(users){ localStorage.setItem('users', JSON.stringify(users)); }
-  function setCurrentUser(user){ localStorage.setItem('currentUser', JSON.stringify(user)); }
-  function getCurrentUser(){ return JSON.parse(localStorage.getItem('currentUser')); }
-  function logoutUser(){ localStorage.removeItem('currentUser'); }
-  
-  function checkEntryFee(){
-    let user = getCurrentUser();
-    if(!user) return;
-    if(!user.isActive){ show('pending'); } 
-    else {
-      $('userName').textContent = user.name;
-      $('balance').textContent = '$' + (user.balance || 0).toFixed(2);
-      $('refLink').value = SITE_URL + "?ref=" + user.email;
-      show('dashboard'); 
-    }
-  }
-  
-  document.addEventListener('DOMContentLoaded', function() {
-    if(getCurrentUser()){ checkEntryFee(); }
+let ADMIN_PASSWORD = "AbdulReham123";
+let currentUserEmail = "";
+let currentUserName = "";
+let YOUR_REF_LINK = "https://renvex.co/signup?ref=47413";
+let PICTURES = [
+    "https://picsum.photos/400/200?random=1","https://picsum.photos/400/200?random=2","https://picsum.photos/400/200?random=3","https://picsum.photos/400/200?random=4","https://picsum.photos/400/200?random=5",
+    "https://picsum.photos/400/200?random=6","https://picsum.photos/400/200?random=7","https://picsum.photos/400/200?random=8","https://picsum.photos/400/200?random=9","https://picsum.photos/400/200?random=10"
+];
+
+// SCREENS
+function showMain(){ hideAll(); document.getElementById('mainScreen').style.display='block'; }
+function showSignup(){ hideAll(); document.getElementById('signupScreen').style.display='block'; }
+function showPayment(){ hideAll(); document.getElementById('paymentScreen').style.display='block'; }
+function showLogin(){ hideAll(); document.getElementById('loginScreen').style.display='block'; }
+function showPending(){ hideAll(); document.getElementById('pendingScreen').style.display='block'; }
+function showDashboard(){ hideAll(); document.getElementById('dashboard').style.display='block'; updateBalance(); checkDailyLimits(); }
+function showWithdraw(){ hideAll(); document.getElementById('withdrawScreen').style.display='block'; updateWithdrawBalance(); }
+function showWatchTask(){ hideAll(); document.getElementById('watchTask').style.display='block'; }
+function showReferral(){ hideAll(); document.getElementById('referralScreen').style.display='block'; generateReferralLink(); }
+function showAdminPanel(){ hideAll(); document.getElementById('adminPanel').style.display='block'; loadUsers(); }
+function showAdminLogin(){ hideAll(); document.getElementById('adminLogin').style.display='block'; }
+function hideAll(){ document.querySelectorAll('.box, #dashboard').forEach(el => el.style.display='none'); }
+
+// DAILY LIMIT CHECK
+function checkDailyLimits(){
+    if(!currentUserEmail) return;
+    let today = new Date().toDateString();
+    let videoData = JSON.parse(localStorage.getItem("videoTask_"+currentUserEmail)) || {lastDate: ""};
+    let picData = JSON.parse(localStorage.getItem("userTask_"+currentUserEmail)) || {lastDate: "", rated: 0};
     
-    $('toRegister').onclick = () => show('register');
-    $('toLogin').onclick = () => show('login'); 
-    $('backHome1').onclick = () => show('home');
-    $('backHome2').onclick = () => show('home');
-    $('backHomeAdmin').onclick = () => show('home');
-    $('logoutBtn').onclick = () => { logoutUser(); show('home'); }
-    $('inviteFriend').onclick = () => { $('refBox').classList.toggle('hidden'); }
-    
-    $('toAdmin').onclick = () => {
-      const email = prompt('Admin Email:');
-      const pass = prompt('Admin Password:');
-      if(email === 'admin@launchx.com' && pass === 'admin123'){
-        loadAdminPanel();
-        show('admin');
-      } else { alert('Wrong!'); }
+    if(videoData.lastDate === today){
+        document.getElementById('watchBtn').disabled = true;
+        document.getElementById('watchBtn').innerHTML = `<span style="font-size:24px">✅</span><br>Video Done<br>کل آئے گا`;
+    } else {
+        document.getElementById('watchBtn').disabled = false;
+        document.getElementById('watchBtn').innerHTML = `<span style="font-size:24px">▶️</span><br>Watch Video<br>+$0.05`;
     }
 
-    function loadAdminPanel(){
-      let users = getUsers();
-      let html = '';
-      users.forEach(u => {
-        html += `<div class="user-card">
-          <b>${u.name}</b><br>
-          <b>Email:</b> ${u.email}<br>
-          <b>Balance:</b> $${u.balance.toFixed(2)}<br>
-          <b>Status:</b> ${u.isActive ? 'Active ✅' : 'Pending ❌'}
-        </div>`;
-      });
-      $('usersList').innerHTML = html || '<p class="note">No users</p>';
+    if(picData.lastDate === today && picData.rated >= 10){
+        document.getElementById('rateBtn').disabled = true;
+        document.getElementById('rateBtn').innerHTML = `<span style="font-size:24px">✅</span><br>Task Done<br>کل آئے گا`;
+    } else {
+        document.getElementById('rateBtn').disabled = false;
+        document.getElementById('rateBtn').innerHTML = `<span style="font-size:24px">⭐</span><br>Rate Pictures<br>+$0.10`;
     }
-    
-    // MANUAL APPROVE - TARIKA 1
-    $('manualApprove').onclick = () => {
-      let email = $('manualEmail').value.trim();
-      let users = getUsers();
-      let u = users.find(x => x.email === email);
-      if(u){
-        u.balance = 300; 
-        u.isActive = true; 
-        u.depositTx = "";
-        saveUsers(users);
-        $('manualSuccess').textContent = email + " ko Approve kar diya! 300 added.";
-        $('manualSuccess').classList.remove('hidden');
-        loadAdminPanel();
-      } else {
-        alert("Ye email nahi mili!");
-      }
-    }
-    
-    $('regForm').onsubmit = e => {
-      e.preventDefault();
-      const name = $('regForm').name.value;
-      const email = $('regForm').email.value;
-      const number = $('regForm').number.value;
-      const password = $('regForm').password.value;
-      const referral = $('regForm').referral.value;
-      let users = getUsers();
-      if(users.find(u => u.email === email)){ alert("Email exists!"); return; }
-      if(referral){ let refUser = users.find(u => u.email === referral); if(refUser){ refUser.balance += REF_REWARD; } }
-      users.push({name, email, number, password, balance: 0.00, isActive: false, referredBy: referral});
-      saveUsers(users);
-      setCurrentUser({name, email, number, balance: 0.00, isActive: false});
-      $('regSuccess').textContent = "Account ban gaya! Ab 300 deposit karein";
-      $('regSuccess').classList.remove('hidden');
-      setTimeout(()=>show('deposit'), 1500);
-    }
-    
-    $('loginForm').onsubmit = e => {
-      e.preventDefault();
-      const email = $('loginForm').email.value;
-      const password = $('loginForm').password.value;
-      let users = getUsers();
-      let user = users.find(u => u.email === email && u.password === password);
-      if(user){ setCurrentUser(user); checkEntryFee(); } 
-      else { $('loginError').classList.remove('hidden'); }
-    }
+}
 
-    $('depositForm').onsubmit = e => {
-      e.preventDefault();
-      let user = getCurrentUser();
-      let users = getUsers();
-      let u = users.find(x => x.email === user.email);
-      u.depositTx = $('depositForm').txid.value;
-      saveUsers(users);
-      setCurrentUser(u);
-      $('depositSuccess').classList.remove('hidden');
-      setTimeout(()=>show('pending'), 1500);
+// PICTURE RATING TASK
+function showPictureTask(){
+    if(!currentUserEmail) return;
+    let picData = JSON.parse(localStorage.getItem("userTask_"+currentUserEmail)) || {lastDate: "", rated: 0};
+    let today = new Date().toDateString();
+    if(picData.lastDate === today && picData.rated >= 10){
+        alert("❌ آپ آج کا Picture Task مکمل کر چکے ہیں۔ کل 12 بجے کے بعد دوبارہ ہوگا");
+        return;
     }
-    
-    $('watchVideo').onclick = () => alert('Video section');
-    $('addEarn').onclick = () => alert('Ad section');
-    $('withdrawBtn').onclick = () => alert('Withdraw section');
-  });
+    hideAll(); document.getElementById('pictureTask').style.display='block'; loadPictures();
+}
+function loadPictures(){
+    let list = document.getElementById('pictureList'); list.innerHTML = ""; ratedPics = {};
+    PICTURES.forEach((pic, i) => {
+        list.innerHTML += `<div class="pic-box"><img src="${pic}"><div class="stars" id="stars-${i}"><span class="star" onclick="ratePic(${i},1)">★</span><span class="star" onclick="ratePic(${i},2)">★</span><span class="star" onclick="ratePic(${i},3)">★</span><span class="star" onclick="ratePic(${i},4)">★</span><span class="star" onclick="ratePic(${i},5)">★</span></div></div>`;
+    });
+}
+let ratedPics = {};
+function ratePic(index, star){
+    ratedPics[index] = star;
+    let starsDiv = document.getElementById('stars-'+index).querySelectorAll('.star');
+    starsDiv.forEach((s, i) => { if(i < star) s.classList.add('active'); else s.classList.remove('active'); });
+    if(Object.keys(ratedPics).length === 10){
+        let users = JSON.parse(localStorage.getItem("allUsers")) || [];
+        users = users.map(u => u.email === currentUserEmail? {...u, balance: parseFloat((u.balance + 0.10).toFixed(2))} : u);
+        localStorage.setItem("allUsers", JSON.stringify(users));
+        let userData = {lastDate: new Date().toDateString(), rated: 10};
+        localStorage.setItem("userTask_"+currentUserEmail, JSON.stringify(userData));
+        alert("✅ مبارک ہو! $0.10 آپ کے Balance میں Add ہو گئے");
+        showDashboard();
+    }
+}
+
+// WATCH & EARN
+function watchAndEarn(){
+    if(!currentUserEmail) return;
+    let videoData = JSON.parse(localStorage.getItem("videoTask_"+currentUserEmail)) || {lastDate: ""};
+    let today = new Date().toDateString();
+    if(videoData.lastDate === today){
+        alert("❌ آپ آج کا Video Task مکمل کر چکے ہیں۔ کل 12 بجے کے بعد دوبارہ ہوگا");
+        return;
+    }
+    window.open("https://video-lemon-chi.vercel.app", '_blank');
+    setTimeout(() => {
+        let users = JSON.parse(localStorage.getItem("allUsers")) || [];
+        users = users.map(u => u.email === currentUserEmail? {...u, balance: parseFloat((u.balance + 0.05).toFixed(2))} : u);
+        localStorage.setItem("allUsers", JSON.stringify(users));
+        let newVideoData = {lastDate: today};
+        localStorage.setItem("videoTask_"+currentUserEmail, JSON.stringify(newVideoData));
+        updateBalance(); alert("✅ $0.05 Added to your balance!"); checkDailyLimits();
+    }, 3000);
+}
+function completeTask(){ watchAndEarn(); }
+
+// WITHDRAW
+function updateWithdrawBalance(){
+    let users = JSON.parse(localStorage.getItem("allUsers")) || [];
+    let user = users.find(u => u.email === currentUserEmail);
+    if(user) document.getElementById('withdrawBalance').innerText = "Your Balance: $" + user.balance.toFixed(2);
+}
+function submitWithdraw(){
+    let amount = parseFloat(document.getElementById('withdrawAmount').value);
+    let method = document.getElementById('withdrawMethod').value;
+    let users = JSON.parse(localStorage.getItem("allUsers")) || [];
+    let user = users.find(u => u.email === currentUserEmail);
+    if(amount >= 3 && method){
+        if(user.balance >= amount){
+            users = users.map(u => u.email === currentUserEmail? {...u, balance: parseFloat((u.balance - amount).toFixed(2))} : u);
+            localStorage.setItem("allUsers", JSON.stringify(users));
+            alert("✅ Withdraw Request Submitted for $" + amount + "!\nAdmin will send to: " + method);
+            showDashboard();
+        } else { alert("❌ آپ کے پاس اتنا Balance نہیں ہے") }
+    } else { alert("Minimum withdraw is $3.00 and enter number") }
+}
+
+// REFERRAL
+function generateReferralLink(){ document.getElementById('referLink').innerText = YOUR_REF_LINK; }
+function copyReferral(){ navigator.clipboard.writeText(YOUR_REF_LINK); alert("✅ Referral Link Copied!"); }
+
+// SIGNUP + LOGIN + ADMIN
+function submitSignup(){
+    let user = { name: document.getElementById('name').value, email: document.getElementById('email').value, pass: document.getElementById('signupPass').value, number: document.getElementById('number').value, status: "pending", balance: 0.00, txnId: "" }
+    if(user.name && user.email && user.pass){ 
+        let users = JSON.parse(localStorage.getItem("allUsers")) || []; 
+        if(users.find(u => u.email === user.email)){ alert("This email already exists"); return; } 
+        users.push(user); 
+        localStorage.setItem("allUsers", JSON.stringify(users)); 
+        currentUserEmail = user.email; 
+        currentUserName = user.name; 
+        alert("Account Created! Now pay 300 PKR to activate"); 
+        showPayment(); 
+    } else { alert("Please Fill All Fields") }
+}
+
+function submitPayment(){ 
+    let txn = document.getElementById('txnId').value; 
+    if(txn && txn.length > 3){ 
+        let users = JSON.parse(localStorage.getItem("allUsers")) || []; 
+        users = users.map(u => u.email === currentUserEmail? {...u, txnId: txn} : u); 
+        localStorage.setItem("allUsers", JSON.stringify(users)); 
+        alert("✅ Payment Submitted! \nAdmin Abdul Reham will verify and approve soon. \nWhatsApp: 0331-6035482"); 
+        showMain(); 
+    } else { alert("Please enter a valid Transaction ID") } 
+}
+
+function submitLogin(){ 
+    let email = document.getElementById('loginEmail').value; 
+    let pass = document.getElementById('loginPass').value; 
+    let users = JSON.parse(localStorage.getItem("allUsers")) || []; 
+    let user = users.find(u => u.email === email && u.pass === pass); 
+    if(user){ 
+        currentUserEmail = email; 
+        currentUserName = user.name; 
+        if(user.status === "active"){ 
+            showDashboard(); 
+        } else if(user.status === "pending") { 
+            showPending(); // YEHI PENDING SCREEN HAI
+        } 
+    } else { alert("Invalid Email or Password") } 
+}
+
+function checkAdmin(){ 
+    if(document.getElementById('adminPass').value === ADMIN_PASSWORD){ 
+        showAdminPanel(); 
+    } else { alert("Wrong Admin Password") } 
+}
+
+function loadUsers(){ 
+    let users = JSON.parse(localStorage.getItem("allUsers")) || []; 
+    let list = document.getElementById('userList'); 
+    list.innerHTML = ""; 
+    let pendingUsers = users.filter(u => u.status === "pending"); 
+    if(pendingUsers.length === 0){ list.innerHTML = "<p>No Pending Users</p>"; return; } 
+    pendingUsers.forEach(user => { 
+        list.innerHTML += `<div class="user-card"><p><b>Name:</b> ${user.name}</p><p><b>Email:</b> ${user.email}</p><p><b>Number:</b> ${user.number}</p><p><b>Txn ID:</b> ${user.txnId || 'N/A'}</p><button class="activate-btn" onclick="activateUser('${user.email}')">Activate</button></div>`; 
+    }); 
+}
+
+function activateUser(email){ 
+    let users = JSON.parse(localStorage.getItem("allUsers")) || []; 
+    users = users.map(u => u.email === email? {...u, status: "active"} : u); 
+    localStorage.setItem("allUsers", JSON.stringify(users)); 
+    alert(email + " is now Active!"); 
+    loadUsers(); 
+}
+
+function updateBalance(){
+    let users = JSON.parse(localStorage.getItem("allUsers")) || [];
+    let user = users.find(u => u.email === currentUserEmail);
+    if(user) {
+        document.getElementById('balance').innerText = "$" + user.balance.toFixed(2);
+        document.getElementById('topBalance').innerText = "$" + user.balance.toFixed(2);
+        document.getElementById('userName').innerText = user.name;
+    }
+}
+
+function logout(){ currentUserEmail = ""; currentUserName = ""; showMain(); }
 </script>
+
 </body>
 </html>
 
