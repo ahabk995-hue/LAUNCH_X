@@ -17,7 +17,6 @@
     .btn.red{background:var(--red);border-color:#dc2626}
     .btn.yellow{background:var(--warn);border-color:#b45309;color:#111}
     .grid{display:grid;gap:16px}
-    @media(min-width:720px){.grid{grid-template-columns:repeat(2,1fr)}}
     input,button{font:inherit}
     .field{display:flex;flex-direction:column;gap:8px;margin-bottom:12px}
     .field input{padding:12px 14px;border-radius:10px;border:1px solid #243244;background:#0b1220;color:#fff}
@@ -31,27 +30,33 @@
     .video-links{display:grid;gap:8px;margin-bottom:16px}
     .header{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px}
     .btn-logout{padding:8px 14px;font-size:14px;width:auto;background:#ef4444;border-color:#dc2626}
+    .error{color:#ef4444;font-size:14px;margin-top:8px}
+    .success{color:#22c55e;font-size:14px;margin-top:8px}
   </style>
 </head>
 <body>
   <div class="container">
-    <!-- HOME -->
+    <!-- HOME - 4 OPTIONS -->
     <section id="home" class="card">
       <h1>Welcome to <span style="color:#3b82f6">Launch X</span></h1>
-      <p>Earn money by completing simple tasks. Start now!</p>
-      <button class="btn green" id="toRegister">Click to Login / Register</button>
-      <div class="note">Already have an account? <button class="link-btn" id="toLogin">Login Here</button></div>
+      <div class="grid">
+        <button class="btn green" id="toRegister">1. Create Account</button>
+        <button class="btn brand" id="toLogin">2. Login</button>
+        <button class="btn yellow" id="toAbout">3. About Us</button>
+        <button class="btn" id="toContact">4. Contact</button>
+      </div>
     </section>
 
     <!-- REGISTER -->
     <section id="register" class="card hidden">
-      <h1>Create Your Account</h1>
+      <h1>Create Account</h1>
       <form id="regForm" class="grid">
         <div class="field"><label>Name</label><input name="name" required/></div>
         <div class="field"><label>Email</label><input name="email" type="email" required/></div>
-        <div class="field"><label>Phone</label><input name="phone" required/></div>
-        <div class="field"><label>Password</label><input name="password" type="password" required/></div>
-        <button class="btn green" type="submit">Submit & Verify</button>
+        <div class="field"><label>Password</label><input name="password" type="password" required minlength="4"/></div>
+        <button class="btn green" type="submit">Sign Up</button>
+        <div class="error hidden" id="regError"></div>
+        <div class="success hidden" id="regSuccess"></div>
       </form>
       <button class="btn" id="backHome1" style="margin-top:12px">← Back</button>
     </section>
@@ -63,8 +68,23 @@
         <div class="field"><label>Email</label><input name="email" type="email" required/></div>
         <div class="field"><label>Password</label><input name="password" type="password" required/></div>
         <button class="btn brand" type="submit">Login Now</button>
+        <div class="error hidden" id="loginError">Wrong Email or Password!</div>
       </form>
       <button class="btn" id="backHome2" style="margin-top:12px">← Back</button>
+    </section>
+
+    <!-- ABOUT -->
+    <section id="about" class="card hidden">
+      <h1>About Us</h1>
+      <p>Launch X is a task earning platform. Watch videos and earn money.</p>
+      <button class="btn" id="backHome3">← Back</button>
+    </section>
+
+    <!-- CONTACT -->
+    <section id="contact" class="card hidden">
+      <h1>Contact</h1>
+      <p>WhatsApp: 03xx-xxxxxxx</p>
+      <button class="btn" id="backHome4">← Back</button>
     </section>
 
     <!-- VERIFY -->
@@ -79,7 +99,7 @@
         <h1>Dashboard</h1>
         <button class="btn btn-logout" id="logoutBtn">LOGOUT</button>
       </div>
-      <p>Choose an option below</p>
+      <p>Welcome: <span id="userName"></span></p>
       <div class="dashboard">
         <button class="btn yellow" id="addEarn">ADD EARN</button>
         <button class="btn brand" id="watchVideo">WATCH VIDEO</button>
@@ -91,21 +111,16 @@
     <!-- VIDEO -->
     <section id="video" class="card hidden">
       <h1>Watch Video to Earn</h1>
-      <p>Complete all 3 tasks to unlock video</p>
-      
       <div class="video-links">
         <a class="btn red" href="https://youtube.com/shorts/PNsbWwa3Kwo?si=2uXJ2eHRmZRx7mQU" target="_blank">1. Subscribe Channel</a>
         <a class="btn red" href="https://youtube.com/shorts/PNsbWwa3Kwo?si=2uXJ2eHRmZRx7mQU" target="_blank">2. Like Video</a>
         <a class="btn red" href="https://youtube.com/shorts/PNsbWwa3Kwo?si=2uXJ2eHRmZRx7mQU" target="_blank">3. Watch Full Video</a>
       </div>
-
       <div class="checkbox"><input type="checkbox" id="c1"/><label for="c1">I Subscribed to the channel</label></div>
       <div class="checkbox"><input type="checkbox" id="c2"/><label for="c2">I Liked the video</label></div>
       <div class="checkbox"><input type="checkbox" id="c3"/><label for="c3">I Watched the full video</label></div>
-      
       <button class="btn green" id="openVideo" disabled>Open Video Below</button>
       <button class="btn" id="backDash" style="margin-top:12px">← Back to Dashboard</button>
-      
       <div id="videoBox" class="hidden" style="margin-top:16px">
         <iframe class="video-frame" src="https://www.youtube.com/embed/PNsbWwa3Kwo" allowfullscreen></iframe>
       </div>
@@ -115,34 +130,81 @@
 <script>
   const $ = id => document.getElementById(id);
   function show(id){
-    ['home','register','login','verify','dashboard','video'].forEach(s => $(s).classList.add('hidden'));
+    ['home','register','login','about','contact','verify','dashboard','video'].forEach(s => $(s).classList.add('hidden'));
     $(id).classList.remove('hidden');
   }
 
+  // LocalStorage Functions
+  function getUsers(){ return JSON.parse(localStorage.getItem('users')) || []; }
+  function saveUsers(users){ localStorage.setItem('users', JSON.stringify(users)); }
+  function setCurrentUser(user){ localStorage.setItem('currentUser', JSON.stringify(user)); }
+  function getCurrentUser(){ return JSON.parse(localStorage.getItem('currentUser')); }
+  function logoutUser(){ localStorage.removeItem('currentUser'); }
+
   document.addEventListener('DOMContentLoaded', function() {
-    // Navigation
-    $('toRegister').onclick = () => show('register');
-    $('toLogin').onclick = () => show('login'); 
-    $('backHome1').onclick = () => show('home');
-    $('backHome2').onclick = () => show('home');
-    $('backDash').onclick = () => show('dashboard');
-
-    // Register
-    $('regForm').onsubmit = e => {
-      e.preventDefault();
-      show('verify');
-      let t=30; $('timer').textContent=t;
-      const iv=setInterval(()=>{t--; $('timer').textContent=t; if(t<=0){clearInterval(iv); show('dashboard')}},1000);
-    }
-
-    // Login
-    $('loginForm').onsubmit = e => {
-      e.preventDefault();
+    // Check if already logged in
+    if(getCurrentUser()){ 
+      $('userName').textContent = getCurrentUser().name;
       show('dashboard'); 
     }
 
-    // LOGOUT - NEW
+    // Navigation
+    $('toRegister').onclick = () => show('register');
+    $('toLogin').onclick = () => show('login'); 
+    $('toAbout').onclick = () => show('about');
+    $('toContact').onclick = () => show('contact');
+    $('backHome1').onclick = () => show('home');
+    $('backHome2').onclick = () => show('home');
+    $('backHome3').onclick = () => show('home');
+    $('backHome4').onclick = () => show('home');
+    $('backDash').onclick = () => show('dashboard');
+
+    // REGISTER - Save to LocalStorage
+    $('regForm').onsubmit = e => {
+      e.preventDefault();
+      const name = $('regForm').name.value;
+      const email = $('regForm').email.value;
+      const password = $('regForm').password.value;
+      let users = getUsers();
+      
+      if(users.find(u => u.email === email)){
+        $('regError').textContent = "Email already exists!";
+        $('regError').classList.remove('hidden');
+        return;
+      }
+      
+      users.push({name, email, password});
+      saveUsers(users);
+      setCurrentUser({name, email});
+      
+      $('regSuccess').textContent = "Account created! Verifying...";
+      $('regSuccess').classList.remove('hidden');
+      show('verify');
+      let t=30; $('timer').textContent=t;
+      const iv=setInterval(()=>{t--; $('timer').textContent=t; if(t<=0){clearInterval(iv); $('userName').textContent=name; show('dashboard')}},1000);
+    }
+
+    // LOGIN - Check from LocalStorage
+    $('loginForm').onsubmit = e => {
+      e.preventDefault();
+      const email = $('loginForm').email.value;
+      const password = $('loginForm').password.value;
+      let users = getUsers();
+      let user = users.find(u => u.email === email && u.password === password);
+      
+      if(user){
+        $('loginError').classList.add('hidden');
+        setCurrentUser(user);
+        $('userName').textContent = user.name;
+        show('dashboard'); 
+      } else {
+        $('loginError').classList.remove('hidden');
+      }
+    }
+
+    // LOGOUT
     $('logoutBtn').onclick = () => {
+      logoutUser();
       show('home');
       alert('Logged out successfully!');
     }
