@@ -22,7 +22,6 @@
     .field input{padding:12px 14px;border-radius:10px;border:1px solid #243244;background:#0b1220;color:#fff}
     .hidden{display:none}
     .timer{font-size:22px;font-weight:800;letter-spacing:.5px}
-    .pill{display:inline-block;padding:4px 10px;border-radius:999px;background:#0b1220;border:1px solid #243244;font-size:12px;color:#cbd5e1}
     .dashboard{display:grid;gap:12px}
     .video-frame{width:100%;aspect-ratio:9/16;border:0;border-radius:12px;background:#000}
     .checkbox{display:flex;align-items:center;gap:10px;margin:8px 0}
@@ -76,7 +75,7 @@
       <div class="dashboard">
         <button class="btn yellow" id="addEarn">ADD EARN</button>
         <button class="btn brand" id="watchVideo">WATCH VIDEO</button>
-        <button class="btn green" id="invite">INVITE MEMBERS</button>
+        <a class="btn green" id="invite" href="https://renvex.co/signup?ref=47413" target="_blank">INVITE MEMBERS</a>
         <button class="btn" id="task">TASK</button>
       </div>
     </section>
@@ -90,7 +89,7 @@
       <button class="btn green" id="openVideo" disabled>Open Video</button>
       <button class="btn" id="backDash" style="margin-top:12px">← Back to Dashboard</button>
       <div id="videoBox" class="hidden" style="margin-top:16px">
-        <iframe class="video-frame" src="https://youtube.com/shorts/PNsbWwa3Kwo?si=FrCfcnlNSMsUN5cW" allowfullscreen></iframe>
+        <iframe class="video-frame" src="https://www.youtube.com/embed/YOUR_VIDEO_ID" allowfullscreen></iframe>
       </div>
     </section>
   </div>
@@ -102,41 +101,43 @@
     $(id).classList.remove('hidden');
   }
 
-  // Navigation
-  $('toRegister').onclick = () => show('register');
-  $('toLogin').onclick = () => show('login'); 
-  $('backHome1').onclick = () => show('home');
-  $('backHome2').onclick = () => show('home');
-  $('backDash').onclick = () => show('dashboard');
+  // Navigation - FIXED
+  document.addEventListener('DOMContentLoaded', function() {
+    $('toRegister').onclick = () => show('register');
+    $('toLogin').onclick = () => show('login'); 
+    $('backHome1').onclick = () => show('home');
+    $('backHome2').onclick = () => show('home');
+    $('backDash').onclick = () => show('dashboard');
 
-  // Register
-  $('regForm').onsubmit = e => {
-    e.preventDefault();
-    show('verify');
-    let t=30; $('timer').textContent=t;
-    const iv=setInterval(()=>{t--; $('timer').textContent=t; if(t<=0){clearInterval(iv); show('dashboard')}},1000);
-  }
+    // Register
+    $('regForm').onsubmit = e => {
+      e.preventDefault();
+      show('verify');
+      let t=30; $('timer').textContent=t;
+      const iv=setInterval(()=>{t--; $('timer').textContent=t; if(t<=0){clearInterval(iv); show('dashboard')}},1000);
+    }
 
-  // Login - DIRECT DASHBOARD
-  $('loginForm').onsubmit = e => {
-    e.preventDefault();
-    show('dashboard'); 
-  }
+    // Login - DIRECT DASHBOARD
+    $('loginForm').onsubmit = e => {
+      e.preventDefault();
+      show('dashboard'); 
+    }
 
-  // Dashboard Buttons - FIXED
-  $('addEarn').onclick = () => alert('ADD EARN: Coming Soon!');
-  $('watchVideo').onclick = () => show();
-  $('invite').onclick = () => alert(');
-  $('task').onclick = () => alert('TASK: New tasks coming soon!');
+    // Dashboard Buttons
+    $('addEarn').onclick = () => alert('ADD EARN: Coming Soon!');
+    $('watchVideo').onclick = () => show('video');
+    $('task').onclick = () => alert('TASK: New tasks coming soon!');
+    // INVITE button is now a link, no JS needed
 
-  // Video
-  ['c1','c2','c3'].forEach(id=>$(id).onchange=()=>{
-    $('openVideo').disabled = !($('c1').checked && $('c2').checked && $('c3').checked)
+    // Video
+    ['c1','c2','c3'].forEach(id=>$(id).onchange=()=>{
+      $('openVideo').disabled = !($('c1').checked && $('c2').checked && $('c3').checked)
+    });
+    $('openVideo').onclick = () => {
+      $('videoBox').classList.remove('hidden');
+      $('openVideo').textContent = 'Video Opened ✓'
+    }
   });
-  $('openVideo').onclick = () => {
-    $('videoBox').classList.remove('hidden');
-    $('openVideo').textContent = 'Video Opened ✓'
-  }
 </script>
 </body>
 </html>
