@@ -1,78 +1,82 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>LAUNCHX</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Launch X Dashboard</title>
 <style>
-body{margin:0;background:linear-gradient(#00ff88,#00aa55);font-family:Arial;text-align:center;color:#fff;min-height:100vh}
-.container{max-width:400px;margin:0 auto;padding:20px}
-h1{font-size:45px;margin-top:40px}
-h1 span{color:#000}
-.box{background:#0008;padding:20px;border-radius:15px;margin:20px 0}
-input{width:90%;padding:12px;margin:8px 0;border-radius:8px;border:0;font-size:15px}
-button{width:95%;padding:14px;margin:10px 0;border:0;border-radius:10px;font-size:16px;font-weight:bold;cursor:pointer}
-.btn1{background:#000;color:#00ff88}
-.btn2{background:#25D366;color:#fff}
-.grid{display:grid;grid-template-columns:1fr 1fr;gap:15px;margin-top:20px}
-.card{background:#222;padding:20px 5px;border-radius:12px;border:2px solid #00ff88;cursor:pointer}
-.balance{font-size:28px;color:#00ff88;font-weight:bold}
+    * { margin: 0; padding: 0; box-sizing: border-box; font-family: Arial, sans-serif; }
+    body { background: #00C853; color: white; text-align: center; padding: 20px; }
+    h1 { margin-bottom: 20px; font-size: 28px; }
+    .balance-box {
+        background: #004D40;
+        padding: 25px;
+        border-radius: 15px;
+        margin-bottom: 20px;
+    }
+    .balance-box h3 { font-size: 16px; font-weight: normal; }
+    .balance-box h2 { font-size: 36px; color: #00E676; margin-top: 10px; }
+    .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 20px; }
+    .btn {
+        background: #1B1B1B;
+        padding: 20px 10px;
+        border-radius: 12px;
+        cursor: pointer;
+        font-size: 14px;
+        font-weight: bold;
+        border: none;
+        color: white;
+    }
+    .btn span { display: block; font-size: 24px; margin-bottom: 5px; }
+    .logout {
+        background: red;
+        width: 100%;
+        padding: 15px;
+        border-radius: 12px;
+        border: none;
+        color: white;
+        font-size: 16px;
+        font-weight: bold;
+        cursor: pointer;
+    }
+    a { text-decoration: none; }
 </style>
 </head>
 <body>
-<div class="container">
 
-<div id="p1">
-<h1>LAUNCH<span>X</span></h1>
-<p>Earn by Watching Videos</p>
-<button class="btn1" onclick="p('p2')">Get Started</button>
-<button class="btn2" onclick="window.open('https://wa.me/','_blank')">WhatsApp Support</button>
-</div>
+<h1>Welcome Leader</h1>
 
-<div id="p2" style="display:none">
-<div class="box">
-<h2>Create Account</h2>
-<input id="n" placeholder="Full Name">
-<input id="e" placeholder="Email">
-<input id="ph" placeholder="Phone Number">
-<input id="pw" placeholder="Password" type="password">
-<button class="btn1" onclick="reg()">Continue</button>
-<button onclick="p('p1')">Back</button>
-</div>
+<div class="balance-box">
+    <h3>Your Balance</h3>
+    <h2>0 PKR</h2>
 </div>
 
-<div id="p3" style="display:none">
-<div class="box">
-<h2>Please Wait</h2>
-<p>Creating Account: <span id="tm">30</span>s</p>
-</div>
-</div>
-
-<div id="p4" style="display:none">
-<h2>Welcome <span id="un"></span></h2>
-<div class="box">
-<p>Your Balance</p>
-<p class="balance"><span id="bal">0</span> PKR</p>
-</div>
 <div class="grid">
-<div class="card" onclick="alert('Task Coming Soon')">📋<br>Complete Task</div>
-<div class="card" onclick="video()">▶️<br>Watch Video</div>
-<div class="card" onclick="alert('Earn More Coming Soon')">💰<br>Earn</div>
-<div class="card" onclick="window.open('https://wa.me/?text=Join LAUNCHX','_blank')">👥<br>Invite Friend</div>
-</div>
-<button class="btn1" style="background:red;margin-top:20px" onclick="logout()">Logout</button>
+    <button class="btn">
+        <span>📋</span>
+        Complete Task
+    </button>
+
+    <!-- YEH WALA BUTTON CHANGE KIYA HAI -->
+    <a href="https://video-lemon-chi.vercel.app" target="_blank">
+        <button class="btn">
+            <span>▶️</span>
+            Watch Video
+        </button>
+    </a>
+
+    <button class="btn">
+        <span>💰</span>
+        Earn
+    </button>
+
+    <button class="btn">
+        <span>👥</span>
+        Invite Friend
+    </button>
 </div>
 
-</div>
+<button class="logout">Logout</button>
 
-<script>
-let u=JSON.parse(localStorage.u||'null');if(u){p('p4');upd()}
-function p(id){['p1','p2','p3','p4'].map(x=>document.getElementById(x).style.display='none');document.getElementById(id).style.display='block'}
-function reg(){
-if(n.value==''||e.value==''||ph.value==''||pw.value==''){alert('Please fill all fields');return}
-u={n:n.value,e:e.value,ph:ph.value,pw:pw.value,bal:0};localStorage.u=JSON.stringify(u);p('p3');let t=30;let x=setInterval(()=>{tm.innerText=t--;if(t<0){clearInterval(x);p('p4');upd()}},1000)}
-function upd(){un.innerText=u.n;bal.innerText=u.bal}
-function video(){window.open('https://youtube.com','_blank');setTimeout(()=>{u.bal=u.bal+5;localStorage.u=JSON.stringify(u);upd();alert('+5 PKR Added')},30000)}
-function logout(){localStorage.removeItem('u');u=null;p('p1')}
-</script>
 </body>
 </html>
