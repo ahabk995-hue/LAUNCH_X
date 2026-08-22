@@ -44,13 +44,15 @@
     .user-card{background:#0b1220;padding:12px;border-radius:10px;margin-bottom:10px;border:1px solid #243244}
     .deposit-box{background:linear-gradient(135deg,#f59e0b,#ef4444);padding:20px;border-radius:12px;text-align:center;margin-bottom:16px}
     .ref-box{background:#0b1220;padding:14px;border-radius:10px;margin-top:16px;border:1px dashed #3b82f6}
+    .pending-card{background:#1e293b;border:1px solid #f59e0b;padding:12px;border-radius:10px;margin-bottom:10px}
+    .approve-btn{padding:8px 14px;font-size:14px;width:auto;background:#22c55e;border-color:#15803d}
   </style>
 </head>
 <body>
   <div class="container">
     <section id="home" class="card">
       <h1>Welcome to <span style="color:#3b82f6">Launch X</span></h1>
-      <p>Earn money by watching videos and completing tasks. Entry Fee: 300 PKR</p>
+      <p>Earn money by watching videos. Entry Fee: 300 PKR - Manual Approval</p>
       <div class="grid">
         <button class="btn green" id="toRegister">Create Account</button>
         <button class="btn brand" id="toLogin">Login to Existing Account</button>
@@ -100,16 +102,14 @@
 
     <section id="about" class="card hidden">
       <h1>About Us</h1>
-      <p>Launch X is a task earning platform. Entry Fee 300 PKR. Watch videos, complete tasks and earn real money. Withdraw via Easypaisa or JazzCash. Min Withdraw $0.50</p>
+      <p>Launch X is a task earning platform. Entry Fee 300 PKR Manual Approval. Min Withdraw $0.50</p>
       <a class="btn brand" href="https://launch-x-f7n5.vercel.app/" target="_blank">Visit Our Website</a>
       <button class="btn" id="backHome3" style="margin-top:12px">← Back to Home</button>
     </section>
 
     <section id="contact" class="card hidden">
       <h1>Contact / WhatsApp Help</h1>
-      <p>Need Help? Contact us</p>
       <a class="btn green" href="https://wa.me/923368881011" target="_blank">WhatsApp: 0336-8881011</a>
-      <a class="btn brand" href="https://launch-x-f7n5.vercel.app/" target="_blank">Website: launch-x-f7n5.vercel.app</a>
       <button class="btn" id="backHome4" style="margin-top:12px">← Back to Home</button>
     </section>
 
@@ -124,14 +124,23 @@
         <div class="balance-label">Required Amount</div>
         <div class="balance-amount">300 PKR</div>
       </div>
-      <p class="warn-note">⚠️ Dashboard use karne ke liye pehle 300 PKR deposit karna zaroori hai</p>
+      <p class="warn-note">⚠️ Pehle 300 PKR deposit karein. Phir TX ID submit karein. Admin approval ke baad dashboard khule ga</p>
       <p><b>Deposit to:</b><br>Easypaisa: 03368881011 - Abdul Rehan</p>
       <form id="depositForm" class="grid">
         <div class="field"><label>Transaction ID / Screenshot Ref</label><input name="txid" placeholder="Enter TX ID" required/></div>
         <button class="btn green" type="submit">I Have Deposited 300</button>
         <div class="success hidden" id="depositSuccess"></div>
+        <div class="error hidden" id="depositPending"></div>
       </form>
       <button class="btn" id="backHomeDep" style="margin-top:12px">← Back to Home</button>
+    </section>
+
+    <section id="pending" class="card hidden">
+      <h1>Approval Pending</h1>
+      <div class="warn-note">⚠️ Aap ne 300 PKR deposit ki request bhej di hai. Admin approval ka wait karein</div>
+      <p><b>TX ID:</b> <span id="pendingTx"></span></p>
+      <p>Approval ke baad aap ko dashboard access mil jaye ga</p>
+      <button class="btn" id="backHomePen" style="margin-top:12px">← Back to Home</button>
     </section>
 
     <section id="dashboard" class="card hidden">
@@ -146,17 +155,15 @@
       </div>
       <div class="grid-2">
         <button class="btn brand" id="watchVideo">1. WATCH<br>VIDEO</button>
-        <button class="btn green" id="inviteFriend">2. INVITE<br>FRIEND</button> <!-- CHANGED -->
+        <button class="btn green" id="inviteFriend">2. INVITE<br>FRIEND</button>
         <button class="btn yellow" id="addEarn">3. ADD<br>EARN</button>
         <button class="btn red" id="withdrawBtn">4. WITHDRAW</button>
       </div>
       <button class="btn" id="task" style="margin-top:16px">5. COMPLETE TASK</button>
-      
       <div id="adBox" class="hidden">
-        <p class="note">Watch ad to earn. Complete the ad to get reward</p>
+        <p class="note">Watch ad to earn</p>
         <div id="adNetwork">Your Ad Code Here</div>
       </div>
-
       <div class="ref-box hidden" id="refBox">
         <h3>Your Referral Link</h3>
         <p class="note">Share this link. Per referral you get $0.25 = 70 PKR</p>
@@ -165,7 +172,6 @@
           <button class="btn copy-btn" id="copyRef">Copy</button>
         </div>
       </div>
-
       <div class="footer-copy">
         <span>© 2026 Launch X</span>
         <button class="btn copy-btn" id="copyLink">Copy Website Link</button>
@@ -175,10 +181,10 @@
     <section id="withdraw" class="card hidden">
       <h1>Withdrawal Request</h1>
       <div class="warn-note">⚠️ Important: You must complete today's video task before withdrawal</div>
-      <p class="note">Minimum Withdrawal: $0.50</p> <!-- CHANGED -->
+      <p class="note">Minimum Withdrawal: $0.50</p>
       <form id="withdrawForm" class="grid">
         <div class="field"><label>Current Balance</label><input id="currentBal" readonly/></div>
-        <div class="field"><label>Withdrawal Amount $</label><input name="amount" type="number" step="0.01" min="0.50" placeholder="Min $0.50" required/></div> <!-- CHANGED -->
+        <div class="field"><label>Withdrawal Amount $</label><input name="amount" type="number" step="0.01" min="0.50" placeholder="Min $0.50" required/></div>
         <div class="field">
           <label>Withdrawal Method</label>
           <select name="method" required>
@@ -197,15 +203,15 @@
 
     <section id="video" class="card hidden">
       <h1>Watch Video to Earn $0.05</h1>
-      <p class="note">Reward: 1 time per day. Reset at 12:00 AM</p>
+      <p class="note">Reward: 1 time per day</p>
       <div class="video-links">
         <a class="btn red" href="https://youtube.com/shorts/PNsbWwa3Kwo?si=2uXJ2eHRmZRx7mQU" target="_blank">1. Subscribe Channel</a>
         <a class="btn red" href="https://youtube.com/shorts/PNsbWwa3Kwo?si=2uXJ2eHRmZRx7mQU" target="_blank">2. Like Video</a>
         <a class="btn red" href="https://youtube.com/shorts/PNsbWwa3Kwo?si=2uXJ2eHRmZRx7mQU" target="_blank">3. Watch Full Video</a>
       </div>
-      <div class="checkbox"><input type="checkbox" id="c1"/><label for="c1">I Subscribed to the channel</label></div>
-      <div class="checkbox"><input type="checkbox" id="c2"/><label for="c2">I Liked the video</label></div>
-      <div class="checkbox"><input type="checkbox" id="c3"/><label for="c3">I Watched the full video</label></div>
+      <div class="checkbox"><input type="checkbox" id="c1"/><label for="c1">I Subscribed</label></div>
+      <div class="checkbox"><input type="checkbox" id="c2"/><label for="c2">I Liked</label></div>
+      <div class="checkbox"><input type="checkbox" id="c3"/><label for="c3">I Watched</label></div>
       <div class="success hidden" id="videoRewardMsg" style="margin-top:12px"></div>
       <button class="btn gray" id="backDash" style="margin-top:12px">← Back to Dashboard</button>
       <div id="videoBox" class="hidden" style="margin-top:16px">
@@ -216,10 +222,14 @@
     <section id="admin" class="card hidden">
       <h1>🔐 Admin Panel</h1>
       <div class="balance-box">
-        <div class="balance-label">Total Registered Users</div>
+        <div class="balance-label">Total Users</div>
         <div class="balance-amount" id="totalUsers">0</div>
       </div>
-      <h3>All Users Data</h3>
+      
+      <h3>📥 Pending Deposits</h3>
+      <div id="pendingDeposits"></div>
+      
+      <h3 style="margin-top:20px">👥 All Users Data</h3>
       <div id="usersList"></div>
       <button class="btn" id="backHomeAdmin" style="margin-top:12px">← Back to Home</button>
     </section>
@@ -228,16 +238,13 @@
 <script>
   const $ = id => document.getElementById(id);
   const SITE_URL = "https://launch-x-f7n5.vercel.app/";
-  const REF_REWARD = 0.25; // $0.25 = 70 PKR
+  const REF_REWARD = 0.25;
   
   function show(id){
-    ['home','register','login','about','contact','verify','dashboard','withdraw','video','admin','deposit'].forEach(s => $(s).classList.add('hidden'));
+    ['home','register','login','about','contact','verify','dashboard','withdraw','video','admin','deposit','pending'].forEach(s => $(s).classList.add('hidden'));
     $(id).classList.remove('hidden');
   }
-  function togglePass(id){
-    const x = $(id);
-    x.type = x.type === "password" ? "text" : "password";
-  }
+  function togglePass(id){ const x = $(id); x.type = x.type === "password" ? "text" : "password"; }
   function getUsers(){ return JSON.parse(localStorage.getItem('users')) || []; }
   function saveUsers(users){ localStorage.setItem('users', JSON.stringify(users)); }
   function setCurrentUser(user){ localStorage.setItem('currentUser', JSON.stringify(user)); }
@@ -247,9 +254,8 @@
     let user = getCurrentUser();
     let users = getUsers();
     let u = users.find(x => x.email === user.email);
-    u.balance = amount;
-    saveUsers(users);
-    setCurrentUser(u);
+    u.balance = amount; u.isActive = true;
+    saveUsers(users); setCurrentUser(u);
     $('balance').textContent = '$' + amount.toFixed(2);
   }
   function getToday(){ return new Date().toDateString(); }
@@ -257,8 +263,13 @@
   function checkEntryFee(){
     let user = getCurrentUser();
     if(!user) return;
-    if(user.balance < 300){
-      show('deposit');
+    if(!user.isActive){
+      if(user.depositTx){ 
+        $('pendingTx').textContent = user.depositTx;
+        show('pending'); 
+      } else {
+        show('deposit');
+      }
     } else {
       $('userName').textContent = user.name;
       $('balance').textContent = '$' + (user.balance || 0).toFixed(2);
@@ -268,9 +279,8 @@
   }
   
   document.addEventListener('DOMContentLoaded', function() {
-    if(getCurrentUser()){ 
-      checkEntryFee();
-    }
+    if(getCurrentUser()){ checkEntryFee(); }
+    
     $('toRegister').onclick = () => show('register');
     $('toLogin').onclick = () => show('login'); 
     $('toAbout').onclick = () => show('about');
@@ -283,6 +293,7 @@
     $('backDash2').onclick = () => show('dashboard');
     $('backHomeAdmin').onclick = () => show('home');
     $('backHomeDep').onclick = () => show('home');
+    $('backHomePen').onclick = () => show('home');
     
     $('toAdmin').onclick = () => {
       const email = prompt('Admin Email:');
@@ -298,35 +309,45 @@
     function loadAdminPanel(){
       let users = getUsers();
       $('totalUsers').textContent = users.length;
-      if(users.length === 0){
-        $('usersList').innerHTML = '<p class="note">No users registered yet</p>';
-        return;
-      }
+      
+      // PENDING DEPOSITS
+      let pendingHtml = '';
+      users.filter(u => u.depositTx && !u.isActive).forEach(u => {
+        pendingHtml += `<div class="pending-card">
+          <b>Name:</b> ${u.name}<br>
+          <b>Email:</b> ${u.email}<br>
+          <b>Phone:</b> ${u.number}<br>
+          <b>TX ID:</b> ${u.depositTx}<br>
+          <button class="btn approve-btn" onclick="approveUser('${u.email}')">✓ Approve 300</button>
+        </div>`;
+      });
+      $('pendingDeposits').innerHTML = pendingHtml || '<p class="note">No pending deposits</p>';
+      
+      // ALL USERS
       let html = '';
       users.forEach(u => {
         html += `<div class="user-card">
           <b>Name:</b> ${u.name}<br>
           <b>Email:</b> ${u.email}<br>
-          <b>Phone:</b> ${u.number}<br>
-          <b>Referred By:</b> ${u.referredBy || 'None'}<br>
           <b>Balance:</b> $${u.balance.toFixed(2)}<br>
-          <b>Status:</b> ${u.balance >= 300 ? 'Active' : 'Entry Fee Pending'}
+          <b>Status:</b> ${u.isActive ? 'Active' : (u.depositTx ? 'Pending' : 'Not Deposited')}
         </div>`;
       });
       $('usersList').innerHTML = html;
     }
     
-    $('copyLink').onclick = () => {
-      navigator.clipboard.writeText(SITE_URL);
-      alert('Website link copied!');
+    window.approveUser = (email) => {
+      let users = getUsers();
+      let u = users.find(x => x.email === email);
+      u.balance = 300; u.isActive = true; u.depositTx = "";
+      saveUsers(users);
+      alert(`${u.name} ko approve kar diya gaya!`);
+      loadAdminPanel();
     }
-    $('copyRef').onclick = () => {
-      navigator.clipboard.writeText($('refLink').value);
-      alert('Referral link copied!');
-    }
-    $('inviteFriend').onclick = () => {
-      $('refBox').classList.toggle('hidden');
-    }
+    
+    $('copyLink').onclick = () => { navigator.clipboard.writeText(SITE_URL); alert('Website link copied!'); }
+    $('copyRef').onclick = () => { navigator.clipboard.writeText($('refLink').value); alert('Referral link copied!'); }
+    $('inviteFriend').onclick = () => { $('refBox').classList.toggle('hidden'); }
     
     $('regForm').onsubmit = e => {
       e.preventDefault();
@@ -341,25 +362,20 @@
         $('regError').classList.remove('hidden');
         return;
       }
-      
-      // REFERRAL BONUS
       if(referral){
         let refUser = users.find(u => u.email === referral);
-        if(refUser){
-          refUser.balance = (refUser.balance || 0) + REF_REWARD;
-          alert(`Referrer ${referral} got $${REF_REWARD} bonus!`);
-        }
+        if(refUser){ refUser.balance = (refUser.balance || 0) + REF_REWARD; }
       }
-      
-      users.push({name, email, number, password, balance: 0.00, videoClaimed: false, lastVideoDate: "", referredBy: referral});
+      users.push({name, email, number, password, balance: 0.00, isActive: false, depositTx: "", videoClaimed: false, lastVideoDate: "", referredBy: referral});
       saveUsers(users);
-      setCurrentUser({name, email, number, balance: 0.00, videoClaimed: false, lastVideoDate: "", referredBy: referral});
+      setCurrentUser({name, email, number, balance: 0.00, isActive: false, depositTx: "", videoClaimed: false, lastVideoDate: "", referredBy: referral});
       $('regSuccess').textContent = "Account created! Please deposit 300 PKR";
       $('regSuccess').classList.remove('hidden');
       show('verify');
       let t=30; $('timer').textContent=t;
       const iv=setInterval(()=>{t--; $('timer').textContent=t; if(t<=0){clearInterval(iv); show('deposit')}},1000);
     }
+    
     $('loginForm').onsubmit = e => {
       e.preventDefault();
       const email = $('loginForm').email.value;
@@ -367,45 +383,35 @@
       let users = getUsers();
       let user = users.find(u => u.email === email && u.password === password);
       if(user){
-        if(user.lastVideoDate !== getToday()){
-          user.videoClaimed = false;
-        }
+        if(user.lastVideoDate !== getToday()){ user.videoClaimed = false; }
         $('loginError').classList.add('hidden');
         setCurrentUser(user);
         checkEntryFee();
-      } else {
-        $('loginError').classList.remove('hidden');
-      }
+      } else { $('loginError').classList.remove('hidden'); }
     }
-    $('logoutBtn').onclick = () => {
-      logoutUser();
-      show('home');
-      alert('Logged out successfully!');
-    }
+    
+    $('logoutBtn').onclick = () => { logoutUser(); show('home'); alert('Logged out successfully!'); }
 
     $('depositForm').onsubmit = e => {
       e.preventDefault();
       let user = getCurrentUser();
       let users = getUsers();
       let u = users.find(x => x.email === user.email);
-      u.balance = 300;
+      u.depositTx = $('depositForm').txid.value; // Save TX ID, don't add balance yet
       saveUsers(users);
       setCurrentUser(u);
-      $('depositSuccess').textContent = "Deposit Received! Now you can access Dashboard";
-      $('depositSuccess').classList.remove('hidden');
+      $('depositPending').textContent = "Request sent! Wait for admin approval";
+      $('depositPending').classList.remove('hidden');
       setTimeout(()=>{ checkEntryFee(); }, 1500);
     }
     
-    $('addEarn').onclick = () => {
-      $('adBox').classList.toggle('hidden');
-      alert('Ad loading... Complete the ad to earn reward');
-    };
+    $('addEarn').onclick = () => { $('adBox').classList.toggle('hidden'); alert('Ad loading...'); };
     
     $('watchVideo').onclick = () => {
       let user = getCurrentUser();
-      if(user.balance < 300){ alert('Pehle 300 Entry Fee jama karein'); show('deposit'); return; }
+      if(!user.isActive){ alert('Pehle 300 Entry Fee approve karwayen'); show('deposit'); return; }
       if(user.videoClaimed && user.lastVideoDate === getToday()){
-        $('videoRewardMsg').textContent = 'You have already claimed today. Come back tomorrow!';
+        $('videoRewardMsg').textContent = 'You have already claimed today!';
         $('videoRewardMsg').classList.remove('hidden');
         $('c1').disabled = true; $('c2').disabled = true; $('c3').disabled = true;
       } else {
@@ -415,44 +421,42 @@
       }
       show('video');
     };
+    
     $('withdrawBtn').onclick = () => {
       let user = getCurrentUser();
-      if(user.balance < 300){ alert('Pehle 300 Entry Fee jama karein'); show('deposit'); return; }
+      if(!user.isActive){ alert('Pehle 300 Entry Fee approve karwayen'); show('deposit'); return; }
       if(!user.videoClaimed || user.lastVideoDate !== getToday()){
-        alert('⚠️ Withdrawal ke liye pehle aaj ki video complete karna zaroori hai!');
-        show('video');
-        return;
+        alert('⚠️ Pehle aaj ki video complete karein!');
+        show('video'); return;
       }
       $('currentBal').value = '$' + (user.balance || 0).toFixed(2);
       show('withdraw');
     };
+    
     $('task').onclick = () => alert('COMPLETE TASK - Coming Soon!');
+    
     $('withdrawForm').onsubmit = e => {
       e.preventDefault();
       const amount = parseFloat($('withdrawForm').amount.value);
       const method = $('withdrawForm').method.value;
-      const account = $('withdrawForm').account.value;
       let user = getCurrentUser();
       $('withdrawError').classList.add('hidden');
       
       if(!user.videoClaimed || user.lastVideoDate !== getToday()){
         $('withdrawError').textContent = "Pehle aaj ki video task complete karein!";
-        $('withdrawError').classList.remove('hidden');
-        return;
+        $('withdrawError').classList.remove('hidden'); return;
       }
-      if(amount < 0.50){ // CHANGED
+      if(amount < 0.50){
         $('withdrawError').textContent = "Minimum withdrawal is $0.50";
-        $('withdrawError').classList.remove('hidden');
-        return;
+        $('withdrawError').classList.remove('hidden'); return;
       }
       if(amount > (user.balance || 0)){
         $('withdrawError').textContent = "Insufficient Balance!";
-        $('withdrawError').classList.remove('hidden');
-        return;
+        $('withdrawError').classList.remove('hidden'); return;
       }
       let newBal = (user.balance || 0) - amount;
       updateBalance(newBal);
-      $('withdrawSuccess').textContent = `Request Submitted! $${amount} via ${method}. We will contact you on 03368881011`;
+      $('withdrawSuccess').textContent = `Request Submitted! $${amount} via ${method}.`;
       $('withdrawSuccess').classList.remove('hidden');
       setTimeout(()=>show('dashboard'), 2000);
     }
@@ -460,20 +464,15 @@
     function checkVideoReward(){
       let user = getCurrentUser();
       if(user.videoClaimed && user.lastVideoDate === getToday()) return;
-      
       if($('c1').checked && $('c2').checked && $('c3').checked){
         let newBal = (user.balance || 0) + 0.05;
         updateBalance(newBal);
-        
         let users = getUsers();
         let u = users.find(x => x.email === user.email);
-        u.videoClaimed = true;
-        u.lastVideoDate = getToday();
-        saveUsers(users);
-        setCurrentUser(u);
-        
+        u.videoClaimed = true; u.lastVideoDate = getToday();
+        saveUsers(users); setCurrentUser(u);
         $('videoBox').classList.remove('hidden');
-        $('videoRewardMsg').textContent = 'Congratulations! $0.05 added. Ab aap withdrawal kar sakte hain';
+        $('videoRewardMsg').textContent = 'Congratulations! $0.05 added.';
         $('videoRewardMsg').classList.remove('hidden');
         $('c1').disabled = true; $('c2').disabled = true; $('c3').disabled = true;
       }
@@ -483,3 +482,4 @@
 </script>
 </body>
 </html>
+
