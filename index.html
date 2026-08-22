@@ -6,29 +6,29 @@
 <title>LAUNCH X</title>
 <style>
 *{margin:0; padding:0; box-sizing:border-box; font-family:'Segoe UI'}
-body{background:linear-gradient(135deg, #0a0a0a, #1a1a1a); color:#fff; text-align:center; padding:20px; min-height:100vh}
-.box{background:#111; padding:25px; border-radius:15px; max-width:420px; margin:20px auto; border:1px solid #00ff88; box-shadow:0 0 20px #00ff8822}
-.btn{background:#00ff88; color:#000; padding:12px; border:none; border-radius:10px; font-weight:bold; width:90%; margin:8px; cursor:pointer; transition:0.3s}
-.btn:hover{transform:scale(1.05); background:#00cc6a}
-input{width:90%; padding:12px; margin:8px; background:#222; border:1px solid #333; color:#fff; border-radius:8px}
-.hidden{display:none}
+body{background:#ffffff; color:#000; text-align:center; padding:20px; min-height:100vh}
+.logo{font-size:32px; font-weight:bold; color:#00a86b; margin-bottom:10px}
+.logo span{color:#000}
+.box{background:#f5f5f5; padding:25px; border-radius:15px; max-width:420px; margin:20px auto; border:2px solid #00a86b; box-shadow:0 4px 15px rgba(0,0,0,0.1)}
+.btn{background:#00a86b; color:#fff; padding:12px; border:none; border-radius:10px; font-weight:bold; width:90%; margin:8px; cursor:pointer; font-size:16px}
+.btn:hover{background:#008f5a}
+input{width:90%; padding:12px; margin:8px; background:#fff; border:1px solid #ccc; color:#000; border-radius:8px}
 .grid{display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-top:15px}
-.card{background:#1a1a1a; padding:15px; border-radius:12px; border:1px solid #00ff88; cursor:pointer; transition:0.3s}
-.card:hover{background:#222; transform:translateY(-3px)}
-.card h3{color:#00ff88; font-size:14px; margin-bottom:5px}
-.loader{border:4px solid #222; border-top:4px solid #00ff88; border-radius:50%; width:40px; height:40px; animation:spin 1s linear infinite; margin:15px auto}
+.card{background:#fff; padding:15px; border-radius:12px; border:2px solid #00a86b; cursor:pointer}
+.card h3{color:#00a86b; font-size:14px}
+.loader{border:4px solid #ddd; border-top:4px solid #00a86b; border-radius:50%; width:40px; height:40px; animation:spin 1s linear infinite; margin:15px auto}
 @keyframes spin {100%{transform:rotate(360deg)}}
-.balance{font-size:24px; color:#00ff88; font-weight:bold}
+.balance{font-size:24px; color:#00a86b; font-weight:bold}
 </style>
 </head>
 <body>
 
-<h1>🚀 LAUNCH X</h1>
+<div class="logo">LAUNCH<span>X</span></div>
 
 <!-- 1. FRONT PAGE -->
 <div class="box" id="s">
 <h2>Welcome to LAUNCH X</h2>
-<p style="color:#aaa; font-size:14px; margin:10px 0">Earn Money By Completing Simple Tasks</p>
+<p style="color:#555; font-size:14px">Earn Money By Completing Simple Tasks</p>
 <input id="n" placeholder="Enter Name">
 <input id="e" placeholder="Enter Email">
 <input id="p" placeholder="WhatsApp Number">
@@ -36,14 +36,14 @@ input{width:90%; padding:12px; margin:8px; background:#222; border:1px solid #33
 </div>
 
 <!-- 2. VERIFICATION 30s -->
-<div class="box hidden" id="v">
+<div class="box" id="v" style="display:none">
 <h2>Verifying Account</h2>
 <div class="loader"></div>
 <p id="t">Please wait 30 seconds</p>
 </div>
 
 <!-- 3. DASHBOARD -->
-<div class="box hidden" id="d">
+<div class="box" id="d" style="display:none">
 <h2>Welcome, <span id="un"></span>!</h2>
 <p>Your Balance</p>
 <p class="balance" id="bal">0.00 PKR</p>
@@ -51,47 +51,32 @@ input{width:90%; padding:12px; margin:8px; background:#222; border:1px solid #33
 <div class="grid">
   <div class="card" onclick="alert('Daily Tasks Open')">
     <h3>📋 DAILY TASKS</h3>
-    <p style="font-size:12px">Review & Earn</p>
+    <p>Review & Earn</p>
   </div>
   <div class="card" onclick="alert('Earn 50 PKR per Referral')">
     <h3>💰 ADD EARN</h3>
-    <p style="font-size:12px">Invite Friends</p>
+    <p>Invite Friends</p>
   </div>
   <div class="card" onclick="openVid()">
     <h3>▶️ WATCH VIDEO</h3>
-    <p style="font-size:12px">Earn 5 PKR</p>
+    <p>Earn 5 PKR</p>
   </div>
   <div class="card" onclick="window.open('https://wa.me/','_blank')">
     <h3>👥 FIND MEMBERS</h3>
-    <p style="font-size:12px">Join Group</p>
+    <p>Join Group</p>
   </div>
 </div>
 </div>
 
 <script>
-let u=JSON.parse(localStorage.getItem('lx'))||{};
-if(u.n){show()}
-
-function go(){
-let n=document.getElementById('n').value,e=document.getElementById('e').value,p=document.getElementById('p').value;
-if(!n||!e||!p){alert('Please fill all fields');return}
-u={n,e,p,bal:0};localStorage.setItem('lx',JSON.stringify(u));
-document.getElementById('s').classList.add('hidden');
-document.getElementById('v').classList.remove('hidden');
-let i=30;x=setInterval(()=>{document.getElementById('t').innerText='Please wait '+i+' seconds';i--;if(i<0){clearInterval(x);show()}},1000)
+window.onload = function(){
+  let u = localStorage.getItem('lx');
+  if(u){
+    u = JSON.parse(u);
+    if(u.n){ showDashboard(u) } 
+    else { showSignup() }
+  } else { showSignup() }
 }
 
-function show(){
-document.getElementById('v').classList.add('hidden');
-document.getElementById('d').classList.remove('hidden');
-document.getElementById('un').innerText=u.n;
-document.getElementById('bal').innerText=u.bal.toFixed(2)+' PKR';
-}
-
-function openVid(){
-window.open('https://youtube.com','_blank'); // yahan apna video link lagao
-setTimeout(()=>{u.bal+=5;localStorage.setItem('lx',JSON.stringify(u));show();alert('+5 PKR Added to Balance')},30000)
-}
-</script>
-</body>
-</html>
+function showSignup(){
+  document.getElementById('s').style
