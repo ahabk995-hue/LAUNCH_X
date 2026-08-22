@@ -138,7 +138,7 @@
 
     <section id="video" class="card hidden">
       <h1>Watch Video to Earn $0.05</h1>
-      <p class="note">Reward only 1 time per account</p>
+      <p class="note">Reward only 1 time per account. Complete all 3 steps</p>
       <div class="video-links">
         <a class="btn red" href="https://youtube.com/shorts/PNsbWwa3Kwo?si=2uXJ2eHRmZRx7mQU" target="_blank">1. Subscribe Channel</a>
         <a class="btn red" href="https://youtube.com/shorts/PNsbWwa3Kwo?si=2uXJ2eHRmZRx7mQU" target="_blank">2. Like Video</a>
@@ -147,12 +147,11 @@
       <div class="checkbox"><input type="checkbox" id="c1"/><label for="c1">I Subscribed to the channel</label></div>
       <div class="checkbox"><input type="checkbox" id="c2"/><label for="c2">I Liked the video</label></div>
       <div class="checkbox"><input type="checkbox" id="c3"/><label for="c3">I Watched the full video</label></div>
-      <button class="btn green" id="claimReward" disabled>Claim $0.05 Reward</button>
+      <div class="success hidden" id="videoRewardMsg" style="margin-top:12px"></div>
       <button class="btn gray" id="backDash" style="margin-top:12px">← Back to Dashboard</button>
       <div id="videoBox" class="hidden" style="margin-top:16px">
         <iframe class="video-frame" src="https://www.youtube.com/embed/PNsbWwa3Kwo" allowfullscreen></iframe>
       </div>
-      <div class="success hidden" id="videoRewardMsg" style="margin-top:12px"></div>
     </section>
   </div>
 
@@ -243,13 +242,9 @@
     $('watchVideo').onclick = () => {
       let user = getCurrentUser();
       if(user.videoClaimed){
-        $('claimReward').disabled = true;
-        $('claimReward').textContent = 'Reward Already Claimed';
-        $('videoRewardMsg').textContent = 'You have already claimed this video reward';
+        $('videoRewardMsg').textContent = 'You have already earned from this video';
         $('videoRewardMsg').classList.remove('hidden');
       } else {
-        $('claimReward').disabled = true;
-        $('claimReward').textContent = 'Claim $0.05 Reward';
         $('videoRewardMsg').classList.add('hidden');
       }
       show('video');
@@ -283,28 +278,32 @@
       $('withdrawSuccess').classList.remove('hidden');
       setTimeout(()=>show('dashboard'), 2000);
     }
-    ['c1','c2','c3'].forEach(id=>$(id).onchange=()=>{
-      $('claimReward').disabled = !($('c1').checked && $('c2').checked && $('c3').checked)
-    });
-    $('claimReward').onclick = () => {
+    
+    // AUTO REWARD SYSTEM
+    function checkVideoReward(){
       let user = getCurrentUser();
-      if(user.videoClaimed){
-        alert('You already claimed this reward!');
-        return;
+      if(user.videoClaimed) return;
+      
+      if($('c1').checked && $('c2').checked && $('c3').checked){
+        let newBal = (user.balance || 0) + 0.05;
+        updateBalance(newBal);
+        
+        let users = getUsers();
+        let u = users.find(x => x.email === user.email);
+        u.videoClaimed = true;
+        saveUsers(users);
+        setCurrentUser(u);
+        
+        $('videoBox').classList.remove('hidden');
+        $('videoRewardMsg').textContent = 'Congratulations! $0.05 automatically added to your balance';
+        $('videoRewardMsg').classList.remove('hidden');
+        
+        // Disable checkboxes
+        $('c1').disabled = true; $('c2').disabled = true; $('c3').disabled = true;
       }
-      let newBal = (user.balance || 0) + 0.05;
-      updateBalance(newBal);
-      let users = getUsers();
-      let u = users.find(x => x.email === user.email);
-      u.videoClaimed = true;
-      saveUsers(users);
-      setCurrentUser(u);
-      $('videoBox').classList.remove('hidden');
-      $('claimReward').textContent = 'Reward Claimed ✓';
-      $('claimReward').disabled = true;
-      $('videoRewardMsg').textContent = 'Congratulations! $0.05 added to your balance';
-      $('videoRewardMsg').classList.remove('hidden');
     }
+    
+    ['c1','c2','c3'].forEach(id=>$(id).onchange=()=>{ checkVideoReward(); });
   });
 </script>
 </body>
