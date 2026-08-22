@@ -1,107 +1,67 @@
 <!DOCTYPE html>
-<html lang="ur" dir="rtl">
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>PRIME_X Dashboard</title>
+<title>LAUNCH X</title>
 <style>
-  *{margin:0; padding:0; box-sizing:border-box; font-family:'Segoe UI'}
-  body{background:#0f0f0f; color:#fff; text-align:center; padding:20px}
-  .box{background:#1a1a1a; padding:25px; border-radius:15px; max-width:450px; margin:20px auto}
-  .btn{background:#00ff88; color:#000; padding:12px 25px; border:none; border-radius:8px; font-size:16px; font-weight:bold; cursor:pointer; margin:8px; width:90%}
-  input{width:90%; padding:12px; margin:8px; border-radius:8px; border:none; background:#333; color:#fff}
-  .hidden{display:none}
-  .task{background:#222; padding:15px; border-radius:10px; margin:10px 0; text-align:right}
-  .loader{border:4px solid #333; border-top:4px solid #00ff88; border-radius:50%; width:40px; height:40px; animation:spin 1s linear infinite; margin:20px auto}
-  @keyframes spin {0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); }}
+body{background:#000; color:#fff; text-align:center; font-family:Arial; padding:20px}
+.box{background:#111; padding:20px; border-radius:12px; max-width:400px; margin:20px auto}
+.btn{background:#00ff88; color:#000; padding:10px; border:none; border-radius:8px; font-weight:bold; width:90%; margin:5px; cursor:pointer}
+input{width:90%; padding:10px; margin:5px; background:#222; border:none; color:#fff; border-radius:6px}
+.hidden{display:none}
 </style>
 </head>
 <body>
 
-<h1>🚀 PRIME_X</h1>
+<h1>🚀 LAUNCH X</h1>
 
-<!-- 1. SIGNUP BOX -->
-<div class="box" id="signupBox">
-  <h2>Account بنائیں</h2>
-  <input type="text" id="name" placeholder="اپنا نام">
-  <input type="email" id="email" placeholder="ای میل">
-  <input type="tel" id="phone" placeholder="واٹس ایپ نمبر">
-  <button class="btn" onclick="submitForm()">Get Started</button>
+<div class="box" id="s">
+<h2>Sign Up</h2>
+<input id="n" placeholder="Name">
+<input id="e" placeholder="Email">
+<input id="p" placeholder="Phone">
+<button class="btn" onclick="go()">Get Started</button>
 </div>
 
-<!-- 2. VERIFICATION LOADER -->
-<div class="box hidden" id="verifyBox">
-  <h2>1 منٹ ویریفیکیشن...</h2>
-  <div class="loader"></div>
-  <p>آپ کا اکاؤنٹ تیار کیا جا رہا ہے</p>
+<div class="box hidden" id="v">
+<h2>Verifying...</h2>
+<p id="t">Wait 30s</p>
 </div>
 
-<!-- 3. DASHBOARD -->
-<div class="box hidden" id="dashboardBox">
-  <h2>خوش آمدید <span id="userName"></span>!</h2>
-  <p>بیلنس: <b>0.00 PKR</b></p>
-  <hr style="margin:15px 0; border-color:#333">
-  
-  <h3>📋 آج کے Tasks</h3>
-  
-  <div class="task">
-    <b>Task 1: YouTube Video Watch</b>
-    <p>یہ ویڈیو 30 سیکنڈ دیکھیں + لائک کریں</p>
-    <button class="btn" onclick="watchVideo()">Video دیکھیں</button>
-  </div>
-
-  <div class="task">
-    <b>Task 2: Ad Watch</b>
-    <p>اشتہار دیکھیں اور 10 پوائنٹس حاصل کریں</p>
-    <button class="btn" onclick="watchAd()">Ad دیکھیں</button>
-  </div>
-
-  <div class="task">
-    <b>Task 3: Picture Review</b>
-    <p>روزانہ 10 تصاویر ریٹ کریں</p>
-    <button class="btn" onclick="reviewPics()">شروع کریں</button>
-  </div>
+<div class="box hidden" id="d">
+<h2>Hi <span id="un"></span></h2>
+<p>Balance: <b id="bal">0 PKR</b></p>
+<button class="btn" onclick="alert('Daily Tasks')">📋 Daily Tasks</button>
+<button class="btn" onclick="alert('Earn 50 PKR per Referral')">💰 Add Earn</button>
+<button class="btn" onclick="openVid()">▶️ Watch Video</button>
+<button class="btn" onclick="window.open('https://wa.me/','_blank')">👥 Find Members</button>
 </div>
 
 <script>
-function submitForm(){
-  let name = document.getElementById('name').value;
-  let email = document.getElementById('email').value;
-  let phone = document.getElementById('phone').value;
-  if(!name || !email){ alert("نام اور ای میل لازمی ہے"); return; }
-  
-  localStorage.setItem('user', JSON.stringify({name,email,phone}));
-  
-  document.getElementById('signupBox').classList.add('hidden');
-  document.getElementById('verifyBox').classList.remove('hidden');
-  
-  // 1 منٹ بعد ڈیش بورڈ کھول دو
-  setTimeout(() => {
-    document.getElementById('verifyBox').classList.add('hidden');
-    document.getElementById('dashboardBox').classList.remove('hidden');
-    document.getElementById('userName').innerText = name;
-  }, 60000); // 60000ms = 1 منٹ
+let u=JSON.parse(localStorage.getItem('lx'))||{};
+if(u.n){show()}
+
+function go(){
+let n=document.getElementById('n').value,e=document.getElementById('e').value,p=document.getElementById('p').value;
+if(!n||!e){alert('Fill all');return}
+u={n,e,p,bal:0};localStorage.setItem('lx',JSON.stringify(u));
+document.getElementById('s').classList.add('hidden');
+document.getElementById('v').classList.remove('hidden');
+let i=30;x=setInterval(()=>{document.getElementById('t').innerText='Wait '+i+'s';i--;if(i<0){clearInterval(x);show()}},1000)
 }
 
-function watchVideo(){
-  window.open("https://youtube.com", "_blank");
-  alert("ویڈیو دیکھنے کے بعد 15 پوائنٹس مل جائیں گے");
-}
-function watchAd(){
-  alert("Ad چل رہا ہے... 10 پوائنٹس ایڈ ہو گئے");
-}
-function reviewPics(){
-  alert("تصاویر والا پیج یہاں کھلے گا");
+function show(){
+document.getElementById('v').classList.add('hidden');
+document.getElementById('d').classList.remove('hidden');
+document.getElementById('un').innerText=u.n;
+document.getElementById('bal').innerText=u.bal+' PKR';
 }
 
-// اگر پہلے سے Login ہے تو سیدھا ڈیش بورڈ
-if(localStorage.getItem('user')){
-  let user = JSON.parse(localStorage.getItem('user'));
-  document.getElementById('signupBox').classList.add('hidden');
-  document.getElementById('dashboardBox').classList.remove('hidden');
-  document.getElementById('userName').innerText = user.name;
+function openVid(){
+window.open('https://youtube.com','_blank'); // apna link yahan lagao
+setTimeout(()=>{u.bal+=5;localStorage.setItem('lx',JSON.stringify(u));alert('+5 PKR Added')},30000)
 }
 </script>
-
 </body>
 </html>
