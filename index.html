@@ -1,145 +1,78 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>LAUNCHX - Earn App</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>LAUNCHX</title>
 <style>
-*{margin:0;padding:0;box-sizing:border-box;font-family:Arial}
-body{background:linear-gradient(135deg,#00ff88,#00cc66);min-height:100vh;color:#fff}
-.container{max-width:400px;margin:0 auto;padding:20px;text-align:center}
-h1{font-size:45px;margin:20px 0;color:#fff}
+body{margin:0;background:linear-gradient(#00ff88,#00aa55);font-family:Arial;text-align:center;color:#fff;min-height:100vh}
+.container{max-width:400px;margin:0 auto;padding:20px}
+h1{font-size:45px;margin-top:40px}
 h1 span{color:#000}
-.btn{width:100%;padding:15px;margin:10px 0;border:none;border-radius:10px;font-size:16px;font-weight:bold;cursor:pointer}
-.btn-green{background:#000;color:#00ff88}
-.btn-whatsapp{background:#25D366;color:#fff}
-.box{background:#0009;padding:20px;border-radius:15px;margin:20px 0}
-input{width:100%;padding:12px;margin:8px 0;border:none;border-radius:8px;font-size:15px}
-.grid{display:grid;grid-template-columns:1fr 1fr;gap:15px;margin:20px 0}
-.card{background:#222;padding:25px 10px;border-radius:15px;cursor:pointer;border:2px solid #00ff88}
-.card:hover{background:#333}
-.card .icon{font-size:30px;margin-bottom:8px}
-.balance{font-size:25px;color:#00ff88;font-weight:bold}
-.logout{margin-top:20px;background:red;color:#fff}
-.timer{font-size:18px}
-.hidden{display:none}
+.box{background:#0008;padding:20px;border-radius:15px;margin:20px 0}
+input{width:90%;padding:12px;margin:8px 0;border-radius:8px;border:0;font-size:15px}
+button{width:95%;padding:14px;margin:10px 0;border:0;border-radius:10px;font-size:16px;font-weight:bold;cursor:pointer}
+.btn1{background:#000;color:#00ff88}
+.btn2{background:#25D366;color:#fff}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:15px;margin-top:20px}
+.card{background:#222;padding:20px 5px;border-radius:12px;border:2px solid #00ff88;cursor:pointer}
+.balance{font-size:28px;color:#00ff88;font-weight:bold}
 </style>
 </head>
 <body>
 <div class="container">
 
-<!-- PAGE 1: WELCOME -->
-<div id="welcome">
-  <h1>LAUNCH<span>X</span></h1>
-  <p>Earn Money by Watching Videos & Tasks</p>
-  <button class="btn btn-green" onclick="showPage('register')">Get Started</button>
-  <button class="btn btn-whatsapp" onclick="window.open('https://wa.me/','_blank')">WhatsApp Support</button>
+<div id="p1">
+<h1>LAUNCH<span>X</span></h1>
+<p>Earn by Watching Videos</p>
+<button class="btn1" onclick="p('p2')">Get Started</button>
+<button class="btn2" onclick="window.open('https://wa.me/','_blank')">WhatsApp Support</button>
 </div>
 
-<!-- PAGE 2: REGISTER -->
-<div id="register" class="hidden">
-  <div class="box">
-    <h2>Create Account</h2>
-    <input id="name" placeholder="Full Name" required>
-    <input id="email" placeholder="Email" type="email" required>
-    <input id="phone" placeholder="Phone Number" type="number" required>
-    <input id="pass" placeholder="Set Password" type="password" required>
-    <button class="btn btn-green" onclick="register()">Continue</button>
-    <button class="btn" style="background:#555" onclick="showPage('welcome')">Back</button>
-  </div>
+<div id="p2" style="display:none">
+<div class="box">
+<h2>Create Account</h2>
+<input id="n" placeholder="Full Name">
+<input id="e" placeholder="Email">
+<input id="ph" placeholder="Phone Number">
+<input id="pw" placeholder="Password" type="password">
+<button class="btn1" onclick="reg()">Continue</button>
+<button onclick="p('p1')">Back</button>
+</div>
 </div>
 
-<!-- PAGE 3: WAITING -->
-<div id="waiting" class="hidden">
-  <div class="box">
-    <h2>Please Wait...</h2>
-    <p class="timer">Account Creating: <span id="timer">30</span> seconds</p>
-  </div>
+<div id="p3" style="display:none">
+<div class="box">
+<h2>Please Wait</h2>
+<p>Creating Account: <span id="tm">30</span>s</p>
+</div>
 </div>
 
-<!-- PAGE 4: DASHBOARD -->
-<div id="dashboard" class="hidden">
-  <h2>Welcome, <span id="userName"></span></h2>
-  <div class="box">
-    <p>Your Balance</p>
-    <p class="balance"><span id="balance">0</span> PKR</p>
-  </div>
-  
-  <div class="grid">
-    <div class="card" onclick="alert('Task Page Coming Soon')">
-      <div class="icon">📋</div>
-      <div>Complete<br>Task</div>
-    </div>
-    <div class="card" onclick="watchVideo()">
-      <div class="icon">▶️</div>
-      <div>Watch<br>Video</div>
-    </div>
-    <div class="card" onclick="alert('Earn More Coming Soon')">
-      <div class="icon">💰</div>
-      <div>Earn<br>More</div>
-    </div>
-    <div class="card" onclick="window.open('https://wa.me/?text=Join LAUNCHX and Earn Money','_blank')">
-      <div class="icon">👥</div>
-      <div>Invite<br>Friend</div>
-    </div>
-  </div>
-
-  <button class="btn logout" onclick="logout()">Logout</button>
+<div id="p4" style="display:none">
+<h2>Welcome <span id="un"></span></h2>
+<div class="box">
+<p>Your Balance</p>
+<p class="balance"><span id="bal">0</span> PKR</p>
+</div>
+<div class="grid">
+<div class="card" onclick="alert('Task Coming Soon')">📋<br>Complete Task</div>
+<div class="card" onclick="video()">▶️<br>Watch Video</div>
+<div class="card" onclick="alert('Earn More Coming Soon')">💰<br>Earn</div>
+<div class="card" onclick="window.open('https://wa.me/?text=Join LAUNCHX','_blank')">👥<br>Invite Friend</div>
+</div>
+<button class="btn1" style="background:red;margin-top:20px" onclick="logout()">Logout</button>
 </div>
 
 </div>
 
 <script>
-let user = JSON.parse(localStorage.getItem('launchx_user')) || null;
-
-// Agar login hai to direct dashboard
-if(user){ showPage('dashboard'); updateUI(); }
-
-function showPage(id){
-  document.querySelectorAll('#welcome, #register, #waiting, #dashboard').forEach(p=>p.classList.add('hidden'));
-  document.getElementById(id).classList.remove('hidden');
-}
-
-function register(){
-  let n=name.value, e=email.value, p=phone.value, pw=pass.value;
-  if(!n || !e || !p || !pw){ alert('Please fill all fields'); return; }
-  
-  user = {name:n, email:e, phone:p, pass:pw, balance:0};
-  localStorage.setItem('launchx_user', JSON.stringify(user));
-  
-  showPage('waiting');
-  let time=30;
-  let x=setInterval(()=>{
-    document.getElementById('timer').innerText=time;
-    time--;
-    if(time<0){
-      clearInterval(x);
-      showPage('dashboard');
-      updateUI();
-    }
-  },1000);
-}
-
-function updateUI(){
-  document.getElementById('userName').innerText=user.name;
-  document.getElementById('balance').innerText=user.balance;
-}
-
-function watchVideo(){
-  window.open('https://youtube.com','_blank');
-  setTimeout(()=>{
-    user.balance += 5;
-    localStorage.setItem('launchx_user', JSON.stringify(user));
-    updateUI();
-    alert('+5 PKR Added!');
-  },30000); // 30 sec baad paise
-}
-
-function logout(){
-  localStorage.removeItem('launchx_user');
-  user=null;
-  showPage('welcome');
-}
+let u=JSON.parse(localStorage.u||'null');if(u){p('p4');upd()}
+function p(id){['p1','p2','p3','p4'].map(x=>document.getElementById(x).style.display='none');document.getElementById(id).style.display='block'}
+function reg(){
+if(n.value==''||e.value==''||ph.value==''||pw.value==''){alert('Please fill all fields');return}
+u={n:n.value,e:e.value,ph:ph.value,pw:pw.value,bal:0};localStorage.u=JSON.stringify(u);p('p3');let t=30;let x=setInterval(()=>{tm.innerText=t--;if(t<0){clearInterval(x);p('p4');upd()}},1000)}
+function upd(){un.innerText=u.n;bal.innerText=u.bal}
+function video(){window.open('https://youtube.com','_blank');setTimeout(()=>{u.bal=u.bal+5;localStorage.u=JSON.stringify(u);upd();alert('+5 PKR Added')},30000)}
+function logout(){localStorage.removeItem('u');u=null;p('p1')}
 </script>
 </body>
 </html>
