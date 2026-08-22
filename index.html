@@ -1,82 +1,40 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>LAUNCH X</title>
-<style>
-*{margin:0; padding:0; box-sizing:border-box; font-family:'Segoe UI'}
-body{background:#ffffff; color:#000; text-align:center; padding:20px; min-height:100vh}
-.logo{font-size:32px; font-weight:bold; color:#00a86b; margin-bottom:10px}
-.logo span{color:#000}
-.box{background:#f5f5f5; padding:25px; border-radius:15px; max-width:420px; margin:20px auto; border:2px solid #00a86b; box-shadow:0 4px 15px rgba(0,0,0,0.1)}
-.btn{background:#00a86b; color:#fff; padding:12px; border:none; border-radius:10px; font-weight:bold; width:90%; margin:8px; cursor:pointer; font-size:16px}
-.btn:hover{background:#008f5a}
-input{width:90%; padding:12px; margin:8px; background:#fff; border:1px solid #ccc; color:#000; border-radius:8px}
-.grid{display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-top:15px}
-.card{background:#fff; padding:15px; border-radius:12px; border:2px solid #00a86b; cursor:pointer}
-.card h3{color:#00a86b; font-size:14px}
-.loader{border:4px solid #ddd; border-top:4px solid #00a86b; border-radius:50%; width:40px; height:40px; animation:spin 1s linear infinite; margin:15px auto}
-@keyframes spin {100%{transform:rotate(360deg)}}
-.balance{font-size:24px; color:#00a86b; font-weight:bold}
-</style>
-</head>
-<body>
+<html><head><meta name="viewport" content="width=device-width,initial-scale=1">
+<style>body{text-align:center;font-family:Arial;background:#fff}
+.b{background:#f2f2f2;padding:20px;border-radius:10px;width:300px;margin:20px auto;border:2px solid green}
+button{background:green;color:#fff;border:0;padding:10px;width:90%;border-radius:6px}
+input{width:90%;padding:8px;margin:5px}</style></head><body>
 
-<div class="logo">LAUNCH<span>X</span></div>
+<h2 style="color:green">LAUNCH<span style="color:#000">X</span></h2>
 
-<!-- 1. FRONT PAGE -->
-<div class="box" id="s">
-<h2>Welcome to LAUNCH X</h2>
-<p style="color:#555; font-size:14px">Earn Money By Completing Simple Tasks</p>
-<input id="n" placeholder="Enter Name">
-<input id="e" placeholder="Enter Email">
-<input id="p" placeholder="WhatsApp Number">
-<button class="btn" onclick="go()">Get Started</button>
+<div class="b" id="s">
+<input id="n" placeholder="Name"><br>
+<input id="e" placeholder="Email"><br>
+<button onclick="go()">Get Started</button>
 </div>
 
-<!-- 2. VERIFICATION 30s -->
-<div class="box" id="v" style="display:none">
-<h2>Verifying Account</h2>
-<div class="loader"></div>
-<p id="t">Please wait 30 seconds</p>
+<div class="b" id="v" style="display:none">
+Verifying... <b id="t">30</b>s
 </div>
 
-<!-- 3. DASHBOARD -->
-<div class="box" id="d" style="display:none">
-<h2>Welcome, <span id="un"></span>!</h2>
-<p>Your Balance</p>
-<p class="balance" id="bal">0.00 PKR</p>
-
-<div class="grid">
-  <div class="card" onclick="alert('Daily Tasks Open')">
-    <h3>📋 DAILY TASKS</h3>
-    <p>Review & Earn</p>
-  </div>
-  <div class="card" onclick="alert('Earn 50 PKR per Referral')">
-    <h3>💰 ADD EARN</h3>
-    <p>Invite Friends</p>
-  </div>
-  <div class="card" onclick="openVid()">
-    <h3>▶️ WATCH VIDEO</h3>
-    <p>Earn 5 PKR</p>
-  </div>
-  <div class="card" onclick="window.open('https://wa.me/','_blank')">
-    <h3>👥 FIND MEMBERS</h3>
-    <p>Join Group</p>
-  </div>
-</div>
+<div class="b" id="d" style="display:none">
+Hi <b id="u"></b><br>Bal: <b id="bal">0</b> PKR<br><br>
+<button onclick="alert('Tasks')">Tasks</button>
+<button onclick="alert('Earn')">Earn</button>
+<button onclick="vdo()">Video +5</button>
+<button onclick="open('https://wa.me/')">Members</button>
 </div>
 
 <script>
-window.onload = function(){
-  let u = localStorage.getItem('lx');
-  if(u){
-    u = JSON.parse(u);
-    if(u.n){ showDashboard(u) } 
-    else { showSignup() }
-  } else { showSignup() }
-}
+let u=JSON.parse(localStorage.x||'{}');
+if(u.n){show()}else{s.style.display='block'}
 
-function showSignup(){
-  document.getElementById('s').style
+function go(){
+if(!n.value){alert('Name?');return}
+u={n:n.value,e:e.value,bal:0};localStorage.x=JSON.stringify(u);
+s.style.display='none';v.style.display='block';
+let i=30;let z=setInterval(()=>{t.innerText=i--;if(i<0){clearInterval(z);show()}},1000)
+}
+function show(){v.style.display='none';s.style.display='none';d.style.display='block';u.innerText=u.n;bal.innerText=u.bal}
+function vdo(){open('https://youtube.com');setTimeout(()=>{u.bal+=5;localStorage.x=JSON.stringify(u);show();alert('+5')},30000)}
+</script></body></html>
