@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Launch X</title>
   <style>
-    :root{--bg:#0b0f14;--card:#111827;--muted:#94a3b8;--text:#e5e7eb;--brand:#3b82f6;--brand2:#22c55e;--warn:#f59e0b}
+    :root{--bg:#0b0f14;--card:#111827;--muted:#94a3b8;--text:#e5e7eb;--brand:#3b82f6;--brand2:#22c55e;--warn:#f59e0b;--red:#ef4444}
     *{box-sizing:border-box}body{margin:0;font-family:system-ui;background:linear-gradient(180deg,#0b0f14,#0a0a0a);color:var(--text)}
     .container{max-width:900px;margin:0 auto;padding:24px}
     .card{background:var(--card);border:1px solid #1f2937;border-radius:16px;padding:20px;box-shadow:0 8px 24px rgba(0,0,0,.3)}
@@ -14,6 +14,7 @@
     .btn:hover{transform:translateY(-1px);background:#1e293b}
     .btn.brand{background:var(--brand);border-color:#1d4ed8}
     .btn.green{background:var(--brand2);border-color:#15803d}
+    .btn.red{background:var(--red);border-color:#dc2626}
     .btn.yellow{background:var(--warn);border-color:#b45309;color:#111}
     .grid{display:grid;gap:16px}
     @media(min-width:720px){.grid{grid-template-columns:repeat(2,1fr)}}
@@ -24,9 +25,10 @@
     .timer{font-size:22px;font-weight:800;letter-spacing:.5px}
     .dashboard{display:grid;gap:12px}
     .video-frame{width:100%;aspect-ratio:9/16;border:0;border-radius:12px;background:#000}
-    .checkbox{display:flex;align-items:center;gap:10px;margin:8px 0}
+    .checkbox{display:flex;align-items:center;gap:10px;margin:12px 0;font-size:14px}
     .note{font-size:12px;color:#94a3b8;text-align:center;margin-top:16px}
     .link-btn{background:none;border:none;color:#3b82f6;text-decoration:underline;cursor:pointer;font-size:14px;padding:0}
+    .video-links{display:grid;gap:8px;margin-bottom:16px}
   </style>
 </head>
 <body>
@@ -75,7 +77,7 @@
       <div class="dashboard">
         <button class="btn yellow" id="addEarn">ADD EARN</button>
         <button class="btn brand" id="watchVideo">WATCH VIDEO</button>
-        <a class="btn green" id="invite" href="https://renvex.co/signup?ref=47413" target="_blank">INVITE MEMBERS</a>
+        <a class="btn green" href="https://renvex.co/signup?ref=47413" target="_blank">INVITE MEMBERS</a>
         <button class="btn" id="task">TASK</button>
       </div>
     </section>
@@ -83,13 +85,26 @@
     <!-- VIDEO -->
     <section id="video" class="card hidden">
       <h1>Watch Video to Earn</h1>
-      <div class="checkbox"><input type="checkbox" id="c1"/><label for="c1">I will watch the full video</label></div>
-      <div class="checkbox"><input type="checkbox" id="c2"/><label for="c2">I will not skip</label></div>
-      <div class="checkbox"><input type="checkbox" id="c3"/><label for="c3">I agree to the terms</label></div>
-      <button class="btn green" id="openVideo" disabled>Open Video</button>
+      <p>Complete all 3 tasks to unlock video</p>
+      
+      <!-- YOUTUBE LINKS -->
+      <div class="video-links">
+        <a class="btn red" href="https://youtube.com/shorts/PNsbWwa3Kwo?si=2uXJ2eHRmZRx7mQU" target="_blank">1. Subscribe Channel</a>
+        <a class="btn red" href="https://youtube.com/shorts/PNsbWwa3Kwo?si=2uXJ2eHRmZRx7mQU" target="_blank">2. Like Video</a>
+        <a class="btn red" href="https://youtube.com/shorts/PNsbWwa3Kwo?si=2uXJ2eHRmZRx7mQU" target="_blank">3. Watch Full Video</a>
+      </div>
+
+      <!-- CONDITIONS -->
+      <div class="checkbox"><input type="checkbox" id="c1"/><label for="c1">I Subscribed to the channel</label></div>
+      <div class="checkbox"><input type="checkbox" id="c2"/><label for="c2">I Liked the video</label></div>
+      <div class="checkbox"><input type="checkbox" id="c3"/><label for="c3">I Watched the full video</label></div>
+      
+      <button class="btn green" id="openVideo" disabled>Open Video Below</button>
       <button class="btn" id="backDash" style="margin-top:12px">← Back to Dashboard</button>
+      
+      <!-- EMBEDDED VIDEO -->
       <div id="videoBox" class="hidden" style="margin-top:16px">
-        <iframe class="video-frame" src="https://www.youtube.com/embed/YOUR_VIDEO_ID" allowfullscreen></iframe>
+        <iframe class="video-frame" src="https://www.youtube.com/embed/PNsbWwa3Kwo" allowfullscreen></iframe>
       </div>
     </section>
   </div>
@@ -101,8 +116,8 @@
     $(id).classList.remove('hidden');
   }
 
-  // Navigation - FIXED
   document.addEventListener('DOMContentLoaded', function() {
+    // Navigation
     $('toRegister').onclick = () => show('register');
     $('toLogin').onclick = () => show('login'); 
     $('backHome1').onclick = () => show('home');
@@ -117,25 +132,24 @@
       const iv=setInterval(()=>{t--; $('timer').textContent=t; if(t<=0){clearInterval(iv); show('dashboard')}},1000);
     }
 
-    // Login - DIRECT DASHBOARD
+    // Login
     $('loginForm').onsubmit = e => {
       e.preventDefault();
       show('dashboard'); 
     }
 
-    // Dashboard Buttons
+    // Dashboard
     $('addEarn').onclick = () => alert('ADD EARN: Coming Soon!');
     $('watchVideo').onclick = () => show('video');
     $('task').onclick = () => alert('TASK: New tasks coming soon!');
-    // INVITE button is now a link, no JS needed
 
-    // Video
+    // Video Conditions
     ['c1','c2','c3'].forEach(id=>$(id).onchange=()=>{
       $('openVideo').disabled = !($('c1').checked && $('c2').checked && $('c3').checked)
     });
     $('openVideo').onclick = () => {
       $('videoBox').classList.remove('hidden');
-      $('openVideo').textContent = 'Video Opened ✓'
+      $('openVideo').textContent = 'Video Unlocked ✓'
     }
   });
 </script>
