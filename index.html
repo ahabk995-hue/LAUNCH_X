@@ -8,53 +8,13 @@
     * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Arial, sans-serif; }
     body { background: #00C853; color: white; text-align: center; padding: 20px; }
     h1 { margin-bottom: 20px; font-size: 28px; }
-    .box {
-        background: #1B1B1B;
-        padding: 25px;
-        border-radius: 15px;
-        max-width: 450px;
-        margin: 20px auto;
-        box-shadow: 0 0 20px rgba(0,0,0,0.3);
-    }
-    .btn {
-        background: #00E676;
-        color: #000;
-        border: none;
-        padding: 15px;
-        border-radius: 10px;
-        font-weight: bold;
-        cursor: pointer;
-        width: 100%;
-        margin-top: 10px;
-        font-size: 16px;
-    }
-    .btn2 {
-        background: #1B1B1B;
-        color: white;
-        border: 2px solid #00E676;
-        padding: 20px 10px;
-        border-radius: 12px;
-        cursor: pointer;
-        font-size: 14px;
-        font-weight: bold;
-        width: 48%;
-        margin: 5px;
-    }
-    input {
-        width:100%;
-        padding:12px;
-        border:none;
-        border-radius:8px;
-        margin-bottom:15px;
-        background:#333;
-        color:white;
-        font-size: 15px;
-    }
+    .box { background: #1B1B1B; padding: 25px; border-radius: 15px; max-width: 450px; margin: 20px auto; box-shadow: 0 0 20px rgba(0,0,0,0.3); }
+    .btn { background: #00E676; color: #000; border: none; padding: 15px; border-radius: 10px; font-weight: bold; cursor: pointer; width: 100%; margin-top: 10px; font-size: 16px; }
+    .btn2 { background: #1B1B1B; color: white; border: 2px solid #00E676; padding: 20px 10px; border-radius: 12px; cursor: pointer; font-size: 14px; font-weight: bold; width: 48%; margin: 5px; }
+    input { width:100%; padding:12px; border:none; border-radius:8px; margin-bottom:15px; background:#333; color:white; font-size: 15px; }
     .user-card { background:#333; padding:15px; border-radius:10px; margin:10px 0; text-align:left; }
     .activate-btn { background:#00E676; color:#000; border:none; padding:8px 15px; border-radius:5px; cursor:pointer; font-weight:bold; }
     .footer { margin-top:30px; font-size:12px; opacity:0.7; }
-    .condition { background:#333; padding:10px; border-radius:8px; margin:8px 0; text-align:left; }
-    .video-link { background:#00E676; color:#000; padding:12px; border-radius:8px; margin:15px 0; display:block; text-decoration:none; font-weight:bold; }
     .grid { display:flex; flex-wrap:wrap; justify-content:center; }
     .refer-box { background:#333; padding:15px; border-radius:10px; margin-top:15px; word-break:break-all; }
 </style>
@@ -89,7 +49,6 @@
     <p>Send <b>300 PKR</b> to:</p>
     <h3 style="color:#00E676">EasyPaisa / JazzCash: 0331-6035482</h3>
     <p>Owner: Abdul Reham</p>
-    <p>After payment, send screenshot to WhatsApp</p>
     <input id="txnId" type="text" placeholder="Enter Transaction ID">
     <button class="btn" onclick="submitPayment()">Submit for Verification</button>
 </div>
@@ -112,25 +71,21 @@
     </div>
     
     <div class="grid">
-        <button class="btn2" onclick="showWatchTask()"><span style="font-size:24px">▶️</span><br>Watch Video<br>+$0.05</button>
+        <button class="btn2" onclick="watchAndEarn()"><span style="font-size:24px">▶️</span><br>Watch Video<br>+$0.05</button>
         <button class="btn2" onclick="showWithdraw()"><span style="font-size:24px">💵</span><br>Withdraw</button>
         <button class="btn2" onclick="copyReferral()"><span style="font-size:24px">🔗</span><br>Copy Link</button>
         <button class="btn2" onclick="showReferral()"><span style="font-size:24px">👥</span><br>Invite Friend</button>
+        <button class="btn2" onclick="showCompleteTask()"><span style="font-size:24px">✅</span><br>Complete Task</button>
     </div>
 
     <button class="btn" onclick="logout()" style="background:red">Logout</button>
 </div>
 
-<!-- 6. WATCH VIDEO TASK -->
-<div id="watchTask" class="box" style="display:none">
-    <h2>Complete Task - Earn $0.05</h2>
-    <div class="condition">✅ 1. You must Subscribe the Channel</div>
-    <div class="condition">✅ 2. You must Watch Complete Video</div>
-    <div class="condition">✅ 3. You must Like the Video</div>
-    
-    <a href="https://video-lemon-chi.vercel.app" target="_blank" class="video-link">CLICK HERE TO WATCH VIDEO</a>
-    
-    <button class="btn" onclick="completeTask()">I Completed All Tasks</button>
+<!-- 6. COMPLETE TASK SCREEN - NEW -->
+<div id="completeTaskScreen" class="box" style="display:none">
+    <h2>Complete Task - Earn $0.10</h2>
+    <p>Task: Follow our Social Media</p>
+    <button class="btn" onclick="completeSocialTask()">Mark as Complete</button>
     <button class="btn" onclick="showDashboard()" style="background:#555">Back</button>
 </div>
 
@@ -174,7 +129,8 @@
 <script>
 let ADMIN_PASSWORD = "AbdulReham123"; 
 let currentUserEmail = "";
-let SITE_URL = window.location.href.split('?')[0]; // Your site link
+let YOUR_REF_LINK = "https://renvex.co/signup?ref=47413"; // <-- آپ کا لنک
+let VIDEO_LINK = "https://video-lemon-chi.vercel.app"; // <-- ویڈیو کا لنک
 
 // SCREENS
 function showMain(){ hideAll(); document.getElementById('mainScreen').style.display='block'; }
@@ -182,23 +138,42 @@ function showSignup(){ hideAll(); document.getElementById('signupScreen').style.
 function showPayment(){ hideAll(); document.getElementById('paymentScreen').style.display='block'; }
 function showLogin(){ hideAll(); document.getElementById('loginScreen').style.display='block'; }
 function showDashboard(){ hideAll(); document.getElementById('dashboard').style.display='block'; updateBalance(); }
-function showWatchTask(){ hideAll(); document.getElementById('watchTask').style.display='block'; }
 function showWithdraw(){ hideAll(); document.getElementById('withdrawScreen').style.display='block'; }
 function showReferral(){ hideAll(); document.getElementById('referralScreen').style.display='block'; generateReferralLink(); }
+function showCompleteTask(){ hideAll(); document.getElementById('completeTaskScreen').style.display='block'; }
 function showAdminPanel(){ hideAll(); document.getElementById('adminPanel').style.display='block'; loadUsers(); }
 function showAdminLogin(){ hideAll(); document.getElementById('adminLogin').style.display='block'; }
-function hideAll(){ 
-    document.querySelectorAll('.box, #dashboard').forEach(el => el.style.display='none');
+function hideAll(){ document.querySelectorAll('.box, #dashboard').forEach(el => el.style.display='none'); }
+
+// 1 CLICK WATCH & EARN - NO CONDITIONS
+function watchAndEarn(){
+    window.open(VIDEO_LINK, '_blank'); // ویڈیو نئے ٹیب میں کھل جائے گی
+    setTimeout(() => {
+        let users = JSON.parse(localStorage.getItem("allUsers")) || [];
+        users = users.map(u => u.email === currentUserEmail ? {...u, balance: u.balance + 0.05} : u);
+        localStorage.setItem("allUsers", JSON.stringify(users));
+        updateBalance();
+        alert("✅ $0.05 Added to your balance!");
+    }, 3000); // 3 سیکنڈ بعد خود بخود پیسے Add
 }
 
-// WATCH VIDEO TASK
-function completeTask(){
+// COMPLETE TASK
+function completeSocialTask(){
     let users = JSON.parse(localStorage.getItem("allUsers")) || [];
-    users = users.map(u => u.email === currentUserEmail ? {...u, balance: u.balance + 0.05} : u);
+    users = users.map(u => u.email === currentUserEmail ? {...u, balance: u.balance + 0.10} : u);
     localStorage.setItem("allUsers", JSON.stringify(users));
     updateBalance();
-    alert("✅ $0.05 Added to your balance!");
+    alert("✅ $0.10 Added for Completing Task!");
     showDashboard();
+}
+
+// REFERRAL
+function generateReferralLink(){
+    document.getElementById('referLink').innerText = YOUR_REF_LINK;
+}
+function copyReferral(){
+    navigator.clipboard.writeText(YOUR_REF_LINK);
+    alert("✅ Referral Link Copied!");
 }
 
 // WITHDRAW
@@ -211,125 +186,23 @@ function submitWithdraw(){
     } else { alert("Minimum withdraw is $5.00 and enter number") }
 }
 
-// REFERRAL
-function generateReferralLink(){
-    let refLink = SITE_URL + "?ref=" + currentUserEmail;
-    document.getElementById('referLink').innerText = refLink;
+// SIGNUP + LOGIN + ADMIN - Same as before
+function submitSignup(){ /* ... same code ... */ 
+    let user = { name: document.getElementById('name').value, email: document.getElementById('email').value, pass: document.getElementById('signupPass').value, number: document.getElementById('number').value, status: "pending", balance: 0, txnId: "" }
+    if(user.name && user.email && user.pass){ let users = JSON.parse(localStorage.getItem("allUsers")) || []; if(users.find(u => u.email === user.email)){ alert("This email already exists"); return; } users.push(user); localStorage.setItem("allUsers", JSON.stringify(users)); currentUserEmail = user.email; alert("Account Created! Now pay 300 PKR to activate"); showPayment(); } else { alert("Please Fill All Fields") }
 }
-function copyReferral(){
-    let refLink = SITE_URL + "?ref=" + currentUserEmail;
-    navigator.clipboard.writeText(refLink);
-    alert("✅ Referral Link Copied!");
+function submitPayment(){ /* ... same code ... */
+    let txn = document.getElementById('txnId').value; if(txn && txn.length > 3){ let users = JSON.parse(localStorage.getItem("allUsers")) || []; users = users.map(u => u.email === currentUserEmail ? {...u, txnId: txn} : u); localStorage.setItem("allUsers", JSON.stringify(users)); alert("✅ Payment Submitted! \nAdmin Abdul Reham will verify and approve soon. \nWhatsApp: 0331-6035482"); showMain(); } else { alert("Please enter a valid Transaction ID") }
 }
-
-// SIGNUP with Referral
-function submitSignup(){
-    let urlParams = new URLSearchParams(window.location.search);
-    let ref = urlParams.get('ref');
-
-    let user = {
-        name: document.getElementById('name').value,
-        email: document.getElementById('email').value,
-        pass: document.getElementById('signupPass').value,
-        number: document.getElementById('number').value,
-        status: "pending",
-        balance: 0,
-        txnId: "",
-        referredBy: ref || ""
-    }
-    if(user.name && user.email && user.pass){
-        let users = JSON.parse(localStorage.getItem("allUsers")) || [];
-        if(users.find(u => u.email === user.email)){ alert("This email already exists"); return; }
-        users.push(user);
-        localStorage.setItem("allUsers", JSON.stringify(users));
-        currentUserEmail = user.email;
-        alert("Account Created! Now pay 300 PKR to activate");
-        showPayment();
-    } else { alert("Please Fill All Fields") }
+function submitLogin(){ /* ... same code ... */
+    let email = document.getElementById('loginEmail').value; let pass = document.getElementById('loginPass').value; let users = JSON.parse(localStorage.getItem("allUsers")) || []; let user = users.find(u => u.email === email && u.pass === pass); if(user){ if(user.status === "active"){ currentUserEmail = email; showDashboard(); } else if(user.status === "pending") { alert("❌ آپ کا اکاؤنٹ Pending ہے۔ \nپہلے 300 PKR بھیجیں اور Admin Approval کا انتظار کریں"); showPayment(); } } else { alert("Invalid Email or Password") }
 }
-
-// PAYMENT SUBMIT
-function submitPayment(){
-    let txn = document.getElementById('txnId').value;
-    if(txn && txn.length > 3){
-        let users = JSON.parse(localStorage.getItem("allUsers")) || [];
-        users = users.map(u => u.email === currentUserEmail ? {...u, txnId: txn} : u);
-        localStorage.setItem("allUsers", JSON.stringify(users));
-        alert("✅ Payment Submitted! \nAdmin Abdul Reham will verify and approve soon. \nWhatsApp: 0331-6035482");
-        showMain();
-    } else { alert("Please enter a valid Transaction ID") }
-}
-
-// LOGIN
-function submitLogin(){
-    let email = document.getElementById('loginEmail').value;
-    let pass = document.getElementById('loginPass').value;
-    let users = JSON.parse(localStorage.getItem("allUsers")) || [];
-    let user = users.find(u => u.email === email && u.pass === pass);
-    
-    if(user){
-        if(user.status === "active"){
-            currentUserEmail = email;
-            showDashboard();
-        } else if(user.status === "pending") {
-            alert("❌ آپ کا اکاؤنٹ Pending ہے۔ \nپہلے 300 PKR بھیجیں اور Admin Approval کا انتظار کریں");
-            showPayment();
-        }
-    } else { alert("Invalid Email or Password") }
-}
-
-// ADMIN
-function checkAdmin(){
-    if(document.getElementById('adminPass').value === ADMIN_PASSWORD){
-        showAdminPanel();
-    } else { alert("Wrong Admin Password") }
-}
-
-function loadUsers(){
-    let users = JSON.parse(localStorage.getItem("allUsers")) || [];
-    let list = document.getElementById('userList');
-    list.innerHTML = "";
-    let pendingUsers = users.filter(u => u.status === "pending");
-    if(pendingUsers.length === 0){ list.innerHTML = "<p>No Pending Users</p>"; return; }
-
-    pendingUsers.forEach(user => {
-        list.innerHTML += `
-        <div class="user-card">
-            <p><b>Name:</b> ${user.name}</p>
-            <p><b>Email:</b> ${user.email}</p>
-            <p><b>Number:</b> ${user.number}</p>
-            <p><b>Txn ID:</b> ${user.txnId || 'N/A'}</p>
-            <p><b>Referred By:</b> ${user.referredBy || 'None'}</p>
-            <button class="activate-btn" onclick="activateUser('${user.email}')">Activate + Give 70PKR to Referrer</button>
-        </div>`;
-    });
-}
-
-function activateUser(email){
-    let users = JSON.parse(localStorage.getItem("allUsers")) || [];
-    let user = users.find(u => u.email === email);
-    
-    // Give 70 PKR to referrer
-    if(user.referredBy){
-        users = users.map(u => u.email === user.referredBy ? {...u, balance: u.balance + 0.40} : u); // $0.40 = ~70PKR
-        alert("70 PKR added to referrer: " + user.referredBy);
-    }
-
-    users = users.map(u => u.email === email ? {...u, status: "active"} : u);
-    localStorage.setItem("allUsers", JSON.stringify(users));
-    alert(email + " is now Active!");
-    loadUsers();
-}
-
-function updateBalance(){
-    let users = JSON.parse(localStorage.getItem("allUsers")) || [];
-    let user = users.find(u => u.email === currentUserEmail);
-    if(user) document.getElementById('balance').innerText = "$" + user.balance.toFixed(2);
-}
-
+function checkAdmin(){ if(document.getElementById('adminPass').value === ADMIN_PASSWORD){ showAdminPanel(); } else { alert("Wrong Admin Password") } }
+function loadUsers(){ let users = JSON.parse(localStorage.getItem("allUsers")) || []; let list = document.getElementById('userList'); list.innerHTML = ""; let pendingUsers = users.filter(u => u.status === "pending"); if(pendingUsers.length === 0){ list.innerHTML = "<p>No Pending Users</p>"; return; } pendingUsers.forEach(user => { list.innerHTML += `<div class="user-card"><p><b>Name:</b> ${user.name}</p><p><b>Email:</b> ${user.email}</p><p><b>Number:</b> ${user.number}</p><p><b>Txn ID:</b> ${user.txnId || 'N/A'}</p><button class="activate-btn" onclick="activateUser('${user.email}')">Activate</button></div>`; }); }
+function activateUser(email){ let users = JSON.parse(localStorage.getItem("allUsers")) || []; users = users.map(u => u.email === email ? {...u, status: "active"} : u); localStorage.setItem("allUsers", JSON.stringify(users)); alert(email + " is now Active!"); loadUsers(); }
+function updateBalance(){ let users = JSON.parse(localStorage.getItem("allUsers")) || []; let user = users.find(u => u.email === currentUserEmail); if(user) document.getElementById('balance').innerText = "$" + user.balance.toFixed(2); }
 function logout(){ currentUserEmail = ""; showMain(); }
 </script>
 
 </body>
 </html>
-
