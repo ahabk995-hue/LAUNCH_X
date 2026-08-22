@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -7,22 +8,26 @@
 <style>
     * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Arial, sans-serif; }
     body { background: #00C853; color: white; text-align: center; padding: 20px; }
+   .topbar { display:flex; justify-content:space-between; align-items:center; max-width: 500px; margin: 0 auto 15px; padding: 0 10px; }
+   .topbar.user { font-size:18px; font-weight:bold; }
+   .topbar.bal { font-size:18px; color:#FFD600; font-weight:bold; }
+   .topbar.logout { background:red; color:white; border:none; padding:8px 12px; border-radius:6px; cursor:pointer; font-weight:bold; }
     h1 { margin-bottom: 20px; font-size: 28px; }
-   .box { background: #1B1B1B; padding: 25px; border-radius: 15px; max-width: 500px; margin: 20px auto; box-shadow: 0 0 20px rgba(0,0,0,0.3); }
-   .btn { background: #00E676; color: #000; border: none; padding: 15px; border-radius: 10px; font-weight: bold; cursor: pointer; width: 100%; margin-top: 10px; font-size: 16px; }
-   .btn2 { background: #1B1B1B; color: white; border: 2px solid #00E676; padding: 20px 10px; border-radius: 12px; cursor: pointer; font-size: 14px; font-weight: bold; width: 48%; margin: 5px; }
+  .box { background: #1B1B1B; padding: 25px; border-radius: 15px; max-width: 500px; margin: 20px auto; box-shadow: 0 0 20px rgba(0,0,0,0.3); }
+  .btn { background: #00E676; color: #000; border: none; padding: 15px; border-radius: 10px; font-weight: bold; cursor: pointer; width: 100%; margin-top: 10px; font-size: 16px; }
+  .btn2 { background: #1B1B1B; color: white; border: 2px solid #00E676; padding: 20px 10px; border-radius: 12px; cursor: pointer; font-size: 14px; font-weight: bold; width: 48%; margin: 5px; }
     input { width:100%; padding:12px; border:none; border-radius:8px; margin-bottom:15px; background:#333; color:white; font-size: 15px; }
-   .user-card { background:#333; padding:15px; border-radius:10px; margin:10px 0; text-align:left; }
-   .activate-btn { background:#00E676; color:#000; border:none; padding:8px 15px; border-radius:5px; cursor:pointer; font-weight:bold; }
-   .footer { margin-top:30px; font-size:12px; opacity:0.7; }
-   .grid { display:flex; flex-wrap:wrap; justify-content:center; }
-   .refer-box { background:#333; padding:15px; border-radius:10px; margin-top:15px; word-break:break-all; }
-   .balance-show { font-size:22px; color:#00E676; margin-bottom:15px; }
-   .pic-box { background:#222; padding:10px; border-radius:10px; margin:10px 0; }
-   .pic-box img { width:100%; height:120px; object-fit:cover; border-radius:8px; }
-   .stars { margin-top:8px; }
-   .star { font-size:24px; color:#555; cursor:pointer; display:inline-block; }
-   .star.active { color:#FFD600; }
+  .user-card { background:#333; padding:15px; border-radius:10px; margin:10px 0; text-align:left; }
+  .activate-btn { background:#00E676; color:#000; border:none; padding:8px 15px; border-radius:5px; cursor:pointer; font-weight:bold; }
+  .footer { margin-top:30px; font-size:12px; opacity:0.7; }
+  .grid { display:flex; flex-wrap:wrap; justify-content:center; }
+  .refer-box { background:#333; padding:15px; border-radius:10px; margin-top:15px; word-break:break-all; }
+  .balance-show { font-size:22px; color:#00E676; margin-bottom:15px; }
+  .pic-box { background:#222; padding:10px; border-radius:10px; margin:10px 0; }
+  .pic-box img { width:100%; height:120px; object-fit:cover; border-radius:8px; }
+  .stars { margin-top:8px; }
+  .star { font-size:24px; color:#555; cursor:pointer; display:inline-block; }
+  .star.active { color:#FFD600; }
 </style>
 </head>
 <body>
@@ -67,8 +72,13 @@
     <p onclick="showMain()" style="margin-top:10px;cursor:pointer">Back</p>
 </div>
 
-<!-- 5. DASHBOARD -->
+<!-- 5. DASHBOARD - FULLY UPDATED UI -->
 <div id="dashboard" style="display:none">
+    <div class="topbar">
+        <div class="user" id="userName">User</div>
+        <div class="bal" id="topBalance">$0.00</div>
+        <button class="logout" onclick="logout()">Logout</button>
+    </div>
     <h1>Welcome</h1>
     <div class="box">
         <h3>Your Balance</h3>
@@ -81,7 +91,6 @@
         <button class="btn2" onclick="showReferral()"><span style="font-size:24px">👥</span><br>Invite Friend</button>
         <button class="btn2" onclick="showPictureTask()"><span style="font-size:24px">⭐</span><br>Rate Pictures<br>+$0.10</button>
     </div>
-    <button class="btn" onclick="logout()" style="background:red">Logout</button>
 </div>
 
 <!-- 6. WITHDRAW SCREEN -->
@@ -95,7 +104,7 @@
     <button class="btn" onclick="showDashboard()" style="background:#555">Back</button>
 </div>
 
-<!-- 7. PICTURE RATING TASK - NEW -->
+<!-- 7. PICTURE RATING TASK -->
 <div id="pictureTask" class="box" style="display:none">
     <h2>Rate 10 Pictures - Earn $0.10</h2>
     <p id="taskStatus">Rate all pictures to earn</p>
@@ -144,6 +153,7 @@
 <script>
 let ADMIN_PASSWORD = "AbdulReham123";
 let currentUserEmail = "";
+let currentUserName = "";
 let YOUR_REF_LINK = "https://renvex.co/signup?ref=47413";
 let PICTURES = [
     "https://picsum.photos/400/200?random=1","https://picsum.photos/400/200?random=2","https://picsum.photos/400/200?random=3","https://picsum.photos/400/200?random=4","https://picsum.photos/400/200?random=5",
@@ -167,51 +177,29 @@ function hideAll(){ document.querySelectorAll('.box, #dashboard').forEach(el => 
 function showPictureTask(){
     let userData = JSON.parse(localStorage.getItem("userTask_"+currentUserEmail)) || {lastDate: "", rated: 0};
     let today = new Date().toDateString();
-
     if(userData.lastDate === today && userData.rated >= 10){
         alert("❌ آپ آج کا Task مکمل کر چکے ہیں۔ کل دوبارہ کوش کریں");
         return;
     }
-
-    hideAll();
-    document.getElementById('pictureTask').style.display='block';
-    loadPictures();
+    hideAll(); document.getElementById('pictureTask').style.display='block'; loadPictures();
 }
-
 function loadPictures(){
-    let list = document.getElementById('pictureList');
-    list.innerHTML = "";
+    let list = document.getElementById('pictureList'); list.innerHTML = "";
     PICTURES.forEach((pic, i) => {
-        list.innerHTML += `
-        <div class="pic-box">
-            <img src="${pic}">
-            <div class="stars" id="stars-${i}">
-                <span class="star" onclick="ratePic(${i},1)">★</span>
-                <span class="star" onclick="ratePic(${i},2)">★</span>
-                <span class="star" onclick="ratePic(${i},3)">★</span>
-                <span class="star" onclick="ratePic(${i},4)">★</span>
-                <span class="star" onclick="ratePic(${i},5)">★</span>
-            </div>
-        </div>`;
+        list.innerHTML += `<div class="pic-box"><img src="${pic}"><div class="stars" id="stars-${i}"><span class="star" onclick="ratePic(${i},1)">★</span><span class="star" onclick="ratePic(${i},2)">★</span><span class="star" onclick="ratePic(${i},3)">★</span><span class="star" onclick="ratePic(${i},4)">★</span><span class="star" onclick="ratePic(${i},5)">★</span></div></div>`;
     });
 }
-
 let ratedPics = {};
 function ratePic(index, star){
     ratedPics[index] = star;
     let starsDiv = document.getElementById('stars-'+index).querySelectorAll('.star');
-    starsDiv.forEach((s, i) => {
-        if(i < star) s.classList.add('active'); else s.classList.remove('active');
-    });
-
+    starsDiv.forEach((s, i) => { if(i < star) s.classList.add('active'); else s.classList.remove('active'); });
     if(Object.keys(ratedPics).length === 10){
         let users = JSON.parse(localStorage.getItem("allUsers")) || [];
         users = users.map(u => u.email === currentUserEmail? {...u, balance: u.balance + 0.10} : u);
         localStorage.setItem("allUsers", JSON.stringify(users));
-
         let userData = {lastDate: new Date().toDateString(), rated: 10};
         localStorage.setItem("userTask_"+currentUserEmail, JSON.stringify(userData));
-
         alert("✅ مبارک ہو! $0.10 آپ کے Balance میں Add ہو گئے");
         showDashboard();
     }
@@ -223,17 +211,13 @@ function watchAndEarn(){
     setTimeout(() => {
         let users = JSON.parse(localStorage.getItem("allUsers")) || [];
         users = users.map(u => u.email === currentUserEmail? {...u, balance: u.balance + 0.05} : u);
-        localStorage.setItem("allUsers", JSON.stringify(users));
-        updateBalance();
-        alert("✅ $0.05 Added to your balance!");
+        localStorage.setItem("allUsers", JSON.stringify(users)); updateBalance(); alert("✅ $0.05 Added to your balance!");
     }, 3000);
 }
 function completeTask(){
     let users = JSON.parse(localStorage.getItem("allUsers")) || [];
     users = users.map(u => u.email === currentUserEmail? {...u, balance: u.balance + 0.05} : u);
-    localStorage.setItem("allUsers", JSON.stringify(users));
-    alert("$0.05 Added to your balance!");
-    showDashboard();
+    localStorage.setItem("allUsers", JSON.stringify(users)); alert("$0.05 Added to your balance!"); showDashboard();
 }
 
 // WITHDRAW
@@ -258,24 +242,29 @@ function submitWithdraw(){
 }
 
 // REFERRAL
-function generateReferralLink(){
-    document.getElementById('referLink').innerText = YOUR_REF_LINK;
-}
-function copyReferral(){
-    navigator.clipboard.writeText(YOUR_REF_LINK);
-    alert("✅ Referral Link Copied!");
-}
+function generateReferralLink(){ document.getElementById('referLink').innerText = YOUR_REF_LINK; }
+function copyReferral(){ navigator.clipboard.writeText(YOUR_REF_LINK); alert("✅ Referral Link Copied!"); }
 
-// SIGNUP + LOGIN + ADMIN - SAME
-function submitSignup(){ let user = { name: document.getElementById('name').value, email: document.getElementById('email').value, pass: document.getElementById('signupPass').value, number: document.getElementById('number').value, status: "pending", balance: 0, txnId: "" }
-if(user.name && user.email && user.pass){ let users = JSON.parse(localStorage.getItem("allUsers")) || []; if(users.find(u => u.email === user.email)){ alert("This email already exists"); return; } users.push(user); localStorage.setItem("allUsers", JSON.stringify(users)); currentUserEmail = user.email; alert("Account Created! Now pay 300 PKR to activate"); showPayment(); } else { alert("Please Fill All Fields") } }
+// SIGNUP + LOGIN + ADMIN
+function submitSignup(){
+    let user = { name: document.getElementById('name').value, email: document.getElementById('email').value, pass: document.getElementById('signupPass').value, number: document.getElementById('number').value, status: "pending", balance: 0.00, txnId: "" } // BALANCE 0.00
+    if(user.name && user.email && user.pass){ let users = JSON.parse(localStorage.getItem("allUsers")) || []; if(users.find(u => u.email === user.email)){ alert("This email already exists"); return; } users.push(user); localStorage.setItem("allUsers", JSON.stringify(users)); currentUserEmail = user.email; currentUserName = user.name; alert("Account Created! Now pay 300 PKR to activate"); showPayment(); } else { alert("Please Fill All Fields") }
+}
 function submitPayment(){ let txn = document.getElementById('txnId').value; if(txn && txn.length > 3){ let users = JSON.parse(localStorage.getItem("allUsers")) || []; users = users.map(u => u.email === currentUserEmail? {...u, txnId: txn} : u); localStorage.setItem("allUsers", JSON.stringify(users)); alert("✅ Payment Submitted! \nAdmin Abdul Reham will verify and approve soon. \nWhatsApp: 0331-6035482"); showMain(); } else { alert("Please enter a valid Transaction ID") } }
-function submitLogin(){ let email = document.getElementById('loginEmail').value; let pass = document.getElementById('loginPass').value; let users = JSON.parse(localStorage.getItem("allUsers")) || []; let user = users.find(u => u.email === email && u.pass === pass); if(user){ if(user.status === "active"){ currentUserEmail = email; showDashboard(); } else if(user.status === "pending") { alert("❌ آپ کا اکاؤنٹ Pending ہے۔ \nپہلے 300 PKR بھیجیں اور Admin Approval کا انتظار کریں"); showPayment(); } } else { alert("Invalid Email or Password") } }
+function submitLogin(){ let email = document.getElementById('loginEmail').value; let pass = document.getElementById('loginPass').value; let users = JSON.parse(localStorage.getItem("allUsers")) || []; let user = users.find(u => u.email === email && u.pass === pass); if(user){ if(user.status === "active"){ currentUserEmail = email; currentUserName = user.name; showDashboard(); } else if(user.status === "pending") { alert("❌ آپ کا اکاؤنٹ Pending ہے۔ \nپہلے 300 PKR بھیجیں اور Admin Approval کا انتظار کریں"); showPayment(); } else { alert("Invalid Email or Password") } }
 function checkAdmin(){ if(document.getElementById('adminPass').value === ADMIN_PASSWORD){ showAdminPanel(); } else { alert("Wrong Admin Password") } }
 function loadUsers(){ let users = JSON.parse(localStorage.getItem("allUsers")) || []; let list = document.getElementById('userList'); list.innerHTML = ""; let pendingUsers = users.filter(u => u.status === "pending"); if(pendingUsers.length === 0){ list.innerHTML = "<p>No Pending Users</p>"; return; } pendingUsers.forEach(user => { list.innerHTML += `<div class="user-card"><p><b>Name:</b> ${user.name}</p><p><b>Email:</b> ${user.email}</p><p><b>Number:</b> ${user.number}</p><p><b>Txn ID:</b> ${user.txnId || 'N/A'}</p><button class="activate-btn" onclick="activateUser('${user.email}')">Activate</button></div>`; }); }
 function activateUser(email){ let users = JSON.parse(localStorage.getItem("allUsers")) || []; users = users.map(u => u.email === email? {...u, status: "active"} : u); localStorage.setItem("allUsers", JSON.stringify(users)); alert(email + " is now Active!"); loadUsers(); }
-function updateBalance(){ let users = JSON.parse(localStorage.getItem("allUsers")) || []; let user = users.find(u => u.email === currentUserEmail); if(user) document.getElementById('balance').innerText = "$" + user.balance.toFixed(2); }
-function logout(){ currentUserEmail = ""; showMain(); }
+function updateBalance(){
+    let users = JSON.parse(localStorage.getItem("allUsers")) || [];
+    let user = users.find(u => u.email === currentUserEmail);
+    if(user) {
+        document.getElementById('balance').innerText = "$" + user.balance.toFixed(2);
+        document.getElementById('topBalance').innerText = "$" + user.balance.toFixed(2); // TOP RIGHT BALANCE
+        document.getElementById('userName').innerText = user.name; // USER NAME
+    }
+}
+function logout(){ currentUserEmail = ""; currentUserName = ""; showMain(); }
 </script>
 
 </body>
