@@ -80,14 +80,16 @@
     <section id="about" class="card hidden">
       <h1>About Us</h1>
       <p>Launch X is a task earning platform. Watch videos, complete tasks and earn real money. Withdraw via Easypaisa or Cash. Min Withdraw $3</p>
-      <button class="btn" id="backHome3">← Back to Home</button>
+      <a class="btn brand" href="https://launchx.com" target="_blank">Visit Our Website</a>
+      <button class="btn" id="backHome3" style="margin-top:12px">← Back to Home</button>
     </section>
 
     <!-- CONTACT -->
     <section id="contact" class="card hidden">
       <h1>Contact / WhatsApp Help</h1>
-      <p>Need Help? Contact us on WhatsApp</p>
+      <p>Need Help? Contact us</p>
       <a class="btn green" href="https://wa.me/923316035482" target="_blank">WhatsApp: 0331-6035482</a>
+      <a class="btn brand" href="https://launchx.com" target="_blank">Website: launchx.com</a>
       <button class="btn" id="backHome4" style="margin-top:12px">← Back to Home</button>
     </section>
 
@@ -97,7 +99,7 @@
       <p>Please wait <span class="timer" id="timer">30</span> seconds</p>
     </section>
 
-    <!-- DASHBOARD - 5 BUTTONS -->
+    <!-- DASHBOARD - 6 BUTTONS NOW -->
     <section id="dashboard" class="card hidden">
       <div class="header">
         <h1>Dashboard</h1>
@@ -116,6 +118,7 @@
         <a class="btn green" href="https://renvex.co/signup?ref=47413" target="_blank">INVITE FRIEND</a>
         <button class="btn" id="addEarn">ADD EARN</button>
         <button class="btn red" id="withdrawBtn">WITHDRAW</button>
+        <a class="btn" href="https://launchx.com" target="_blank">VISIT WEBSITE</a>
       </div>
     </section>
 
@@ -259,9 +262,7 @@
       const method = $('withdrawForm').method.value;
       const account = $('withdrawForm').account.value;
       let user = getCurrentUser();
-      
       $('withdrawError').classList.add('hidden');
-      
       if(amount < 3){
         $('withdrawError').textContent = "Minimum withdrawal is $3.00";
         $('withdrawError').classList.remove('hidden');
@@ -272,7 +273,6 @@
         $('withdrawError').classList.remove('hidden');
         return;
       }
-      
       let newBal = (user.balance || 0) - amount;
       updateBalance(newBal);
       $('withdrawSuccess').textContent = `Request Submitted! $${amount} via ${method}. We will contact you on 0331-6035482`;
