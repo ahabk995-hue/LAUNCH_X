@@ -42,13 +42,14 @@
     .copy-btn{padding:6px 12px;font-size:12px;width:auto;background:#1e293b}
     #adBox{margin-top:16px;text-align:center}
     .user-card{background:#0b1220;padding:12px;border-radius:10px;margin-bottom:10px;border:1px solid #243244}
+    .deposit-box{background:linear-gradient(135deg,#f59e0b,#ef4444);padding:20px;border-radius:12px;text-align:center;margin-bottom:16px}
   </style>
 </head>
 <body>
   <div class="container">
     <section id="home" class="card">
       <h1>Welcome to <span style="color:#3b82f6">Launch X</span></h1>
-      <p>Earn money by watching videos and completing tasks</p>
+      <p>Earn money by watching videos and completing tasks. Entry Fee: 300 PKR</p>
       <div class="grid">
         <button class="btn green" id="toRegister">Create Account</button>
         <button class="btn brand" id="toLogin">Login to Existing Account</button>
@@ -97,7 +98,7 @@
 
     <section id="about" class="card hidden">
       <h1>About Us</h1>
-      <p>Launch X is a task earning platform. Watch videos, complete tasks and earn real money. Withdraw via Easypaisa or JazzCash. Min Withdraw $3</p>
+      <p>Launch X is a task earning platform. Entry Fee 300 PKR. Watch videos, complete tasks and earn real money. Withdraw via Easypaisa or JazzCash. Min Withdraw $3</p>
       <a class="btn brand" href="https://launch-x-f7n5.vercel.app/" target="_blank">Visit Our Website</a>
       <button class="btn" id="backHome3" style="margin-top:12px">← Back to Home</button>
     </section>
@@ -115,6 +116,23 @@
       <p>Please wait <span class="timer" id="timer">30</span> seconds</p>
     </section>
 
+    <!-- DEPOSIT PAGE FOR ENTRY FEE -->
+    <section id="deposit" class="card hidden">
+      <h1>Entry Fee Required</h1>
+      <div class="deposit-box">
+        <div class="balance-label">Required Amount</div>
+        <div class="balance-amount">300 PKR</div>
+      </div>
+      <p class="warn-note">⚠️ Dashboard use karne ke liye pehle 300 PKR deposit karna zaroori hai</p>
+      <p><b>Deposit to:</b><br>Easypaisa: 03368881011 - Abdul Rehan</p>
+      <form id="depositForm" class="grid">
+        <div class="field"><label>Transaction ID / Screenshot Ref</label><input name="txid" placeholder="Enter TX ID" required/></div>
+        <button class="btn green" type="submit">I Have Deposited 300</button>
+        <div class="success hidden" id="depositSuccess"></div>
+      </form>
+      <button class="btn" id="backHomeDep" style="margin-top:12px">← Back to Home</button>
+    </section>
+
     <section id="dashboard" class="card hidden">
       <div class="header">
         <h1>Dashboard</h1>
@@ -122,7 +140,7 @@
       </div>
       <p>Welcome: <b><span id="userName"></span></b></p>
       <div class="balance-box">
-        <div class="balance-label">Your Balance</div>
+        <div class="balance-label">Your Balance $</div>
         <div class="balance-amount" id="balance">$0.00</div>
       </div>
       <div class="grid-2">
@@ -201,7 +219,7 @@
 <script>
   const $ = id => document.getElementById(id);
   function show(id){
-    ['home','register','login','about','contact','verify','dashboard','withdraw','video','admin'].forEach(s => $(s).classList.add('hidden'));
+    ['home','register','login','about','contact','verify','dashboard','withdraw','video','admin','deposit'].forEach(s => $(s).classList.add('hidden'));
     $(id).classList.remove('hidden');
   }
   function togglePass(id){
@@ -224,19 +242,21 @@
   }
   function getToday(){ return new Date().toDateString(); }
   
-  document.addEventListener('DOMContentLoaded', function() {
-    if(getCurrentUser()){ 
-      let user = getCurrentUser();
-      if(user.lastVideoDate !== getToday()){
-        user.videoClaimed = false;
-        setCurrentUser(user);
-        let users = getUsers();
-        let u = users.find(x => x.email === user.email);
-        if(u){ u.videoClaimed = false; saveUsers(users); }
-      }
+  function checkEntryFee(){
+    let user = getCurrentUser();
+    if(!user) return;
+    if(user.balance < 300){
+      show('deposit');
+    } else {
       $('userName').textContent = user.name;
       $('balance').textContent = '$' + (user.balance || 0).toFixed(2);
       show('dashboard'); 
+    }
+  }
+  
+  document.addEventListener('DOMContentLoaded', function() {
+    if(getCurrentUser()){ 
+      checkEntryFee();
     }
     $('toRegister').onclick = () => show('register');
     $('toLogin').onclick = () => show('login'); 
@@ -249,6 +269,7 @@
     $('backDash').onclick = () => show('dashboard');
     $('backDash2').onclick = () => show('dashboard');
     $('backHomeAdmin').onclick = () => show('home');
+    $('backHomeDep').onclick = () => show('home');
     
     // ADMIN LOGIN
     $('toAdmin').onclick = () => {
@@ -276,7 +297,7 @@
           <b>Email:</b> ${u.email}<br>
           <b>Phone:</b> ${u.number}<br>
           <b>Balance:</b> $${u.balance.toFixed(2)}<br>
-          <b>Video Claimed Today:</b> ${u.videoClaimed && u.lastVideoDate === getToday() ? 'Yes' : 'No'}
+          <b>Status:</b> ${u.balance >= 300 ? 'Active' : 'Entry Fee Pending'}
         </div>`;
       });
       $('usersList').innerHTML = html;
@@ -302,11 +323,11 @@
       users.push({name, email, number, password, balance: 0.00, videoClaimed: false, lastVideoDate: ""});
       saveUsers(users);
       setCurrentUser({name, email, number, balance: 0.00, videoClaimed: false, lastVideoDate: ""});
-      $('regSuccess').textContent = "Account created! Verifying...";
+      $('regSuccess').textContent = "Account created! Please deposit 300 PKR";
       $('regSuccess').classList.remove('hidden');
       show('verify');
       let t=30; $('timer').textContent=t;
-      const iv=setInterval(()=>{t--; $('timer').textContent=t; if(t<=0){clearInterval(iv); $('userName').textContent=name; $('balance').textContent='$0.00'; show('dashboard')}},1000);
+      const iv=setInterval(()=>{t--; $('timer').textContent=t; if(t<=0){clearInterval(iv); show('deposit')}},1000);
     }
     $('loginForm').onsubmit = e => {
       e.preventDefault();
@@ -320,9 +341,7 @@
         }
         $('loginError').classList.add('hidden');
         setCurrentUser(user);
-        $('userName').textContent = user.name;
-        $('balance').textContent = '$' + (user.balance || 0).toFixed(2);
-        show('dashboard'); 
+        checkEntryFee();
       } else {
         $('loginError').classList.remove('hidden');
       }
@@ -332,6 +351,20 @@
       show('home');
       alert('Logged out successfully!');
     }
+
+    // DEPOSIT FORM
+    $('depositForm').onsubmit = e => {
+      e.preventDefault();
+      let user = getCurrentUser();
+      let users = getUsers();
+      let u = users.find(x => x.email === user.email);
+      u.balance = 300; // Entry fee add
+      saveUsers(users);
+      setCurrentUser(u);
+      $('depositSuccess').textContent = "Deposit Received! Now you can access Dashboard";
+      $('depositSuccess').classList.remove('hidden');
+      setTimeout(()=>{ checkEntryFee(); }, 1500);
+    }
     
     $('addEarn').onclick = () => {
       $('adBox').classList.toggle('hidden');
@@ -340,6 +373,7 @@
     
     $('watchVideo').onclick = () => {
       let user = getCurrentUser();
+      if(user.balance < 300){ alert('Pehle 300 Entry Fee jama karein'); show('deposit'); return; }
       if(user.videoClaimed && user.lastVideoDate === getToday()){
         $('videoRewardMsg').textContent = 'You have already claimed today. Come back tomorrow!';
         $('videoRewardMsg').classList.remove('hidden');
@@ -353,6 +387,7 @@
     };
     $('withdrawBtn').onclick = () => {
       let user = getCurrentUser();
+      if(user.balance < 300){ alert('Pehle 300 Entry Fee jama karein'); show('deposit'); return; }
       if(!user.videoClaimed || user.lastVideoDate !== getToday()){
         alert('⚠️ Withdrawal ke liye pehle aaj ki video complete karna zaroori hai!');
         show('video');
