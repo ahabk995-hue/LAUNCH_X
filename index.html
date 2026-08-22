@@ -1,129 +1,154 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>LAUNCH X</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Launch X</title>
   <style>
-    body { font-family: Arial; margin:0; padding:20px; background:#f2f2f2; text-align:center; }
-    .page { display:none; }
-    .active { display:block; }
-    .btn { background:#2563eb; color:white; padding:12px 24px; border:none; border-radius:8px; cursor:pointer; margin:10px; font-size:16px; }
-    .btn-green { background:#16a34a; } .btn-red { background:#dc2626; } .btn-purple { background:#9333ea; }
-    .form input { width:90%; padding:10px; margin:8px 0; border:1px solid #ccc; border-radius:6px; }
-    .popup { position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.6); display:flex; align-items:center; justify-content:center; }
-    .popup-box { background:white; padding:20px; border-radius:12px; width:90%; max-width:400px; text-align:left; }
-    .grid { display:grid; grid-template-columns:1fr 1fr; gap:15px; margin-top:20px; }
-    label { display:block; margin:8px 0; }
+    :root{--bg:#0b0f14;--card:#111827;--muted:#94a3b8;--text:#e5e7eb;--brand:#3b82f6;--brand2:#22c55e;--warn:#f59e0b}
+    *{box-sizing:border-box}body{margin:0;font-family:system-ui;background:linear-gradient(180deg,#0b0f14,#0a0a0a);color:var(--text)}
+    .container{max-width:900px;margin:0 auto;padding:24px}
+    .card{background:var(--card);border:1px solid #1f2937;border-radius:16px;padding:20px;box-shadow:0 8px 24px rgba(0,0,0,.3)}
+    h1{font-size:28px;margin:0 0 8px} p{color:var(--muted);margin:0 0 16px}
+    .btn{display:inline-flex;align-items:center;gap:8px;padding:12px 16px;border-radius:12px;border:1px solid #243244;background:#0f172a;color:#fff;text-decoration:none;font-weight:600;cursor:pointer;width:100%;justify-content:center}
+    .btn:hover{transform:translateY(-1px)}
+    .btn.brand{background:var(--brand);border-color:#1d4ed8}
+    .btn.green{background:var(--brand2);border-color:#15803d}
+    .btn.yellow{background:var(--warn);border-color:#b45309;color:#111}
+    .row{display:flex;gap:12px;flex-wrap:wrap}
+    .grid{display:grid;gap:16px}
+    @media(min-width:720px){.grid{grid-template-columns:repeat(2,1fr)}}
+    input,button{font:inherit}
+    .field{display:flex;flex-direction:column;gap:8px;margin-bottom:12px}
+    .field input{padding:12px 14px;border-radius:10px;border:1px solid #243244;background:#0b1220;color:#fff}
+    .hidden{display:none}
+    .timer{font-size:22px;font-weight:800;letter-spacing:.5px}
+    .pill{display:inline-block;padding:4px 10px;border-radius:999px;background:#0b1220;border:1px solid #243244;font-size:12px;color:#cbd5e1}
+    .dashboard{display:grid;gap:12px}
+    .video-frame{width:100%;aspect-ratio:9/16;border:0;border-radius:12px;background:#000}
+    .checkbox{display:flex;align-items:center;gap:10px;margin:8px 0}
+    .note{font-size:12px;color:#94a3b8;text-align:center;margin-top:16px}
+    .link-btn{background:none;border:none;color:#3b82f6;text-decoration:underline;cursor:pointer;font-size:14px;padding:0}
+    .link-btn:hover{color:#60a5fa}
   </style>
 </head>
 <body>
+  <div class="container">
+    <!-- HOME PAGE -->
+    <section id="home" class="card">
+      <h1>Welcome to <span style="color:#3b82f6">Launch X</span></h1>
+      <p>Earn money by completing simple tasks. Start now!</p>
+      <div class="row">
+        <a class="btn brand" href="https://wa.me/923316035482" target="_blank">WhatsApp: 0331-6035482</a>
+        <button class="btn green" id="toRegister">Click to Login / Register</button>
+      </div>
+      <div class="note">
+        Already have an account? <button class="link-btn" id="toLogin">Login Here</button>
+      </div>
+    </section>
 
-<!-- PAGE 1: STARTING PAGE -->
-<div id="home" class="page active">
-  <h1>Welcome to Earn App</h1>
-  <p>Contact WhatsApp: <a href="https://wa.me/923316035482" target="_blank">03316035482</a></p>
-  <button class="btn" onclick="showPage('login')">Click to Login</button>
-</div>
+    <!-- REGISTER PAGE - New Users -->
+    <section id="register" class="card hidden">
+      <h1>Create Your Account</h1>
+      <p>Fill the form to continue</p>
+      <form id="regForm" class="grid">
+        <div class="field"><label>Name</label><input name="name" required placeholder="Your Name"/></div>
+        <div class="field"><label>Email</label><input name="email" type="email" required placeholder="you@email.com"/></div>
+        <div class="field"><label>Phone Number</label><input name="phone" required placeholder="03xx-xxxxxxx"/></div>
+        <div class="field"><label>Password</label><input name="password" type="password" required placeholder="Create password"/></div>
+        <div><button class="btn green" type="submit">Submit & Verify</button></div>
+      </form>
+      <div style="margin-top:12px"><button class="btn" id="backHome1">← Back</button></div>
+    </section>
 
-<!-- PAGE 2: LOGIN / SIGNUP PAGE -->
-<div id="login" class="page">
-  <h2>Create Account</h2>
-  <form class="form" onsubmit="startVerification(event)">
-    <input type="text" id="name" placeholder="Name" required><br>
-    <input type="email" id="email" placeholder="Email Address" required><br>
-    <input type="number" id="number" placeholder="Phone Number" required><br>
-    <input type="password" id="password" placeholder="Password" required><br>
-    <button type="submit" id="submitBtn" class="btn btn-green">Submit</button>
-  </form>
-</div>
+    <!-- LOGIN PAGE - Existing Users -->
+    <section id="login" class="card hidden">
+      <h1>Login</h1>
+      <p>Enter your Email and Password</p>
+      <form id="loginForm" class="grid">
+        <div class="field"><label>Email</label><input name="email" type="email" required placeholder="you@email.com"/></div>
+        <div class="field"><label>Password</label><input name="password" type="password" required placeholder="Your password"/></div>
+        <div><button class="btn brand" type="submit">Login Now</button></div>
+      </form>
+      <div style="margin-top:12px"><button class="btn" id="backHome2">← Back</button></div>
+    </section>
 
-<!-- PAGE 3: DASHBOARD -->
-<div id="dashboard" class="page">
-  <h2>Dashboard</h2>
-  <div class="grid">
-    <button class="btn btn-green" onclick="alert('Earn Page Coming Soon')">ADD EARN</button>
-    <button class="btn btn-red" onclick="showVideoPopup()">WATCH VIDEO</button>
-    <button class="btn btn-purple" onclick="inviteFriend()">INVITE MEMBERS</button>
-    <button class="btn" onclick="alert('Task Page Coming Soon')">TASK</button>
+    <!-- VERIFICATION PAGE - Only for new users -->
+    <section id="verify" class="card hidden">
+      <h1>Verifying...</h1>
+      <p>Please wait <span class="timer" id="timer">30</span> seconds</p>
+      <div class="pill">Do not close this page</div>
+    </section>
+
+    <!-- DASHBOARD PAGE -->
+    <section id="dashboard" class="card hidden">
+      <h1>Dashboard</h1>
+      <p>Choose an option below</p>
+      <div class="dashboard">
+        <button class="btn yellow" id="addEarn">ADD EARN</button>
+        <button class="btn brand" id="watchVideo">WATCH VIDEO</button>
+        <button class="btn green" id="invite">INVITE MEMBERS</button>
+        <button class="btn" id="task">TASK</button>
+      </div>
+    </section>
+
+    <!-- VIDEO PAGE -->
+    <section id="video" class="card hidden">
+      <h1>Watch Video to Earn</h1>
+      <p>Please complete all 3 conditions first</p>
+      <div class="checkbox"><input type="checkbox" id="c1"/><label for="c1">I will watch the full video</label></div>
+      <div class="checkbox"><input type="checkbox" id="c2"/><label for="c2">I will not skip</label></div>
+      <div class="checkbox"><input type="checkbox" id="c3"/><label for="c3">I agree to the terms</label></div>
+      <button class="btn green" id="openVideo" disabled>Open Video</button>
+      <div style="margin-top:12px"><button class="btn" id="backDash">← Back to Dashboard</button></div>
+      <div id="videoBox" class="hidden" style="margin-top:16px">
+        <iframe class="video-frame" src="https://www.youtube.com/embed/YOUR_VIDEO_ID" allowfullscreen></iframe>
+      </div>
+    </section>
   </div>
-  <button class="btn" style="background:#6b7280; margin-top:20px;" onclick="logout()">Logout</button>
-</div>
-
-<!-- VIDEO CONDITIONS POPUP -->
-<div id="videoPopup" class="popup" style="display:none;">
-  <div class="popup-box">
-    <h3>Before you continue</h3>
-    <p>Please complete these 3 steps:</p>
-    <label><input type="checkbox" id="c1"> Subscribe to the channel</label>
-    <label><input type="checkbox" id="c2"> Watch the short video completely</label>
-    <label><input type="checkbox" id="c3"> Like the video</label><br>
-    <button class="btn btn-green" onclick="startVideo()">Start - Go to YouTube</button>
-    <button class="btn" style="background:gray;" onclick="closeVideoPopup()">Close</button>
-  </div>
-</div>
 
 <script>
-// Page Switch
-function showPage(id){
-  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-  document.getElementById(id).classList.add('active');
-}
-
-// 30 Second Verification
-function startVerification(e){
-  e.preventDefault();
-  let btn = document.getElementById('submitBtn');
-  btn.disabled = true;
-  let count = 30;
-  btn.innerText = `Verifying... ${count}s`;
-  
-  let timer = setInterval(()=>{
-    count--;
-    btn.innerText = `Verifying... ${count}s`;
-    if(count <= 0){
-      clearInterval(timer);
-      localStorage.setItem("user", "loggedin");
-      showPage('dashboard');
-    }
-  }, 1000);
-}
-
-// Video Popup
-function showVideoPopup(){
-  document.getElementById('videoPopup').style.display = 'flex';
-}
-function closeVideoPopup(){
-  document.getElementById('videoPopup').style.display = 'none';
-}
-
-// Start Video with 3 Conditions Check
-function startVideo(){
-  let c1 = document.getElementById('c1').checked;
-  let c2 = document.getElementById('c2').checked;
-  let c3 = document.getElementById('c3').checked;
-  
-  if(c1 && c2 && c3){
-    window.open("https://youtube.com/shorts/PNsbWwa3Kwo?si=mukLQtdgDfjfO3Wh", "_blank"); // یہاں اپنی ویڈیو کا لنک لگائیں
-    closeVideoPopup();
-  } else {
-    alert("پہلے 3 شرائط پوری کریں");
+  const $ = id => document.getElementById(id);
+  const show = id => {
+    ['home','register','login','verify','dashboard','video'].forEach(s => $(s).classList.add('hidden'));
+    $(id).classList.remove('hidden');
   }
-}
 
-// Invite Friend
-function inviteFriend(){
-  let link = "https://آپکی_ویب_سائٹ.com?ref=123";
-  navigator.clipboard.writeText(link);
-  alert("لنک کاپی ہو گیا: " + link);
-}
+  // Navigation
+  $('toRegister').onclick = () => show('register');
+  $('toLogin').onclick = () => show('login'); 
+  $('backHome1').onclick = () => show('home');
+  $('backHome2').onclick = () => show('home');
+  $('backDash').onclick = () => show('dashboard');
 
-// Logout
-function logout(){
-  localStorage.removeItem("user");
-  showPage('home');
-}
+  // Register Form → 30s Timer → Dashboard
+  $('regForm').onsubmit = e => {
+    e.preventDefault();
+    show('verify');
+    let t=30; $('timer').textContent=t;
+    const iv=setInterval(()=>{t--;$('timer').textContent=t;if(t<=0){clearInterval(iv);show('dashboard')}},1000);
+  }
+
+  // Login Form → Direct Dashboard, NO TIMER
+  $('loginForm').onsubmit = e => {
+    e.preventDefault();
+    show('dashboard'); 
+  }
+
+  // Dashboard Buttons
+  $('addEarn').onclick = () => alert('ADD EARN page coming soon');
+  $('invite').onclick = () => alert(https://renvex.co/signup?ref=47413'');
+  $('task').onclick = () => alert('TASK page coming soon');
+
+  // Watch Video Logic
+  $('watchVideo').onclick = () => show(https://youtube.com/shorts/PNsbWwa3Kwo?si=0E4ya2_8eoKbEpwt'');
+  ['c1','c2','c3'].forEach(id=>$(id).onchange=()=>{
+    $('openVideo').disabled = !($('c1').checked && $('c2').checked && $('c3').checked)
+  });
+  $('openVideo').onclick = () => {
+    $('videoBox').classList.remove('hidden');
+    $('openVideo').textContent = 'Video Opened ✓'
+  }
 </script>
-
 </body>
 </html>
