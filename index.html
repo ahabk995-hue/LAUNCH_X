@@ -3,31 +3,59 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Launch X Dashboard</title>
+<title>Launch X</title>
 <style>
     * { margin: 0; padding: 0; box-sizing: border-box; font-family: Arial, sans-serif; }
     body { background: #00C853; color: white; text-align: center; padding: 20px; }
     h1 { margin-bottom: 20px; font-size: 28px; }
-    .balance-box {
-        background: #004D40;
+    .box {
+        background: #1B1B1B;
         padding: 25px;
         border-radius: 15px;
-        margin-bottom: 20px;
+        max-width: 400px;
+        margin: 20px auto;
     }
-    .balance-box h3 { font-size: 16px; font-weight: normal; }
-    .balance-box h2 { font-size: 36px; color: #00E676; margin-top: 10px; }
-    .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 20px; }
     .btn {
+        background: #00E676;
+        color: #000;
+        border: none;
+        padding: 15px;
+        border-radius: 10px;
+        font-weight: bold;
+        cursor: pointer;
+        width: 100%;
+        margin-top: 10px;
+        font-size: 16px;
+    }
+    .btn2 {
         background: #1B1B1B;
+        color: white;
+        border: 2px solid #00E676;
         padding: 20px 10px;
         border-radius: 12px;
         cursor: pointer;
         font-size: 14px;
         font-weight: bold;
-        border: none;
-        color: white;
+        width: 48%;
     }
-    .btn span { display: block; font-size: 24px; margin-bottom: 5px; }
+    input {
+        width:100%;
+        padding:12px;
+        border:none;
+        border-radius:8px;
+        margin-bottom:15px;
+        background:#333;
+        color:white;
+    }
+    .pass-box { position: relative; }
+    .eye {
+        position: absolute;
+        right: 15px;
+        top: 12px;
+        cursor: pointer;
+        font-size: 18px;
+    }
+    .grid { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; margin: 20px 0; }
     .logout {
         background: red;
         width: 100%;
@@ -38,135 +66,141 @@
         font-size: 16px;
         font-weight: bold;
         cursor: pointer;
+        margin-top: 20px;
     }
-    a { text-decoration: none; }
-    input { width:90%;padding:12px;border:none;border-radius:8px;margin-bottom:15px }
-    .popup { background:#1B1B1B;padding:30px;border-radius:15px;text-align:center;width:300px }
+    a { text-decoration: none; color: #00E676; }
 </style>
 </head>
 <body>
 
-<!-- LOGIN POPUP -->
-<div id="loginBox" style="position:fixed;top:0;left:0;width:100%;height:100%;background:#000;display:flex;justify-content:center;align-items:center;z-index:9999">
-  <div class="popup">
-    <h2 style="color:#00E676;margin-bottom:20px">Launch X Login</h2>
-    <input id="passwordInput" type="password" placeholder="Password ڈالیں">
-    <br>
-    <button onclick="checkPassword()" style="background:#00E676;color:#000;border:none;padding:12px 30px;border-radius:8px;font-weight:bold;cursor:pointer;width:90%">
-      Login
-    </button>
-    <p onclick="showForgot()" style="color:#00E676;font-size:12px;margin-top:15px;cursor:pointer;text-decoration:underline">Forgot Password?</p>
-    <p id="error" style="color:red;font-size:12px;margin-top:10px"></p>
-  </div>
+<!-- 1. MAIN SCREEN: 3 OPTIONS -->
+<div id="mainScreen" class="box">
+    <h1>Launch X</h1>
+    <a href="https://wa.me/923316315482" target="_blank"><button class="btn">📞 WhatsApp Support: 0331-6315482</button></a>
+    <button class="btn" onclick="showSignup()">Creating Account</button>
+    <button class="btn" onclick="showLogin()">Login - Already Existing Account</button>
 </div>
 
-<!-- FORGOT PASSWORD POPUP -->
-<div id="forgotBox" style="position:fixed;top:0;left:0;width:100%;height:100%;background:#000;display:none;justify-content:center;align-items:center;z-index:9999">
-  <div class="popup">
-    <h2 style="color:#00E676;margin-bottom:20px">Reset Password</h2>
-    <input id="emailInput" type="email" placeholder="اپنا Email لکھیں">
-    <button onclick="sendOTP()" style="background:#00E676;color:#000;border:none;padding:12px 30px;border-radius:8px;font-weight:bold;cursor:pointer;width:90%">OTP بھیجیں</button>
-    <input id="otpInput" type="text" placeholder="OTP یہاں لکھیں" style="margin-top:10px;display:none">
-    <input id="newPassInput" type="password" placeholder="نیا Password" style="margin-top:10px;display:none">
-    <button id="resetBtn" onclick="resetPassword()" style="background:#00E676;color:#000;border:none;padding:12px 30px;border-radius:8px;font-weight:bold;cursor:pointer;width:90%;display:none;margin-top:10px">Password Change کریں</button>
-    <p onclick="backToLogin()" style="color:#aaa;font-size:12px;margin-top:15px;cursor:pointer">واپس Login</p>
-    <p id="otpShow" style="color:yellow;font-size:14px;margin-top:10px"></p>
-  </div>
+<!-- 2. SIGNUP SCREEN -->
+<div id="signupScreen" class="box" style="display:none">
+    <h2>Creating Account</h2>
+    <input id="name" type="text" placeholder="Name">
+    <input id="email" type="email" placeholder="Email">
+    <div class="pass-box">
+        <input id="signupPass" type="password" placeholder="Set Password">
+        <span class="eye" onclick="togglePass('signupPass')">👁️</span>
+    </div>
+    <input id="number" type="number" placeholder="Phone Number">
+    <button class="btn" onclick="submitSignup()">Submit</button>
+    <p onclick="showMain()" style="margin-top:10px;cursor:pointer">واپس</p>
 </div>
 
-<h1>Welcome Leader</h1>
-
-<div class="balance-box">
-    <h3>Your Balance</h3>
-    <h2>0 PKR</h2>
+<!-- 3. LOGIN SCREEN -->
+<div id="loginScreen" class="box" style="display:none">
+    <h2>Login</h2>
+    <input id="loginEmail" type="email" placeholder="Email">
+    <div class="pass-box">
+        <input id="loginPass" type="password" placeholder="Password">
+        <span class="eye" onclick="togglePass('loginPass')">👁️</span>
+    </div>
+    <button class="btn" onclick="submitLogin()">Login</button>
+    <p onclick="showMain()" style="margin-top:10px;cursor:pointer">واپس</p>
 </div>
 
-<div class="grid">
-    <button class="btn"><span>📋</span>Complete Task</button>
-    <a href="https://video-lemon-chi.vercel.app" target="_blank"><button class="btn"><span>▶️</span>Watch Video</button></a>
-    <button class="btn"><span>💰</span>Earn</button>
-    <button class="btn"><span>👥</span>Invite Friend</button>
-    <button class="btn" onclick="copyLink()" style="grid-column: span 2;"><span>🔗</span>Copy Link</button>
-</div>
+<!-- 4. DASHBOARD SCREEN -->
+<div id="dashboard" style="display:none">
+    <h1>Welcome Leader</h1>
+    <div class="box">
+        <h3>Your Balance</h3>
+        <h2 style="color:#00E676;font-size:36px">0 PKR</h2>
+    </div>
 
-<button class="logout" onclick="logout()">Logout</button>
+    <div class="grid">
+        <!-- 1. WATCH VIDEO - آپ کا دیا ہوا لنک -->
+        <a href="https://video-lemon-chi.vercel.app" target="_blank" style="width:48%">
+            <button class="btn2"><span style="font-size:24px">▶️</span><br>Watch Video</button>
+        </a>
+        
+        <button class="btn2" onclick="alert('Task Complete!')"><span style="font-size:24px">📋</span><br>Complete Task</button>
+        
+        <!-- 2. INVITE FRIEND - آپ کا دیا ہوا لنک -->
+        <a href="https://launch-x-f7n5.vercel.app" target="_blank" style="width:48%">
+            <button class="btn2"><span style="font-size:24px">👥</span><br>Invite Friends</button>
+        </a>
+        
+        <button class="btn2"><span style="font-size:24px">💰</span><br>Earn</button>
+    </div>
+
+    <button class="logout" onclick="logout()">Logout</button>
+
+    <!-- COPY LINK -->
+    <div class="box" style="margin-top:20px">
+        <p>Website Link Copy کریں</p>
+        <button class="btn" onclick="copyLink()">🔗 Copy Website Link</button>
+    </div>
+</div>
 
 <script>
-// 1. اپنا فکس پاسورڈ اور ای میل یہاں لکھو
-let FIX_PASSWORD = "123456"; 
-const FIX_EMAIL = "admin@launchx.com"; // یہی ای میل سے OTP ملے گا
-
-let generatedOTP = "";
-
-function checkPassword(){
-  const input = document.getElementById('passwordInput').value;
-  if(input === FIX_PASSWORD){
-    localStorage.setItem("isLoggedIn", "true");
-    localStorage.setItem("myPassword", FIX_PASSWORD);
-    document.getElementById('loginBox').style.display = 'none';
-  } else {
-    document.getElementById('error').innerText = "غلط پاسورڈ!";
-  }
+// SCREEN SWITCH
+function showMain(){
+    document.getElementById('mainScreen').style.display='block';
+    document.getElementById('signupScreen').style.display='none';
+    document.getElementById('loginScreen').style.display='none';
+    document.getElementById('dashboard').style.display='none';
+}
+function showSignup(){
+    document.getElementById('mainScreen').style.display='none';
+    document.getElementById('signupScreen').style.display='block';
+}
+function showLogin(){
+    document.getElementById('mainScreen').style.display='none';
+    document.getElementById('loginScreen').style.display='block';
+}
+function showDashboard(){
+    document.getElementById('mainScreen').style.display='none';
+    document.getElementById('signupScreen').style.display='none';
+    document.getElementById('loginScreen').style.display='none';
+    document.getElementById('dashboard').style.display='block';
 }
 
-window.onload = function(){
-  const savedPass = localStorage.getItem("myPassword");
-  if(savedPass) FIX_PASSWORD = savedPass;
-  
-  if(localStorage.getItem("isLoggedIn") === "true"){
-    document.getElementById('loginBox').style.display = 'none';
-  }
+// PASSWORD EYE
+function togglePass(id){
+    let x = document.getElementById(id);
+    x.type = x.type === "password" ? "text" : "password";
+}
+
+// SIGNUP + LOGIN - LOCAL STORAGE
+function submitSignup(){
+    let user = {
+        name: document.getElementById('name').value,
+        email: document.getElementById('email').value,
+        pass: document.getElementById('signupPass').value,
+        number: document.getElementById('number').value
+    }
+    if(user.name && user.email && user.pass){
+        localStorage.setItem("user", JSON.stringify(user));
+        alert("✅ Account بن گیا!");
+        showDashboard();
+    } else { alert("❌ سب فیلڈ بھریں") }
+}
+
+function submitLogin(){
+    let user = JSON.parse(localStorage.getItem("user"));
+    let email = document.getElementById('loginEmail').value;
+    let pass = document.getElementById('loginPass').value;
+    if(user && user.email === email && user.pass === pass){
+        showDashboard();
+    } else { alert("❌ غلط Email یا Password") }
 }
 
 function logout(){
-  localStorage.removeItem("isLoggedIn"); 
-  location.reload();
+    showMain();
 }
 
+// COPY FUNCTIONS
 function copyLink(){
-  const websiteLink = window.location.href;
-  navigator.clipboard.writeText(websiteLink).then(function() {
-    alert("✅ لنک کاپی ہو گیا!");
-  });
-}
-
-// FORGOT PASSWORD FUNCTIONS
-function showForgot(){
-  document.getElementById('loginBox').style.display = 'none';
-  document.getElementById('forgotBox').style.display = 'flex';
-}
-
-function backToLogin(){
-  document.getElementById('forgotBox').style.display = 'none';
-  document.getElementById('loginBox').style.display = 'flex';
-}
-
-function sendOTP(){
-  const email = document.getElementById('emailInput').value;
-  if(email !== FIX_EMAIL){
-    alert("❌ یہ ای میل رجسٹر نہیں ہے");
-    return;
-  }
-  // 6 ہندسوں کا OTP بنا دو
-  generatedOTP = Math.floor(100000 + Math.random() * 900000);
-  document.getElementById('otpShow').innerText = "آپ کا OTP: " + generatedOTP; // ای میل کی بجائے یہاں شو ہوگا
-  document.getElementById('otpInput').style.display = 'block';
-  document.getElementById('newPassInput').style.display = 'block';
-  document.getElementById('resetBtn').style.display = 'block';
-  alert("OTP سکرین پر شو ہو گیا ہے اوپر دیکھیں");
-}
-
-function resetPassword(){
-  const otp = document.getElementById('otpInput').value;
-  const newPass = document.getElementById('newPassInput').value;
-  if(otp == generatedOTP){
-    FIX_PASSWORD = newPass;
-    localStorage.setItem("myPassword", newPass);
-    alert("✅ Password Change ہو گیا!");
-    backToLogin();
-  } else {
-    alert("❌ غلط OTP");
-  }
+    navigator.clipboard.writeText(window.location.href);
+    alert("✅ Website Link Copy ہو گیا!");
 }
 </script>
 
