@@ -1,24 +1,145 @@
-<!DOCTYPE html><html><head><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>LAUNCHX</title><style>
-body{margin:0;background:green;text-align:center;color:#fff;font-family:Arial}
-h1{color:#00ff88;font-size:40px;padding-top:30px}
-.box{width:300px;margin:20px auto;padding:15px;background:#0009;border-radius:10px}
-input,button{width:90%;padding:10px;margin:6px;border-radius:5px;border:0}
-button{background:#00ff88;color:#000;font-weight:bold}
-</style></head><body>
-<h1>LAUNCH<span style="color:#fff">X</span></h1>
-<div class="box" id="a">
-<input id="n" placeholder="Name"><input id="e" placeholder="Email">
-<input id="p" placeholder="Phone"><input id="w" type="password" placeholder="Password">
-<button onclick="s()">Get Started</button></div>
-<div class="box" id="b" style="display:none">Wait <span id="t">30</span>s</div>
-<div class="box" id="c" style="display:none">
-<h3 id="u"></h3>Bal:<b id="bal">0</b>PKR<br>
-<button onclick="alert('Task')">Task</button><button onclick="v()">Video</button>
-<button onclick="alert('Earn')">Earn</button><button onclick="open('https://wa.me/')">Invite</button></div>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LAUNCHX - Earn App</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:Arial}
+body{background:linear-gradient(135deg,#00ff88,#00cc66);min-height:100vh;color:#fff}
+.container{max-width:400px;margin:0 auto;padding:20px;text-align:center}
+h1{font-size:45px;margin:20px 0;color:#fff}
+h1 span{color:#000}
+.btn{width:100%;padding:15px;margin:10px 0;border:none;border-radius:10px;font-size:16px;font-weight:bold;cursor:pointer}
+.btn-green{background:#000;color:#00ff88}
+.btn-whatsapp{background:#25D366;color:#fff}
+.box{background:#0009;padding:20px;border-radius:15px;margin:20px 0}
+input{width:100%;padding:12px;margin:8px 0;border:none;border-radius:8px;font-size:15px}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:15px;margin:20px 0}
+.card{background:#222;padding:25px 10px;border-radius:15px;cursor:pointer;border:2px solid #00ff88}
+.card:hover{background:#333}
+.card .icon{font-size:30px;margin-bottom:8px}
+.balance{font-size:25px;color:#00ff88;font-weight:bold}
+.logout{margin-top:20px;background:red;color:#fff}
+.timer{font-size:18px}
+.hidden{display:none}
+</style>
+</head>
+<body>
+<div class="container">
+
+<!-- PAGE 1: WELCOME -->
+<div id="welcome">
+  <h1>LAUNCH<span>X</span></h1>
+  <p>Earn Money by Watching Videos & Tasks</p>
+  <button class="btn btn-green" onclick="showPage('register')">Get Started</button>
+  <button class="btn btn-whatsapp" onclick="window.open('https://wa.me/','_blank')">WhatsApp Support</button>
+</div>
+
+<!-- PAGE 2: REGISTER -->
+<div id="register" class="hidden">
+  <div class="box">
+    <h2>Create Account</h2>
+    <input id="name" placeholder="Full Name" required>
+    <input id="email" placeholder="Email" type="email" required>
+    <input id="phone" placeholder="Phone Number" type="number" required>
+    <input id="pass" placeholder="Set Password" type="password" required>
+    <button class="btn btn-green" onclick="register()">Continue</button>
+    <button class="btn" style="background:#555" onclick="showPage('welcome')">Back</button>
+  </div>
+</div>
+
+<!-- PAGE 3: WAITING -->
+<div id="waiting" class="hidden">
+  <div class="box">
+    <h2>Please Wait...</h2>
+    <p class="timer">Account Creating: <span id="timer">30</span> seconds</p>
+  </div>
+</div>
+
+<!-- PAGE 4: DASHBOARD -->
+<div id="dashboard" class="hidden">
+  <h2>Welcome, <span id="userName"></span></h2>
+  <div class="box">
+    <p>Your Balance</p>
+    <p class="balance"><span id="balance">0</span> PKR</p>
+  </div>
+  
+  <div class="grid">
+    <div class="card" onclick="alert('Task Page Coming Soon')">
+      <div class="icon">📋</div>
+      <div>Complete<br>Task</div>
+    </div>
+    <div class="card" onclick="watchVideo()">
+      <div class="icon">▶️</div>
+      <div>Watch<br>Video</div>
+    </div>
+    <div class="card" onclick="alert('Earn More Coming Soon')">
+      <div class="icon">💰</div>
+      <div>Earn<br>More</div>
+    </div>
+    <div class="card" onclick="window.open('https://wa.me/?text=Join LAUNCHX and Earn Money','_blank')">
+      <div class="icon">👥</div>
+      <div>Invite<br>Friend</div>
+    </div>
+  </div>
+
+  <button class="btn logout" onclick="logout()">Logout</button>
+</div>
+
+</div>
+
 <script>
-let x=JSON.parse(localStorage.x||'{}');if(x.n)d();
-function s(){x={n:n.value,e:e.value,p:p.value,w:w.value,bal:0};localStorage.x=JSON.stringify(x);a.style.display='none';b.style.display='block';let i=30;let y=setInterval(()=>{t.innerText=i--;if(i<0){clearInterval(y);d()}},1000)}
-function d(){b.style.display='none';a.style.display='none';c.style.display='block';u.innerText=x.n;bal.innerText=x.bal}
-function v(){open('https://youtube.com');setTimeout(()=>{x.bal+=5;localStorage.x=JSON.stringify(x);d()},30000)}
-</script></body></html>
+let user = JSON.parse(localStorage.getItem('launchx_user')) || null;
+
+// Agar login hai to direct dashboard
+if(user){ showPage('dashboard'); updateUI(); }
+
+function showPage(id){
+  document.querySelectorAll('#welcome, #register, #waiting, #dashboard').forEach(p=>p.classList.add('hidden'));
+  document.getElementById(id).classList.remove('hidden');
+}
+
+function register(){
+  let n=name.value, e=email.value, p=phone.value, pw=pass.value;
+  if(!n || !e || !p || !pw){ alert('Please fill all fields'); return; }
+  
+  user = {name:n, email:e, phone:p, pass:pw, balance:0};
+  localStorage.setItem('launchx_user', JSON.stringify(user));
+  
+  showPage('waiting');
+  let time=30;
+  let x=setInterval(()=>{
+    document.getElementById('timer').innerText=time;
+    time--;
+    if(time<0){
+      clearInterval(x);
+      showPage('dashboard');
+      updateUI();
+    }
+  },1000);
+}
+
+function updateUI(){
+  document.getElementById('userName').innerText=user.name;
+  document.getElementById('balance').innerText=user.balance;
+}
+
+function watchVideo(){
+  window.open('https://youtube.com','_blank');
+  setTimeout(()=>{
+    user.balance += 5;
+    localStorage.setItem('launchx_user', JSON.stringify(user));
+    updateUI();
+    alert('+5 PKR Added!');
+  },30000); // 30 sec baad paise
+}
+
+function logout(){
+  localStorage.removeItem('launchx_user');
+  user=null;
+  showPage('welcome');
+}
+</script>
+</body>
+</html>
