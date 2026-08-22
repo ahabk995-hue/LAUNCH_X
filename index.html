@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -8,26 +7,28 @@
 <style>
     * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Arial, sans-serif; }
     body { background: #00C853; color: white; text-align: center; padding: 20px; }
-   .topbar { display:flex; justify-content:space-between; align-items:center; max-width: 500px; margin: 0 auto 15px; padding: 0 10px; }
-   .topbar.user { font-size:18px; font-weight:bold; }
-   .topbar.bal { font-size:18px; color:#FFD600; font-weight:bold; }
-   .topbar.logout { background:red; color:white; border:none; padding:8px 12px; border-radius:6px; cursor:pointer; font-weight:bold; }
+  .topbar { display:flex; justify-content:space-between; align-items:center; max-width: 500px; margin: 0 auto 15px; padding: 0 10px; }
+  .topbar.user { font-size:18px; font-weight:bold; }
+  .topbar.bal { font-size:18px; color:#FFD600; font-weight:bold; }
+  .topbar.logout { background:red; color:white; border:none; padding:8px 12px; border-radius:6px; cursor:pointer; font-weight:bold; }
     h1 { margin-bottom: 20px; font-size: 28px; }
-  .box { background: #1B1B1B; padding: 25px; border-radius: 15px; max-width: 500px; margin: 20px auto; box-shadow: 0 0 20px rgba(0,0,0,0.3); }
-  .btn { background: #00E676; color: #000; border: none; padding: 15px; border-radius: 10px; font-weight: bold; cursor: pointer; width: 100%; margin-top: 10px; font-size: 16px; }
-  .btn2 { background: #1B1B1B; color: white; border: 2px solid #00E676; padding: 20px 10px; border-radius: 12px; cursor: pointer; font-size: 14px; font-weight: bold; width: 48%; margin: 5px; }
+ .box { background: #1B1B1B; padding: 25px; border-radius: 15px; max-width: 500px; margin: 20px auto; box-shadow: 0 0 20px rgba(0,0,0,0.3); }
+ .btn { background: #00E676; color: #000; border: none; padding: 15px; border-radius: 10px; font-weight: bold; cursor: pointer; width: 100%; margin-top: 10px; font-size: 16px; }
+ .btn:disabled { background: #555; color: #999; cursor: not-allowed; }
+ .btn2 { background: #1B1B1B; color: white; border: 2px solid #00E676; padding: 20px 10px; border-radius: 12px; cursor: pointer; font-size: 14px; font-weight: bold; width: 48%; margin: 5px; }
+ .btn2:disabled { border-color: #555; color: #777; cursor: not-allowed; }
     input { width:100%; padding:12px; border:none; border-radius:8px; margin-bottom:15px; background:#333; color:white; font-size: 15px; }
-  .user-card { background:#333; padding:15px; border-radius:10px; margin:10px 0; text-align:left; }
-  .activate-btn { background:#00E676; color:#000; border:none; padding:8px 15px; border-radius:5px; cursor:pointer; font-weight:bold; }
-  .footer { margin-top:30px; font-size:12px; opacity:0.7; }
-  .grid { display:flex; flex-wrap:wrap; justify-content:center; }
-  .refer-box { background:#333; padding:15px; border-radius:10px; margin-top:15px; word-break:break-all; }
-  .balance-show { font-size:22px; color:#00E676; margin-bottom:15px; }
-  .pic-box { background:#222; padding:10px; border-radius:10px; margin:10px 0; }
-  .pic-box img { width:100%; height:120px; object-fit:cover; border-radius:8px; }
-  .stars { margin-top:8px; }
-  .star { font-size:24px; color:#555; cursor:pointer; display:inline-block; }
-  .star.active { color:#FFD600; }
+ .user-card { background:#333; padding:15px; border-radius:10px; margin:10px 0; text-align:left; }
+ .activate-btn { background:#00E676; color:#000; border:none; padding:8px 15px; border-radius:5px; cursor:pointer; font-weight:bold; }
+ .footer { margin-top:30px; font-size:12px; opacity:0.7; }
+ .grid { display:flex; flex-wrap:wrap; justify-content:center; }
+ .refer-box { background:#333; padding:15px; border-radius:10px; margin-top:15px; word-break:break-all; }
+ .balance-show { font-size:22px; color:#00E676; margin-bottom:15px; }
+ .pic-box { background:#222; padding:10px; border-radius:10px; margin:10px 0; }
+ .pic-box img { width:100%; height:120px; object-fit:cover; border-radius:8px; }
+ .stars { margin-top:8px; }
+ .star { font-size:24px; color:#555; cursor:pointer; display:inline-block; }
+ .star.active { color:#FFD600; }
 </style>
 </head>
 <body>
@@ -43,6 +44,7 @@
     <p class="footer">© 2026 Launch X - Abdul Reham</p>
 </div>
 
+<!-- باقی ساری سکرینیں وہی رہیں گی -->
 <!-- 2. SIGNUP SCREEN -->
 <div id="signupScreen" class="box" style="display:none">
     <h2>Create Account</h2>
@@ -72,7 +74,7 @@
     <p onclick="showMain()" style="margin-top:10px;cursor:pointer">Back</p>
 </div>
 
-<!-- 5. DASHBOARD - FULLY UPDATED UI -->
+<!-- 5. DASHBOARD -->
 <div id="dashboard" style="display:none">
     <div class="topbar">
         <div class="user" id="userName">User</div>
@@ -85,11 +87,11 @@
         <h2 id="balance" style="color:#00E676;font-size:36px">$0.00</h2>
     </div>
     <div class="grid">
-        <button class="btn2" onclick="watchAndEarn()"><span style="font-size:24px">▶️</span><br>Watch Video<br>+$0.05</button>
+        <button class="btn2" id="watchBtn" onclick="watchAndEarn()"><span style="font-size:24px">▶️</span><br>Watch Video<br>+$0.05</button>
         <button class="btn2" onclick="showWithdraw()"><span style="font-size:24px">💵</span><br>Withdraw</button>
         <button class="btn2" onclick="copyReferral()"><span style="font-size:24px">🔗</span><br>Copy Link</button>
         <button class="btn2" onclick="showReferral()"><span style="font-size:24px">👥</span><br>Invite Friend</button>
-        <button class="btn2" onclick="showPictureTask()"><span style="font-size:24px">⭐</span><br>Rate Pictures<br>+$0.10</button>
+        <button class="btn2" id="rateBtn" onclick="showPictureTask()"><span style="font-size:24px">⭐</span><br>Rate Pictures<br>+$0.10</button>
     </div>
 </div>
 
@@ -165,7 +167,7 @@ function showMain(){ hideAll(); document.getElementById('mainScreen').style.disp
 function showSignup(){ hideAll(); document.getElementById('signupScreen').style.display='block'; }
 function showPayment(){ hideAll(); document.getElementById('paymentScreen').style.display='block'; }
 function showLogin(){ hideAll(); document.getElementById('loginScreen').style.display='block'; }
-function showDashboard(){ hideAll(); document.getElementById('dashboard').style.display='block'; updateBalance(); }
+function showDashboard(){ hideAll(); document.getElementById('dashboard').style.display='block'; updateBalance(); checkDailyLimits(); }
 function showWithdraw(){ hideAll(); document.getElementById('withdrawScreen').style.display='block'; updateWithdrawBalance(); }
 function showWatchTask(){ hideAll(); document.getElementById('watchTask').style.display='block'; }
 function showReferral(){ hideAll(); document.getElementById('referralScreen').style.display='block'; generateReferralLink(); }
@@ -173,18 +175,43 @@ function showAdminPanel(){ hideAll(); document.getElementById('adminPanel').styl
 function showAdminLogin(){ hideAll(); document.getElementById('adminLogin').style.display='block'; }
 function hideAll(){ document.querySelectorAll('.box, #dashboard').forEach(el => el.style.display='none'); }
 
+// DAILY LIMIT CHECK - FIXED
+function checkDailyLimits(){
+    if(!currentUserEmail) return; // <-- YE LINE ADD KI HAI
+    let today = new Date().toDateString();
+    let videoData = JSON.parse(localStorage.getItem("videoTask_"+currentUserEmail)) || {lastDate: ""};
+    let picData = JSON.parse(localStorage.getItem("userTask_"+currentUserEmail)) || {lastDate: "", rated: 0};
+
+    if(videoData.lastDate === today){
+        document.getElementById('watchBtn').disabled = true;
+        document.getElementById('watchBtn').innerHTML = `<span style="font-size:24px">✅</span><br>Video Done<br>کل آئے گا`;
+    } else {
+        document.getElementById('watchBtn').disabled = false;
+        document.getElementById('watchBtn').innerHTML = `<span style="font-size:24px">▶️</span><br>Watch Video<br>+$0.05`;
+    }
+
+    if(picData.lastDate === today && picData.rated >= 10){
+        document.getElementById('rateBtn').disabled = true;
+        document.getElementById('rateBtn').innerHTML = `<span style="font-size:24px">✅</span><br>Task Done<br>کل آئے گا`;
+    } else {
+        document.getElementById('rateBtn').disabled = false;
+        document.getElementById('rateBtn').innerHTML = `<span style="font-size:24px">⭐</span><br>Rate Pictures<br>+$0.10`;
+    }
+}
+
 // PICTURE RATING TASK
 function showPictureTask(){
-    let userData = JSON.parse(localStorage.getItem("userTask_"+currentUserEmail)) || {lastDate: "", rated: 0};
+    if(!currentUserEmail) return; // <-- YE LINE ADD KI HAI
+    let picData = JSON.parse(localStorage.getItem("userTask_"+currentUserEmail)) || {lastDate: "", rated: 0};
     let today = new Date().toDateString();
-    if(userData.lastDate === today && userData.rated >= 10){
-        alert("❌ آپ آج کا Task مکمل کر چکے ہیں۔ کل دوبارہ کوش کریں");
+    if(picData.lastDate === today && picData.rated >= 10){
+        alert("❌ آپ آج کا Picture Task مکمل کر چکے ہیں۔ کل 12 بجے کے بعد دوبارہ ہوگا");
         return;
     }
     hideAll(); document.getElementById('pictureTask').style.display='block'; loadPictures();
 }
 function loadPictures(){
-    let list = document.getElementById('pictureList'); list.innerHTML = "";
+    let list = document.getElementById('pictureList'); list.innerHTML = ""; ratedPics = {};
     PICTURES.forEach((pic, i) => {
         list.innerHTML += `<div class="pic-box"><img src="${pic}"><div class="stars" id="stars-${i}"><span class="star" onclick="ratePic(${i},1)">★</span><span class="star" onclick="ratePic(${i},2)">★</span><span class="star" onclick="ratePic(${i},3)">★</span><span class="star" onclick="ratePic(${i},4)">★</span><span class="star" onclick="ratePic(${i},5)">★</span></div></div>`;
     });
@@ -205,20 +232,26 @@ function ratePic(index, star){
     }
 }
 
-// WATCH & EARN
+// WATCH & EARN - DAILY LIMIT
 function watchAndEarn(){
+    if(!currentUserEmail) return; // <-- YE LINE ADD KI HAI
+    let videoData = JSON.parse(localStorage.getItem("videoTask_"+currentUserEmail)) || {lastDate: ""};
+    let today = new Date().toDateString();
+    if(videoData.lastDate === today){
+        alert("❌ آپ آج کا Video Task مکمل کر چکے ہیں۔ کل 12 بجے کے بعد دوبارہ ہوگا");
+        return;
+    }
     window.open("https://video-lemon-chi.vercel.app", '_blank');
     setTimeout(() => {
         let users = JSON.parse(localStorage.getItem("allUsers")) || [];
         users = users.map(u => u.email === currentUserEmail? {...u, balance: u.balance + 0.05} : u);
-        localStorage.setItem("allUsers", JSON.stringify(users)); updateBalance(); alert("✅ $0.05 Added to your balance!");
+        localStorage.setItem("allUsers", JSON.stringify(users));
+        let newVideoData = {lastDate: today};
+        localStorage.setItem("videoTask_"+currentUserEmail, JSON.stringify(newVideoData));
+        updateBalance(); alert("✅ $0.05 Added to your balance!"); checkDailyLimits();
     }, 3000);
 }
-function completeTask(){
-    let users = JSON.parse(localStorage.getItem("allUsers")) || [];
-    users = users.map(u => u.email === currentUserEmail? {...u, balance: u.balance + 0.05} : u);
-    localStorage.setItem("allUsers", JSON.stringify(users)); alert("$0.05 Added to your balance!"); showDashboard();
-}
+function completeTask(){ watchAndEarn(); }
 
 // WITHDRAW
 function updateWithdrawBalance(){
@@ -247,11 +280,11 @@ function copyReferral(){ navigator.clipboard.writeText(YOUR_REF_LINK); alert("�
 
 // SIGNUP + LOGIN + ADMIN
 function submitSignup(){
-    let user = { name: document.getElementById('name').value, email: document.getElementById('email').value, pass: document.getElementById('signupPass').value, number: document.getElementById('number').value, status: "pending", balance: 0.00, txnId: "" } // BALANCE 0.00
+    let user = { name: document.getElementById('name').value, email: document.getElementById('email').value, pass: document.getElementById('signupPass').value, number: document.getElementById('number').value, status: "pending", balance: 0.00, txnId: "" }
     if(user.name && user.email && user.pass){ let users = JSON.parse(localStorage.getItem("allUsers")) || []; if(users.find(u => u.email === user.email)){ alert("This email already exists"); return; } users.push(user); localStorage.setItem("allUsers", JSON.stringify(users)); currentUserEmail = user.email; currentUserName = user.name; alert("Account Created! Now pay 300 PKR to activate"); showPayment(); } else { alert("Please Fill All Fields") }
 }
 function submitPayment(){ let txn = document.getElementById('txnId').value; if(txn && txn.length > 3){ let users = JSON.parse(localStorage.getItem("allUsers")) || []; users = users.map(u => u.email === currentUserEmail? {...u, txnId: txn} : u); localStorage.setItem("allUsers", JSON.stringify(users)); alert("✅ Payment Submitted! \nAdmin Abdul Reham will verify and approve soon. \nWhatsApp: 0331-6035482"); showMain(); } else { alert("Please enter a valid Transaction ID") } }
-function submitLogin(){ let email = document.getElementById('loginEmail').value; let pass = document.getElementById('loginPass').value; let users = JSON.parse(localStorage.getItem("allUsers")) || []; let user = users.find(u => u.email === email && u.pass === pass); if(user){ if(user.status === "active"){ currentUserEmail = email; currentUserName = user.name; showDashboard(); } else if(user.status === "pending") { alert("❌ آپ کا اکاؤنٹ Pending ہے۔ \nپہلے 300 PKR بھیجیں اور Admin Approval کا انتظار کریں"); showPayment(); } else { alert("Invalid Email or Password") } }
+function submitLogin(){ let email = document.getElementById('loginEmail').value; let pass = document.getElementById('loginPass').value; let users = JSON.parse(localStorage.getItem("allUsers")) || []; let user = users.find(u => u.email === email && u.pass === pass); if(user){ if(user.status === "active"){ currentUserEmail = email; currentUserName = user.name; showDashboard(); } else if(user.status === "pending") { alert("❌ آپ کا اکاؤنٹ Pending ہے۔ \nپہلے 300 PKR بھیجیں اور Admin Approval کا انتظار کریں"); showPayment(); } } else { alert("Invalid Email or Password") } }
 function checkAdmin(){ if(document.getElementById('adminPass').value === ADMIN_PASSWORD){ showAdminPanel(); } else { alert("Wrong Admin Password") } }
 function loadUsers(){ let users = JSON.parse(localStorage.getItem("allUsers")) || []; let list = document.getElementById('userList'); list.innerHTML = ""; let pendingUsers = users.filter(u => u.status === "pending"); if(pendingUsers.length === 0){ list.innerHTML = "<p>No Pending Users</p>"; return; } pendingUsers.forEach(user => { list.innerHTML += `<div class="user-card"><p><b>Name:</b> ${user.name}</p><p><b>Email:</b> ${user.email}</p><p><b>Number:</b> ${user.number}</p><p><b>Txn ID:</b> ${user.txnId || 'N/A'}</p><button class="activate-btn" onclick="activateUser('${user.email}')">Activate</button></div>`; }); }
 function activateUser(email){ let users = JSON.parse(localStorage.getItem("allUsers")) || []; users = users.map(u => u.email === email? {...u, status: "active"} : u); localStorage.setItem("allUsers", JSON.stringify(users)); alert(email + " is now Active!"); loadUsers(); }
@@ -260,8 +293,8 @@ function updateBalance(){
     let user = users.find(u => u.email === currentUserEmail);
     if(user) {
         document.getElementById('balance').innerText = "$" + user.balance.toFixed(2);
-        document.getElementById('topBalance').innerText = "$" + user.balance.toFixed(2); // TOP RIGHT BALANCE
-        document.getElementById('userName').innerText = user.name; // USER NAME
+        document.getElementById('topBalance').innerText = "$" + user.balance.toFixed(2);
+        document.getElementById('userName').innerText = user.name;
     }
 }
 function logout(){ currentUserEmail = ""; currentUserName = ""; showMain(); }
