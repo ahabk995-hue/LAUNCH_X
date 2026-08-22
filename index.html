@@ -1,52 +1,129 @@
-import { useRouter } from "next/navigation"; // اگر Next.js ہے
-// import { useNavigate } from "react-router-dom"; // اگر React ہے
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LAUNCH X</title>
+  <style>
+    body { font-family: Arial; margin:0; padding:20px; background:#f2f2f2; text-align:center; }
+    .page { display:none; }
+    .active { display:block; }
+    .btn { background:#2563eb; color:white; padding:12px 24px; border:none; border-radius:8px; cursor:pointer; margin:10px; font-size:16px; }
+    .btn-green { background:#16a34a; } .btn-red { background:#dc2626; } .btn-purple { background:#9333ea; }
+    .form input { width:90%; padding:10px; margin:8px 0; border:1px solid #ccc; border-radius:6px; }
+    .popup { position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.6); display:flex; align-items:center; justify-content:center; }
+    .popup-box { background:white; padding:20px; border-radius:12px; width:90%; max-width:400px; text-align:left; }
+    .grid { display:grid; grid-template-columns:1fr 1fr; gap:15px; margin-top:20px; }
+    label { display:block; margin:8px 0; }
+  </style>
+</head>
+<body>
 
-export default function Dashboard() {
-  const router = useRouter(); // Next.js کے لیے
-  // const navigate = useNavigate(); // React کے لیے
+<!-- PAGE 1: STARTING PAGE -->
+<div id="home" class="page active">
+  <h1>Welcome to Earn App</h1>
+  <p>Contact WhatsApp: <a href="https://wa.me/923316035482" target="_blank">03316035482</a></p>
+  <button class="btn" onclick="showPage('login')">Click to Login</button>
+</div>
 
-  // 1. Earn والے کا فنکشن
-  const handleEarn = () => {
-    router.push("/earn"); // Earn والے پیج پر لے جائے گا
-  }
+<!-- PAGE 2: LOGIN / SIGNUP PAGE -->
+<div id="login" class="page">
+  <h2>Create Account</h2>
+  <form class="form" onsubmit="startVerification(event)">
+    <input type="text" id="name" placeholder="Name" required><br>
+    <input type="email" id="email" placeholder="Email Address" required><br>
+    <input type="number" id="number" placeholder="Phone Number" required><br>
+    <input type="password" id="password" placeholder="Password" required><br>
+    <button type="submit" id="submitBtn" class="btn btn-green">Submit</button>
+  </form>
+</div>
 
-  // 2. Task والے کا فنکشن  
-  const handleTask = () => {
-    router.push("/task"); // Task والے پیج پر لے جائے گا
-  }
+<!-- PAGE 3: DASHBOARD -->
+<div id="dashboard" class="page">
+  <h2>Dashboard</h2>
+  <div class="grid">
+    <button class="btn btn-green" onclick="alert('Earn Page Coming Soon')">ADD EARN</button>
+    <button class="btn btn-red" onclick="showVideoPopup()">WATCH VIDEO</button>
+    <button class="btn btn-purple" onclick="inviteFriend()">INVITE MEMBERS</button>
+    <button class="btn" onclick="alert('Task Page Coming Soon')">TASK</button>
+  </div>
+  <button class="btn" style="background:#6b7280; margin-top:20px;" onclick="logout()">Logout</button>
+</div>
 
-  // 3. Invite Friend والے کا فنکشن
-  const handleInvite = () => {
-    navigator.clipboard.writeText("https://آپکی_ویب_سائٹ.com/ref=آپکاID");
-    alert("لنک کاپی ہو گیا! دوست کو بھیج دیں");
-  }
+<!-- VIDEO CONDITIONS POPUP -->
+<div id="videoPopup" class="popup" style="display:none;">
+  <div class="popup-box">
+    <h3>Before you continue</h3>
+    <p>Please complete these 3 steps:</p>
+    <label><input type="checkbox" id="c1"> Subscribe to the channel</label>
+    <label><input type="checkbox" id="c2"> Watch the short video completely</label>
+    <label><input type="checkbox" id="c3"> Like the video</label><br>
+    <button class="btn btn-green" onclick="startVideo()">Start - Go to YouTube</button>
+    <button class="btn" style="background:gray;" onclick="closeVideoPopup()">Close</button>
+  </div>
+</div>
 
-  // 4. Logout والے کا فنکشن
-  const handleLogout = () => {
-    localStorage.removeItem("user"); // یوزر کا ڈیٹا ڈیلیٹ
-    // اگر Firebase ہے تو: signOut(auth)
-    router.push("/login"); // Login پیج پر بھیج دو
-  }
-
-  return (
-    <div className="grid grid-cols-2 gap-4 p-4">
-      
-      <button onClick={handleEarn} className="bg-green-600 text-white p-3 rounded-lg">
-        Earn
-      </button>
-
-      <button onClick={handleTask} className="bg-blue-600 text-white p-3 rounded-lg">
-        Task
-      </button>
-
-      <button onClick={handleInvite} className="bg-purple-600 text-white p-3 rounded-lg">
-        Invite Friend
-      </button>
-
-      <button onClick={handleLogout} className="bg-red-600 text-white p-3 rounded-lg">
-        Logout
-      </button>
-
-    </div>
-  )
+<script>
+// Page Switch
+function showPage(id){
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
 }
+
+// 30 Second Verification
+function startVerification(e){
+  e.preventDefault();
+  let btn = document.getElementById('submitBtn');
+  btn.disabled = true;
+  let count = 30;
+  btn.innerText = `Verifying... ${count}s`;
+  
+  let timer = setInterval(()=>{
+    count--;
+    btn.innerText = `Verifying... ${count}s`;
+    if(count <= 0){
+      clearInterval(timer);
+      localStorage.setItem("user", "loggedin");
+      showPage('dashboard');
+    }
+  }, 1000);
+}
+
+// Video Popup
+function showVideoPopup(){
+  document.getElementById('videoPopup').style.display = 'flex';
+}
+function closeVideoPopup(){
+  document.getElementById('videoPopup').style.display = 'none';
+}
+
+// Start Video with 3 Conditions Check
+function startVideo(){
+  let c1 = document.getElementById('c1').checked;
+  let c2 = document.getElementById('c2').checked;
+  let c3 = document.getElementById('c3').checked;
+  
+  if(c1 && c2 && c3){
+    window.open("https://youtube.com/shorts/PNsbWwa3Kwo?si=mukLQtdgDfjfO3Wh", "_blank"); // یہاں اپنی ویڈیو کا لنک لگائیں
+    closeVideoPopup();
+  } else {
+    alert("پہلے 3 شرائط پوری کریں");
+  }
+}
+
+// Invite Friend
+function inviteFriend(){
+  let link = "https://آپکی_ویب_سائٹ.com?ref=123";
+  navigator.clipboard.writeText(link);
+  alert("لنک کاپی ہو گیا: " + link);
+}
+
+// Logout
+function logout(){
+  localStorage.removeItem("user");
+  showPage('home');
+}
+</script>
+
+</body>
+</html>
