@@ -1,270 +1,174 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Launch X</title>
-  <style>
-    :root{--bg:#0b0f14;--card:#111827;--muted:#94a3b8;--text:#e5e7eb;--brand:#3b82f6;--brand2:#22c55e;--warn:#f59e0b;--red:#ef4444}
-    *{box-sizing:border-box}body{margin:0;font-family:system-ui;background:linear-gradient(180deg,#0b0f14,#0a0a0a);color:var(--text)}
-    .container{max-width:900px;margin:0 auto;padding:24px}
-    .card{background:var(--card);border:1px solid #1f2937;border-radius:16px;padding:20px;box-shadow:0 8px 24px rgba(0,0,0,.3)}
-    h1{font-size:28px;margin:0 0 8px} p{color:var(--muted);margin:0 0 16px}
-    .btn{display:inline-flex;align-items:center;gap:8px;padding:12px 16px;border-radius:12px;border:1px solid #243244;background:#0f172a;color:#fff;text-decoration:none;font-weight:600;cursor:pointer;width:100%;justify-content:center}
-    .btn:hover{transform:translateY(-1px);background:#1e293b}
-    .btn.brand{background:var(--brand);border-color:#1d4ed8}
-    .btn.green{background:var(--brand2);border-color:#15803d}
-    .btn.red{background:var(--red);border-color:#dc2626}
-    .btn.yellow{background:var(--warn);border-color:#b45309;color:#111}
-    .grid{display:grid;gap:16px}
-    input,button,select{font:inherit}
-    .field{display:flex;flex-direction:column;gap:8px;margin-bottom:12px}
-    .field input, .field select{padding:12px 14px;border-radius:10px;border:1px solid #243244;background:#0b1220;color:#fff}
-    .hidden{display:none}
-    .timer{font-size:22px;font-weight:800;letter-spacing:.5px}
-    .dashboard{display:grid;gap:12px}
-    .video-frame{width:100%;aspect-ratio:9/16;border:0;border-radius:12px;background:#000}
-    .checkbox{display:flex;align-items:center;gap:10px;margin:12px 0;font-size:14px}
-    .header{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px}
-    .btn-logout{padding:8px 14px;font-size:14px;width:auto;background:#ef4444;border-color:#dc2626}
-    .error{color:#ef4444;font-size:14px;margin-top:8px}
-    .success{color:#22c55e;font-size:14px;margin-top:8px}
-    .balance-box{background:linear-gradient(135deg,#3b82f6,#22c55e);padding:20px;border-radius:12px;text-align:center;margin-bottom:16px}
-    .balance-amount{font-size:36px;font-weight:900;color:#fff}
-    .balance-label{font-size:14px;color:#e5e7eb;opacity:0.9}
-    .video-links{display:grid;gap:8px;margin-bottom:16px}
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Launch X Dashboard</title>
+<style>
+    * { margin: 0; padding: 0; box-sizing: border-box; font-family: Arial, sans-serif; }
+    body { background: #00C853; color: white; text-align: center; padding: 20px; }
+    h1 { margin-bottom: 20px; font-size: 28px; }
+    .balance-box {
+        background: #004D40;
+        padding: 25px;
+        border-radius: 15px;
+        margin-bottom: 20px;
+    }
+    .balance-box h3 { font-size: 16px; font-weight: normal; }
+    .balance-box h2 { font-size: 36px; color: #00E676; margin-top: 10px; }
+    .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 20px; }
+    .btn {
+        background: #1B1B1B;
+        padding: 20px 10px;
+        border-radius: 12px;
+        cursor: pointer;
+        font-size: 14px;
+        font-weight: bold;
+        border: none;
+        color: white;
+    }
+    .btn span { display: block; font-size: 24px; margin-bottom: 5px; }
+    .logout {
+        background: red;
+        width: 100%;
+        padding: 15px;
+        border-radius: 12px;
+        border: none;
+        color: white;
+        font-size: 16px;
+        font-weight: bold;
+        cursor: pointer;
+    }
+    a { text-decoration: none; }
+    input { width:90%;padding:12px;border:none;border-radius:8px;margin-bottom:15px }
+    .popup { background:#1B1B1B;padding:30px;border-radius:15px;text-align:center;width:300px }
+</style>
 </head>
 <body>
-  <div class="container">
-    <section id="home" class="card">
-      <h1>Welcome to <span style="color:#3b82f6">Launch X</span></h1>
-      <p>Earn money by watching videos and completing tasks</p>
-      <div class="grid">
-        <button class="btn green" id="toRegister">1. Create Account</button>
-        <button class="btn brand" id="toLogin">2. Login</button>
-        <button class="btn yellow" id="toAbout">3. About Us</button>
-        <button class="btn" id="toContact">4. Contact / WhatsApp Help</button>
-      </div>
-    </section>
 
-    <section id="register" class="card hidden">
-      <h1>Create Account</h1>
-      <p>Fill the details below</p>
-      <form id="regForm" class="grid">
-        <div class="field"><label>Full Name</label><input name="name" placeholder="Enter your name" required/></div>
-        <div class="field"><label>Email</label><input name="email" type="email" placeholder="Enter your email" required/></div>
-        <div class="field"><label>Password</label><input name="password" type="password" placeholder="Create password" required minlength="4"/></div>
-        <button class="btn green" type="submit">Sign Up</button>
-        <div class="error hidden" id="regError"></div>
-        <div class="success hidden" id="regSuccess"></div>
-      </form>
-      <button class="btn" id="backHome1" style="margin-top:12px">← Back to Home</button>
-    </section>
-
-    <section id="login" class="card hidden">
-      <h1>Login</h1>
-      <p>Enter your Email and Password</p>
-      <form id="loginForm" class="grid">
-        <div class="field"><label>Email</label><input name="email" type="email" placeholder="Enter your email" required/></div>
-        <div class="field"><label>Password</label><input name="password" type="password" placeholder="Enter your password" required/></div>
-        <button class="btn brand" type="submit">Login Now</button>
-        <div class="error hidden" id="loginError">Wrong Email or Password!</div>
-      </form>
-      <button class="btn" id="backHome2" style="margin-top:12px">← Back to Home</button>
-    </section>
-
-    <section id="about" class="card hidden">
-      <h1>About Us</h1>
-      <p>Launch X is a task earning platform. Watch videos, complete tasks and earn real money. Withdraw via Easypaisa or Cash.</p>
-      <button class="btn" id="backHome3">← Back to Home</button>
-    </section>
-
-    <section id="contact" class="card hidden">
-      <h1>Contact / WhatsApp Help</h1>
-      <p>Need Help? Contact us on WhatsApp</p>
-      <a class="btn green" href="https://wa.me/923316035482" target="_blank">WhatsApp: 0331-6035482</a>
-      <button class="btn" id="backHome4" style="margin-top:12px">← Back to Home</button>
-    </section>
-
-    <section id="verify" class="card hidden">
-      <h1>Verifying Your Account...</h1>
-      <p>Please wait <span class="timer" id="timer">30</span> seconds</p>
-    </section>
-
-    <section id="dashboard" class="card hidden">
-      <div class="header">
-        <h1>Dashboard</h1>
-        <button class="btn btn-logout" id="logoutBtn">LOGOUT</button>
-      </div>
-      <p>Welcome: <b><span id="userName"></span></b></p>
-      <div class="balance-box">
-        <div class="balance-label">Your Balance</div>
-        <div class="balance-amount" id="balance">$0.00</div>
-      </div>
-      <div class="dashboard">
-        <button class="btn yellow" id="addEarn">ADD EARN</button>
-        <button class="btn brand" id="watchVideo">WATCH VIDEO</button>
-        <button class="btn red" id="withdrawBtn">WITHDRAWAL</button>
-        <a class="btn green" href="https://renvex.co/signup?ref=47413" target="_blank">INVITE MEMBERS</a>
-        <button class="btn" id="task">TASK</button>
-      </div>
-    </section>
-
-    <section id="withdraw" class="card hidden">
-      <h1>Withdrawal Request</h1>
-      <form id="withdrawForm" class="grid">
-        <div class="field"><label>Current Balance</label><input id="currentBal" readonly/></div>
-        <div class="field"><label>Withdrawal Amount $</label><input name="amount" type="number" step="0.01" min="1" placeholder="Min $1" required/></div>
-        <div class="field">
-          <label>Withdrawal Method</label>
-          <select name="method" required>
-            <option value="">Select Method</option>
-            <option value="Easypaisa">Easypaisa</option>
-            <option value="Cash">Cash</option>
-          </select>
-        </div>
-        <div class="field"><label>Account Number / Name</label><input name="account" placeholder="0331-6035482" required/></div>
-        <button class="btn red" type="submit">Submit Request</button>
-        <div class="success hidden" id="withdrawSuccess"></div>
-      </form>
-      <button class="btn" id="backDash2" style="margin-top:12px">← Back to Dashboard</button>
-    </section>
-
-    <section id="video" class="card hidden">
-      <h1>Watch Video to Earn</h1>
-      <p>Complete all 3 steps then watch video</p>
-      <div class="video-links">
-        <a class="btn red" href="https://youtube.com/shorts/PNsbWwa3Kwo?si=2uXJ2eHRmZRx7mQU" target="_blank">1. Subscribe Channel</a>
-        <a class="btn red" href="https://youtube.com/shorts/PNsbWwa3Kwo?si=2uXJ2eHRmZRx7mQU" target="_blank">2. Like Video</a>
-        <a class="btn red" href="https://youtube.com/shorts/PNsbWwa3Kwo?si=2uXJ2eHRmZRx7mQU" target="_blank">3. Watch Full Video</a>
-      </div>
-      <div class="checkbox"><input type="checkbox" id="c1"/><label for="c1">I Subscribed to the channel</label></div>
-      <div class="checkbox"><input type="checkbox" id="c2"/><label for="c2">I Liked the video</label></div>
-      <div class="checkbox"><input type="checkbox" id="c3"/><label for="c3">I Watched the full video</label></div>
-      <button class="btn green" id="openVideo" disabled>Open Video Below</button>
-      <button class="btn" id="backDash" style="margin-top:12px">← Back to Dashboard</button>
-      <div id="videoBox" class="hidden" style="margin-top:16px">
-        <iframe class="video-frame" src="https://www.youtube.com/embed/PNsbWwa3Kwo" allowfullscreen></iframe>
-      </div>
-    </section>
+<!-- LOGIN POPUP -->
+<div id="loginBox" style="position:fixed;top:0;left:0;width:100%;height:100%;background:#000;display:flex;justify-content:center;align-items:center;z-index:9999">
+  <div class="popup">
+    <h2 style="color:#00E676;margin-bottom:20px">Launch X Login</h2>
+    <input id="passwordInput" type="password" placeholder="Password ڈالیں">
+    <br>
+    <button onclick="checkPassword()" style="background:#00E676;color:#000;border:none;padding:12px 30px;border-radius:8px;font-weight:bold;cursor:pointer;width:90%">
+      Login
+    </button>
+    <p onclick="showForgot()" style="color:#00E676;font-size:12px;margin-top:15px;cursor:pointer;text-decoration:underline">Forgot Password?</p>
+    <p id="error" style="color:red;font-size:12px;margin-top:10px"></p>
   </div>
+</div>
+
+<!-- FORGOT PASSWORD POPUP -->
+<div id="forgotBox" style="position:fixed;top:0;left:0;width:100%;height:100%;background:#000;display:none;justify-content:center;align-items:center;z-index:9999">
+  <div class="popup">
+    <h2 style="color:#00E676;margin-bottom:20px">Reset Password</h2>
+    <input id="emailInput" type="email" placeholder="اپنا Email لکھیں">
+    <button onclick="sendOTP()" style="background:#00E676;color:#000;border:none;padding:12px 30px;border-radius:8px;font-weight:bold;cursor:pointer;width:90%">OTP بھیجیں</button>
+    <input id="otpInput" type="text" placeholder="OTP یہاں لکھیں" style="margin-top:10px;display:none">
+    <input id="newPassInput" type="password" placeholder="نیا Password" style="margin-top:10px;display:none">
+    <button id="resetBtn" onclick="resetPassword()" style="background:#00E676;color:#000;border:none;padding:12px 30px;border-radius:8px;font-weight:bold;cursor:pointer;width:90%;display:none;margin-top:10px">Password Change کریں</button>
+    <p onclick="backToLogin()" style="color:#aaa;font-size:12px;margin-top:15px;cursor:pointer">واپس Login</p>
+    <p id="otpShow" style="color:yellow;font-size:14px;margin-top:10px"></p>
+  </div>
+</div>
+
+<h1>Welcome Leader</h1>
+
+<div class="balance-box">
+    <h3>Your Balance</h3>
+    <h2>0 PKR</h2>
+</div>
+
+<div class="grid">
+    <button class="btn"><span>📋</span>Complete Task</button>
+    <a href="https://video-lemon-chi.vercel.app" target="_blank"><button class="btn"><span>▶️</span>Watch Video</button></a>
+    <button class="btn"><span>💰</span>Earn</button>
+    <button class="btn"><span>👥</span>Invite Friend</button>
+    <button class="btn" onclick="copyLink()" style="grid-column: span 2;"><span>🔗</span>Copy Link</button>
+</div>
+
+<button class="logout" onclick="logout()">Logout</button>
 
 <script>
-  const $ = id => document.getElementById(id);
-  function show(id){
-    ['home','register','login','about','contact','verify','dashboard','withdraw','video'].forEach(s => $(s).classList.add('hidden'));
-    $(id).classList.remove('hidden');
+// 1. اپنا فکس پاسورڈ اور ای میل یہاں لکھو
+let FIX_PASSWORD = "123456"; 
+const FIX_EMAIL = "admin@launchx.com"; // یہی ای میل سے OTP ملے گا
+
+let generatedOTP = "";
+
+function checkPassword(){
+  const input = document.getElementById('passwordInput').value;
+  if(input === FIX_PASSWORD){
+    localStorage.setItem("isLoggedIn", "true");
+    localStorage.setItem("myPassword", FIX_PASSWORD);
+    document.getElementById('loginBox').style.display = 'none';
+  } else {
+    document.getElementById('error').innerText = "غلط پاسورڈ!";
   }
-  function getUsers(){ return JSON.parse(localStorage.getItem('users')) || []; }
-  function saveUsers(users){ localStorage.setItem('users', JSON.stringify(users)); }
-  function setCurrentUser(user){ localStorage.setItem('currentUser', JSON.stringify(user)); }
-  function getCurrentUser(){ return JSON.parse(localStorage.getItem('currentUser')); }
-  function logoutUser(){ localStorage.removeItem('currentUser'); }
-  function updateBalance(amount){
-    let user = getCurrentUser();
-    let users = getUsers();
-    let u = users.find(x => x.email === user.email);
-    u.balance = amount;
-    saveUsers(users);
-    setCurrentUser(u);
-    $('balance').textContent = '$' + amount.toFixed(2);
+}
+
+window.onload = function(){
+  const savedPass = localStorage.getItem("myPassword");
+  if(savedPass) FIX_PASSWORD = savedPass;
+  
+  if(localStorage.getItem("isLoggedIn") === "true"){
+    document.getElementById('loginBox').style.display = 'none';
   }
-  document.addEventListener('DOMContentLoaded', function() {
-    if(getCurrentUser()){ 
-      let user = getCurrentUser();
-      $('userName').textContent = user.name;
-      $('balance').textContent = '$' + (user.balance || 0).toFixed(2);
-      show('dashboard'); 
-    }
-    $('toRegister').onclick = () => show('register');
-    $('toLogin').onclick = () => show('login'); 
-    $('toAbout').onclick = () => show('about');
-    $('toContact').onclick = () => show('contact');
-    $('backHome1').onclick = () => show('home');
-    $('backHome2').onclick = () => show('home');
-    $('backHome3').onclick = () => show('home');
-    $('backHome4').onclick = () => show('home');
-    $('backDash').onclick = () => show('dashboard');
-    $('backDash2').onclick = () => show('dashboard');
-    $('regForm').onsubmit = e => {
-      e.preventDefault();
-      const name = $('regForm').name.value;
-      const email = $('regForm').email.value;
-      const password = $('regForm').password.value;
-      let users = getUsers();
-      if(users.find(u => u.email === email)){
-        $('regError').textContent = "Email already exists!";
-        $('regError').classList.remove('hidden');
-        return;
-      }
-      users.push({name, email, password, balance: 0.00});
-      saveUsers(users);
-      setCurrentUser({name, email, balance: 0.00});
-      $('regSuccess').textContent = "Account created! Verifying...";
-      $('regSuccess').classList.remove('hidden');
-      show('verify');
-      let t=30; $('timer').textContent=t;
-      const iv=setInterval(()=>{t--; $('timer').textContent=t; if(t<=0){clearInterval(iv); $('userName').textContent=name; $('balance').textContent='$0.00'; show('dashboard')}},1000);
-    }
-    $('loginForm').onsubmit = e => {
-      e.preventDefault();
-      const email = $('loginForm').email.value;
-      const password = $('loginForm').password.value;
-      let users = getUsers();
-      let user = users.find(u => u.email === email && u.password === password);
-      if(user){
-        $('loginError').classList.add('hidden');
-        setCurrentUser(user);
-        $('userName').textContent = user.name;
-        $('balance').textContent = '$' + (user.balance || 0).toFixed(2);
-        show('dashboard'); 
-      } else {
-        $('loginError').classList.remove('hidden');
-      }
-    }
-    $('logoutBtn').onclick = () => {
-      logoutUser();
-      show('home');
-      alert('Logged out successfully!');
-    }
-    $('addEarn').onclick = () => {
-      let user = getCurrentUser();
-      let newBal = (user.balance || 0) + 0.10;
-      updateBalance(newBal);
-      alert('Added $0.10 to your balance!');
-    };
-    $('watchVideo').onclick = () => show('video');
-    $('withdrawBtn').onclick = () => {
-      let user = getCurrentUser();
-      $('currentBal').value = '$' + (user.balance || 0).toFixed(2);
-      show('withdraw');
-    };
-    $('task').onclick = () => alert('TASK: New tasks coming soon!');
-    $('withdrawForm').onsubmit = e => {
-      e.preventDefault();
-      const amount = parseFloat($('withdrawForm').amount.value);
-      const method = $('withdrawForm').method.value;
-      const account = $('withdrawForm').account.value;
-      let user = getCurrentUser();
-      if(amount > (user.balance || 0)){
-        alert('Insufficient Balance!');
-        return;
-      }
-      let newBal = (user.balance || 0) - amount;
-      updateBalance(newBal);
-      $('withdrawSuccess').textContent = `Request Submitted! $${amount} via ${method}. We will contact you.`;
-      $('withdrawSuccess').classList.remove('hidden');
-      setTimeout(()=>show('dashboard'), 2000);
-    }
-    ['c1','c2','c3'].forEach(id=>$(id).onchange=()=>{
-      $('openVideo').disabled = !($('c1').checked && $('c2').checked && $('c3').checked)
-    });
-    $('openVideo').onclick = () => {
-      $('videoBox').classList.remove('hidden');
-      $('openVideo').textContent = 'Video Unlocked ✓'
-    }
+}
+
+function logout(){
+  localStorage.removeItem("isLoggedIn"); 
+  location.reload();
+}
+
+function copyLink(){
+  const websiteLink = window.location.href;
+  navigator.clipboard.writeText(websiteLink).then(function() {
+    alert("✅ لنک کاپی ہو گیا!");
   });
+}
+
+// FORGOT PASSWORD FUNCTIONS
+function showForgot(){
+  document.getElementById('loginBox').style.display = 'none';
+  document.getElementById('forgotBox').style.display = 'flex';
+}
+
+function backToLogin(){
+  document.getElementById('forgotBox').style.display = 'none';
+  document.getElementById('loginBox').style.display = 'flex';
+}
+
+function sendOTP(){
+  const email = document.getElementById('emailInput').value;
+  if(email !== FIX_EMAIL){
+    alert("❌ یہ ای میل رجسٹر نہیں ہے");
+    return;
+  }
+  // 6 ہندسوں کا OTP بنا دو
+  generatedOTP = Math.floor(100000 + Math.random() * 900000);
+  document.getElementById('otpShow').innerText = "آپ کا OTP: " + generatedOTP; // ای میل کی بجائے یہاں شو ہوگا
+  document.getElementById('otpInput').style.display = 'block';
+  document.getElementById('newPassInput').style.display = 'block';
+  document.getElementById('resetBtn').style.display = 'block';
+  alert("OTP سکرین پر شو ہو گیا ہے اوپر دیکھیں");
+}
+
+function resetPassword(){
+  const otp = document.getElementById('otpInput').value;
+  const newPass = document.getElementById('newPassInput').value;
+  if(otp == generatedOTP){
+    FIX_PASSWORD = newPass;
+    localStorage.setItem("myPassword", newPass);
+    alert("✅ Password Change ہو گیا!");
+    backToLogin();
+  } else {
+    alert("❌ غلط OTP");
+  }
+}
 </script>
+
 </body>
 </html>
