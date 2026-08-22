@@ -1,82 +1,52 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Launch X Dashboard</title>
-<style>
-    * { margin: 0; padding: 0; box-sizing: border-box; font-family: Arial, sans-serif; }
-    body { background: #00C853; color: white; text-align: center; padding: 20px; }
-    h1 { margin-bottom: 20px; font-size: 28px; }
-    .balance-box {
-        background: #004D40;
-        padding: 25px;
-        border-radius: 15px;
-        margin-bottom: 20px;
-    }
-    .balance-box h3 { font-size: 16px; font-weight: normal; }
-    .balance-box h2 { font-size: 36px; color: #00E676; margin-top: 10px; }
-    .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 20px; }
-    .btn {
-        background: #1B1B1B;
-        padding: 20px 10px;
-        border-radius: 12px;
-        cursor: pointer;
-        font-size: 14px;
-        font-weight: bold;
-        border: none;
-        color: white;
-    }
-    .btn span { display: block; font-size: 24px; margin-bottom: 5px; }
-    .logout {
-        background: red;
-        width: 100%;
-        padding: 15px;
-        border-radius: 12px;
-        border: none;
-        color: white;
-        font-size: 16px;
-        font-weight: bold;
-        cursor: pointer;
-    }
-    a { text-decoration: none; }
-</style>
-</head>
-<body>
+import { useRouter } from "next/navigation"; // اگر Next.js ہے
+// import { useNavigate } from "react-router-dom"; // اگر React ہے
 
-<h1>Welcome Leader</h1>
+export default function Dashboard() {
+  const router = useRouter(); // Next.js کے لیے
+  // const navigate = useNavigate(); // React کے لیے
 
-<div class="balance-box">
-    <h3>Your Balance</h3>
-    <h2>0 PKR</h2>
-</div>
+  // 1. Earn والے کا فنکشن
+  const handleEarn = () => {
+    router.push("/earn"); // Earn والے پیج پر لے جائے گا
+  }
 
-<div class="grid">
-    <button class="btn">
-        <span>📋</span>
-        Complete Task
-    </button>
+  // 2. Task والے کا فنکشن  
+  const handleTask = () => {
+    router.push("/task"); // Task والے پیج پر لے جائے گا
+  }
 
-    <!-- YEH WALA BUTTON CHANGE KIYA HAI -->
-    <a href="https://video-lemon-chi.vercel.app" target="_blank">
-        <button class="btn">
-            <span>▶️</span>
-            Watch Video
-        </button>
-    </a>
+  // 3. Invite Friend والے کا فنکشن
+  const handleInvite = () => {
+    navigator.clipboard.writeText("https://آپکی_ویب_سائٹ.com/ref=آپکاID");
+    alert("لنک کاپی ہو گیا! دوست کو بھیج دیں");
+  }
 
-    <button class="btn">
-        <span>💰</span>
+  // 4. Logout والے کا فنکشن
+  const handleLogout = () => {
+    localStorage.removeItem("user"); // یوزر کا ڈیٹا ڈیلیٹ
+    // اگر Firebase ہے تو: signOut(auth)
+    router.push("/login"); // Login پیج پر بھیج دو
+  }
+
+  return (
+    <div className="grid grid-cols-2 gap-4 p-4">
+      
+      <button onClick={handleEarn} className="bg-green-600 text-white p-3 rounded-lg">
         Earn
-    </button>
+      </button>
 
-    <button class="btn">
-        <span>👥</span>
+      <button onClick={handleTask} className="bg-blue-600 text-white p-3 rounded-lg">
+        Task
+      </button>
+
+      <button onClick={handleInvite} className="bg-purple-600 text-white p-3 rounded-lg">
         Invite Friend
-    </button>
-</div>
+      </button>
 
-<button class="logout">Logout</button>
+      <button onClick={handleLogout} className="bg-red-600 text-white p-3 rounded-lg">
+        Logout
+      </button>
 
-</body>
-</html>
+    </div>
+  )
+}
