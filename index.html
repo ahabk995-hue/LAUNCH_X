@@ -16,6 +16,7 @@
     .btn.green{background:var(--brand2);border-color:#15803d}
     .btn.red{background:var(--red);border-color:#dc2626}
     .btn.yellow{background:var(--warn);border-color:#b45309;color:#111}
+    .btn.gray{background:#374151;border-color:#4b5563}
     .grid{display:grid;gap:16px}
     .grid-2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
     input,button,select{font:inherit}
@@ -38,7 +39,6 @@
     .note{font-size:12px;color:var(--muted)}
     .footer-copy{display:flex;justify-content:space-between;align-items:center;margin-top:20px;padding-top:16px;border-top:1px solid #243244;font-size:12px;color:var(--muted)}
     .copy-btn{padding:6px 12px;font-size:12px;width:auto;background:#1e293b}
-    #adBox{margin-top:16px;text-align:center}
   </style>
 </head>
 <body>
@@ -124,16 +124,11 @@
       <div class="grid-2">
         <button class="btn brand" id="watchVideo">1. WATCH<br>VIDEO</button>
         <a class="btn green" href="https://renvex.co/signup?ref=47413" target="_blank">2. INVITE<br>FRIEND</a>
-        <button class="btn yellow" id="addEarn">3. ADD<br>EARN</button>
+        <button class="btn gray" id="addEarn">3. ADD<br>EARN</button>
         <button class="btn red" id="withdrawBtn">4. WITHDRAW</button>
       </div>
-      <button class="btn" id="task" style="margin-top:16px">5. COMPLETE TASK</button>
+      <button class="btn yellow" id="task" style="margin-top:16px">5. COMPLETE TASK</button>
       
-      <div id="adBox" class="hidden">
-        <p class="note">Watch ad to earn. Complete the ad to get reward</p>
-        <div id="adNetwork">Your Ad Code Here</div>
-      </div>
-
       <div class="footer-copy">
         <span>© 2026 Launch X</span>
         <button class="btn copy-btn" id="copyLink">Copy Link</button>
@@ -164,14 +159,14 @@
 
     <section id="video" class="card hidden">
       <h1>Watch Video to Earn $0.05</h1>
-      <p class="note">Reward: 1 time per day. Reset at 12:00 AM</p>
+      <p class="note">Reward only 1 time per account. Complete all 3 steps</p>
       <div class="video-links">
         <a class="btn red" href="https://youtube.com/shorts/PNsbWwa3Kwo?si=2uXJ2eHRmZRx7mQU" target="_blank">1. Subscribe Channel</a>
         <a class="btn red" href="https://youtube.com/shorts/PNsbWwa3Kwo?si=2uXJ2eHRmZRx7mQU" target="_blank">2. Like Video</a>
         <a class="btn red" href="https://youtube.com/shorts/PNsbWwa3Kwo?si=2uXJ2eHRmZRx7mQU" target="_blank">3. Watch Full Video</a>
       </div>
       <div class="checkbox"><input type="checkbox" id="c1"/><label for="c1">I Subscribed to the channel</label></div>
-      <div class="checkbox"><input type="checkbox" id="c2"/><label for="c2">I Liked the video</button></div>
+      <div class="checkbox"><input type="checkbox" id="c2"/><label for="c2">I Liked the video</label></div>
       <div class="checkbox"><input type="checkbox" id="c3"/><label for="c3">I Watched the full video</label></div>
       <div class="success hidden" id="videoRewardMsg" style="margin-top:12px"></div>
       <button class="btn gray" id="backDash" style="margin-top:12px">← Back to Dashboard</button>
@@ -205,19 +200,9 @@
     setCurrentUser(u);
     $('balance').textContent = '$' + amount.toFixed(2);
   }
-  function getToday(){ return new Date().toDateString(); }
-  
   document.addEventListener('DOMContentLoaded', function() {
     if(getCurrentUser()){ 
       let user = getCurrentUser();
-      // Check if new day, reset video claim
-      if(user.lastVideoDate !== getToday()){
-        user.videoClaimed = false;
-        setCurrentUser(user);
-        let users = getUsers();
-        let u = users.find(x => x.email === user.email);
-        if(u){ u.videoClaimed = false; saveUsers(users); }
-      }
       $('userName').textContent = user.name;
       $('balance').textContent = '$' + (user.balance || 0).toFixed(2);
       show('dashboard'); 
@@ -250,9 +235,9 @@
         $('regError').classList.remove('hidden');
         return;
       }
-      users.push({name, email, number, password, balance: 0.00, videoClaimed: false, lastVideoDate: ""});
+      users.push({name, email, number, password, balance: 0.00, videoClaimed: false});
       saveUsers(users);
-      setCurrentUser({name, email, number, balance: 0.00, videoClaimed: false, lastVideoDate: ""});
+      setCurrentUser({name, email, number, balance: 0.00, videoClaimed: false});
       $('regSuccess').textContent = "Account created! Verifying...";
       $('regSuccess').classList.remove('hidden');
       show('verify');
@@ -266,10 +251,6 @@
       let users = getUsers();
       let user = users.find(u => u.email === email && u.password === password);
       if(user){
-        // Reset if new day
-        if(user.lastVideoDate !== getToday()){
-          user.videoClaimed = false;
-        }
         $('loginError').classList.add('hidden');
         setCurrentUser(user);
         $('userName').textContent = user.name;
@@ -284,22 +265,16 @@
       show('home');
       alert('Logged out successfully!');
     }
-    
     $('addEarn').onclick = () => {
-      $('adBox').classList.toggle('hidden');
-      alert('Ad loading... Complete the ad to earn reward');
+      alert('ADD EARN - Coming Soon!');
     };
-    
     $('watchVideo').onclick = () => {
       let user = getCurrentUser();
-      if(user.videoClaimed && user.lastVideoDate === getToday()){
-        $('videoRewardMsg').textContent = 'You have already claimed today. Come back tomorrow!';
+      if(user.videoClaimed){
+        $('videoRewardMsg').textContent = 'You have already earned from this video';
         $('videoRewardMsg').classList.remove('hidden');
-        $('c1').disabled = true; $('c2').disabled = true; $('c3').disabled = true;
       } else {
         $('videoRewardMsg').classList.add('hidden');
-        $('c1').disabled = false; $('c2').disabled = false; $('c3').disabled = false;
-        $('c1').checked = false; $('c2').checked = false; $('c3').checked = false;
       }
       show('video');
     };
@@ -335,21 +310,17 @@
     
     function checkVideoReward(){
       let user = getCurrentUser();
-      if(user.videoClaimed && user.lastVideoDate === getToday()) return;
-      
+      if(user.videoClaimed) return;
       if($('c1').checked && $('c2').checked && $('c3').checked){
         let newBal = (user.balance || 0) + 0.05;
         updateBalance(newBal);
-        
         let users = getUsers();
         let u = users.find(x => x.email === user.email);
         u.videoClaimed = true;
-        u.lastVideoDate = getToday();
         saveUsers(users);
         setCurrentUser(u);
-        
         $('videoBox').classList.remove('hidden');
-        $('videoRewardMsg').textContent = 'Congratulations! $0.05 added to your balance. Come back tomorrow for more';
+        $('videoRewardMsg').textContent = 'Congratulations! $0.05 automatically added to your balance';
         $('videoRewardMsg').classList.remove('hidden');
         $('c1').disabled = true; $('c2').disabled = true; $('c3').disabled = true;
       }
