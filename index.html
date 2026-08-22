@@ -12,7 +12,7 @@
         background: #1B1B1B;
         padding: 25px;
         border-radius: 15px;
-        max-width: 420px;
+        max-width: 450px;
         margin: 20px auto;
         box-shadow: 0 0 20px rgba(0,0,0,0.3);
     }
@@ -38,6 +38,7 @@
         font-size: 14px;
         font-weight: bold;
         width: 48%;
+        margin: 5px;
     }
     input {
         width:100%;
@@ -54,6 +55,8 @@
     .footer { margin-top:30px; font-size:12px; opacity:0.7; }
     .condition { background:#333; padding:10px; border-radius:8px; margin:8px 0; text-align:left; }
     .video-link { background:#00E676; color:#000; padding:12px; border-radius:8px; margin:15px 0; display:block; text-decoration:none; font-weight:bold; }
+    .grid { display:flex; flex-wrap:wrap; justify-content:center; }
+    .refer-box { background:#333; padding:15px; border-radius:10px; margin-top:15px; word-break:break-all; }
 </style>
 </head>
 <body>
@@ -62,7 +65,7 @@
 <div id="mainScreen" class="box">
     <h1>Launch X</h1>
     <p style="margin-bottom:15px">Owner: Abdul Reham</p>
-    <a href="https://wa.me/923316315482" target="_blank"><button class="btn">📞 WhatsApp Support: 0331-6315482</button></a>
+    <a href="https://wa.me/923316035482" target="_blank"><button class="btn">📞 WhatsApp Support: 0331-6035482</button></a>
     <button class="btn" onclick="showSignup()">Create New Account</button>
     <button class="btn" onclick="showLogin()">Login</button>
     <button class="btn" onclick="showAdminLogin()" style="background:#FFD600">Admin Panel</button>
@@ -84,7 +87,7 @@
 <div id="paymentScreen" class="box" style="display:none">
     <h2>Account Activation Fee</h2>
     <p>Send <b>300 PKR</b> to:</p>
-    <h3 style="color:#00E676">EasyPaisa / JazzCash: 0331-6315482</h3>
+    <h3 style="color:#00E676">EasyPaisa / JazzCash: 0331-6035482</h3>
     <p>Owner: Abdul Reham</p>
     <p>After payment, send screenshot to WhatsApp</p>
     <input id="txnId" type="text" placeholder="Enter Transaction ID">
@@ -100,7 +103,7 @@
     <p onclick="showMain()" style="margin-top:10px;cursor:pointer">Back</p>
 </div>
 
-<!-- 5. DASHBOARD -->
+<!-- 5. DASHBOARD - UPDATED -->
 <div id="dashboard" style="display:none">
     <h1>Welcome</h1>
     <div class="box">
@@ -108,9 +111,11 @@
         <h2 id="balance" style="color:#00E676;font-size:36px">$0.00</h2>
     </div>
     
-    <div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin:20px 0">
+    <div class="grid">
         <button class="btn2" onclick="showWatchTask()"><span style="font-size:24px">▶️</span><br>Watch Video<br>+$0.05</button>
-        <button class="btn2"><span style="font-size:24px">💰</span><br>Earn</button>
+        <button class="btn2" onclick="showWithdraw()"><span style="font-size:24px">💵</span><br>Withdraw</button>
+        <button class="btn2" onclick="copyReferral()"><span style="font-size:24px">🔗</span><br>Copy Link</button>
+        <button class="btn2" onclick="showReferral()"><span style="font-size:24px">👥</span><br>Invite Friend</button>
     </div>
 
     <button class="btn" onclick="logout()" style="background:red">Logout</button>
@@ -129,15 +134,36 @@
     <button class="btn" onclick="showDashboard()" style="background:#555">Back</button>
 </div>
 
+<!-- 7. WITHDRAW SCREEN -->
+<div id="withdrawScreen" class="box" style="display:none">
+    <h2>Withdraw</h2>
+    <p>Minimum Withdraw: $5.00</p>
+    <input id="withdrawMethod" type="text" placeholder="EasyPaisa / JazzCash Number">
+    <input id="withdrawAmount" type="number" placeholder="Enter Amount $">
+    <button class="btn" onclick="submitWithdraw()">Request Withdraw</button>
+    <button class="btn" onclick="showDashboard()" style="background:#555">Back</button>
+</div>
 
-<!-- 7. ADMIN PANEL -->
+<!-- 8. REFERRAL SCREEN -->
+<div id="referralScreen" class="box" style="display:none">
+    <h2>Invite Friends - Earn 70 PKR</h2>
+    <p>Har friend ke join hone par aapko 70 PKR milenge</p>
+    <div class="refer-box">
+        <p><b>Your Referral Link:</b></p>
+        <p id="referLink"></p>
+    </div>
+    <button class="btn" onclick="copyReferral()">Copy Link</button>
+    <button class="btn" onclick="showDashboard()" style="background:#555">Back</button>
+</div>
+
+<!-- 9. ADMIN PANEL -->
 <div id="adminPanel" class="box" style="display:none">
     <h2>Admin Panel - Abdul Reham</h2>
     <div id="userList"></div>
     <button class="btn" onclick="showMain()">Back</button>
 </div>
 
-<!-- 8. ADMIN LOGIN -->
+<!-- 10. ADMIN LOGIN -->
 <div id="adminLogin" class="box" style="display:none">
     <h2>Admin Login</h2>
     <input id="adminPass" type="password" placeholder="Enter Admin Password">
@@ -148,6 +174,7 @@
 <script>
 let ADMIN_PASSWORD = "AbdulReham123"; 
 let currentUserEmail = "";
+let SITE_URL = window.location.href.split('?')[0]; // Your site link
 
 // SCREENS
 function showMain(){ hideAll(); document.getElementById('mainScreen').style.display='block'; }
@@ -156,13 +183,15 @@ function showPayment(){ hideAll(); document.getElementById('paymentScreen').styl
 function showLogin(){ hideAll(); document.getElementById('loginScreen').style.display='block'; }
 function showDashboard(){ hideAll(); document.getElementById('dashboard').style.display='block'; updateBalance(); }
 function showWatchTask(){ hideAll(); document.getElementById('watchTask').style.display='block'; }
+function showWithdraw(){ hideAll(); document.getElementById('withdrawScreen').style.display='block'; }
+function showReferral(){ hideAll(); document.getElementById('referralScreen').style.display='block'; generateReferralLink(); }
 function showAdminPanel(){ hideAll(); document.getElementById('adminPanel').style.display='block'; loadUsers(); }
 function showAdminLogin(){ hideAll(); document.getElementById('adminLogin').style.display='block'; }
 function hideAll(){ 
     document.querySelectorAll('.box, #dashboard').forEach(el => el.style.display='none');
 }
 
-// WATCH VIDEO TASK - NO CLICK EARN
+// WATCH VIDEO TASK
 function completeTask(){
     let users = JSON.parse(localStorage.getItem("allUsers")) || [];
     users = users.map(u => u.email === currentUserEmail ? {...u, balance: u.balance + 0.05} : u);
@@ -172,8 +201,32 @@ function completeTask(){
     showDashboard();
 }
 
-// SIGNUP
+// WITHDRAW
+function submitWithdraw(){
+    let amount = parseFloat(document.getElementById('withdrawAmount').value);
+    let method = document.getElementById('withdrawMethod').value;
+    if(amount >= 5 && method){
+        alert("✅ Withdraw Request Submitted!\nAdmin will send payment to: " + method + "\nWhatsApp: 0331-6035482");
+        showDashboard();
+    } else { alert("Minimum withdraw is $5.00 and enter number") }
+}
+
+// REFERRAL
+function generateReferralLink(){
+    let refLink = SITE_URL + "?ref=" + currentUserEmail;
+    document.getElementById('referLink').innerText = refLink;
+}
+function copyReferral(){
+    let refLink = SITE_URL + "?ref=" + currentUserEmail;
+    navigator.clipboard.writeText(refLink);
+    alert("✅ Referral Link Copied!");
+}
+
+// SIGNUP with Referral
 function submitSignup(){
+    let urlParams = new URLSearchParams(window.location.search);
+    let ref = urlParams.get('ref');
+
     let user = {
         name: document.getElementById('name').value,
         email: document.getElementById('email').value,
@@ -181,7 +234,8 @@ function submitSignup(){
         number: document.getElementById('number').value,
         status: "pending",
         balance: 0,
-        txnId: ""
+        txnId: "",
+        referredBy: ref || ""
     }
     if(user.name && user.email && user.pass){
         let users = JSON.parse(localStorage.getItem("allUsers")) || [];
@@ -201,7 +255,7 @@ function submitPayment(){
         let users = JSON.parse(localStorage.getItem("allUsers")) || [];
         users = users.map(u => u.email === currentUserEmail ? {...u, txnId: txn} : u);
         localStorage.setItem("allUsers", JSON.stringify(users));
-        alert("✅ Payment Submitted! \nAdmin Abdul Reham will verify and approve soon. \nWhatsApp: 0331-6315482");
+        alert("✅ Payment Submitted! \nAdmin Abdul Reham will verify and approve soon. \nWhatsApp: 0331-6035482");
         showMain();
     } else { alert("Please enter a valid Transaction ID") }
 }
@@ -245,13 +299,22 @@ function loadUsers(){
             <p><b>Email:</b> ${user.email}</p>
             <p><b>Number:</b> ${user.number}</p>
             <p><b>Txn ID:</b> ${user.txnId || 'N/A'}</p>
-            <button class="activate-btn" onclick="activateUser('${user.email}')">Activate</button>
+            <p><b>Referred By:</b> ${user.referredBy || 'None'}</p>
+            <button class="activate-btn" onclick="activateUser('${user.email}')">Activate + Give 70PKR to Referrer</button>
         </div>`;
     });
 }
 
 function activateUser(email){
     let users = JSON.parse(localStorage.getItem("allUsers")) || [];
+    let user = users.find(u => u.email === email);
+    
+    // Give 70 PKR to referrer
+    if(user.referredBy){
+        users = users.map(u => u.email === user.referredBy ? {...u, balance: u.balance + 0.40} : u); // $0.40 = ~70PKR
+        alert("70 PKR added to referrer: " + user.referredBy);
+    }
+
     users = users.map(u => u.email === email ? {...u, status: "active"} : u);
     localStorage.setItem("allUsers", JSON.stringify(users));
     alert(email + " is now Active!");
@@ -269,3 +332,4 @@ function logout(){ currentUserEmail = ""; showMain(); }
 
 </body>
 </html>
+
