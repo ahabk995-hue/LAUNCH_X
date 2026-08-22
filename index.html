@@ -17,26 +17,25 @@
     .btn.red{background:var(--red);border-color:#dc2626}
     .btn.yellow{background:var(--warn);border-color:#b45309;color:#111}
     .grid{display:grid;gap:16px}
-    input,button{font:inherit}
+    input,button,select{font:inherit}
     .field{display:flex;flex-direction:column;gap:8px;margin-bottom:12px}
-    .field input{padding:12px 14px;border-radius:10px;border:1px solid #243244;background:#0b1220;color:#fff}
+    .field input, .field select{padding:12px 14px;border-radius:10px;border:1px solid #243244;background:#0b1220;color:#fff}
     .hidden{display:none}
     .timer{font-size:22px;font-weight:800;letter-spacing:.5px}
     .dashboard{display:grid;gap:12px}
     .video-frame{width:100%;aspect-ratio:9/16;border:0;border-radius:12px;background:#000}
     .checkbox{display:flex;align-items:center;gap:10px;margin:12px 0;font-size:14px}
-    .note{font-size:12px;color:#94a3b8;text-align:center;margin-top:16px}
-    .link-btn{background:none;border:none;color:#3b82f6;text-decoration:underline;cursor:pointer;font-size:14px;padding:0}
-    .video-links{display:grid;gap:8px;margin-bottom:16px}
     .header{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px}
     .btn-logout{padding:8px 14px;font-size:14px;width:auto;background:#ef4444;border-color:#dc2626}
     .error{color:#ef4444;font-size:14px;margin-top:8px}
     .success{color:#22c55e;font-size:14px;margin-top:8px}
+    .balance-box{background:linear-gradient(135deg,#3b82f6,#22c55e);padding:20px;border-radius:12px;text-align:center;margin-bottom:16px}
+    .balance-amount{font-size:36px;font-weight:900;color:#fff}
+    .balance-label{font-size:14px;color:#e5e7eb;opacity:0.9}
   </style>
 </head>
 <body>
   <div class="container">
-    <!-- HOME - 4 OPTIONS -->
     <section id="home" class="card">
       <h1>Welcome to <span style="color:#3b82f6">Launch X</span></h1>
       <div class="grid">
@@ -47,7 +46,6 @@
       </div>
     </section>
 
-    <!-- REGISTER -->
     <section id="register" class="card hidden">
       <h1>Create Account</h1>
       <form id="regForm" class="grid">
@@ -61,7 +59,6 @@
       <button class="btn" id="backHome1" style="margin-top:12px">← Back</button>
     </section>
 
-    <!-- LOGIN -->
     <section id="login" class="card hidden">
       <h1>Login</h1>
       <form id="loginForm" class="grid">
@@ -73,42 +70,62 @@
       <button class="btn" id="backHome2" style="margin-top:12px">← Back</button>
     </section>
 
-    <!-- ABOUT -->
     <section id="about" class="card hidden">
       <h1>About Us</h1>
       <p>Launch X is a task earning platform. Watch videos and earn money.</p>
       <button class="btn" id="backHome3">← Back</button>
     </section>
 
-    <!-- CONTACT -->
     <section id="contact" class="card hidden">
       <h1>Contact</h1>
       <p>WhatsApp: 03xx-xxxxxxx</p>
       <button class="btn" id="backHome4">← Back</button>
     </section>
 
-    <!-- VERIFY -->
     <section id="verify" class="card hidden">
       <h1>Verifying...</h1>
       <p>Please wait <span class="timer" id="timer">30</span> seconds</p>
     </section>
 
-    <!-- DASHBOARD -->
     <section id="dashboard" class="card hidden">
       <div class="header">
         <h1>Dashboard</h1>
         <button class="btn btn-logout" id="logoutBtn">LOGOUT</button>
       </div>
       <p>Welcome: <span id="userName"></span></p>
+      <div class="balance-box">
+        <div class="balance-label">Your Balance</div>
+        <div class="balance-amount" id="balance">$0.00</div>
+      </div>
       <div class="dashboard">
         <button class="btn yellow" id="addEarn">ADD EARN</button>
         <button class="btn brand" id="watchVideo">WATCH VIDEO</button>
+        <button class="btn red" id="withdrawBtn">WITHDRAWAL</button>
         <a class="btn green" href="https://renvex.co/signup?ref=47413" target="_blank">INVITE MEMBERS</a>
         <button class="btn" id="task">TASK</button>
       </div>
     </section>
 
-    <!-- VIDEO -->
+    <section id="withdraw" class="card hidden">
+      <h1>Withdrawal Request</h1>
+      <form id="withdrawForm" class="grid">
+        <div class="field"><label>Current Balance</label><input id="currentBal" readonly/></div>
+        <div class="field"><label>Withdrawal Amount $</label><input name="amount" type="number" step="0.01" min="1" required/></div>
+        <div class="field">
+          <label>Method</label>
+          <select name="method" required>
+            <option value="">Select Method</option>
+            <option value="Easypaisa">Easypaisa</option>
+            <option value="Cash">Cash</option>
+          </select>
+        </div>
+        <div class="field"><label>Account Number / Name</label><input name="account" required/></div>
+        <button class="btn red" type="submit">Submit Request</button>
+        <div class="success hidden" id="withdrawSuccess"></div>
+      </form>
+      <button class="btn" id="backDash2" style="margin-top:12px">← Back to Dashboard</button>
+    </section>
+
     <section id="video" class="card hidden">
       <h1>Watch Video to Earn</h1>
       <div class="video-links">
@@ -130,25 +147,30 @@
 <script>
   const $ = id => document.getElementById(id);
   function show(id){
-    ['home','register','login','about','contact','verify','dashboard','video'].forEach(s => $(s).classList.add('hidden'));
+    ['home','register','login','about','contact','verify','dashboard','withdraw','video'].forEach(s => $(s).classList.add('hidden'));
     $(id).classList.remove('hidden');
   }
-
-  // LocalStorage Functions
   function getUsers(){ return JSON.parse(localStorage.getItem('users')) || []; }
   function saveUsers(users){ localStorage.setItem('users', JSON.stringify(users)); }
   function setCurrentUser(user){ localStorage.setItem('currentUser', JSON.stringify(user)); }
   function getCurrentUser(){ return JSON.parse(localStorage.getItem('currentUser')); }
   function logoutUser(){ localStorage.removeItem('currentUser'); }
-
+  function updateBalance(amount){
+    let user = getCurrentUser();
+    let users = getUsers();
+    let u = users.find(x => x.email === user.email);
+    u.balance = amount;
+    saveUsers(users);
+    setCurrentUser(u);
+    $('balance').textContent = '$' + amount.toFixed(2);
+  }
   document.addEventListener('DOMContentLoaded', function() {
-    // Check if already logged in
     if(getCurrentUser()){ 
-      $('userName').textContent = getCurrentUser().name;
+      let user = getCurrentUser();
+      $('userName').textContent = user.name;
+      $('balance').textContent = '$' + (user.balance || 0).toFixed(2);
       show('dashboard'); 
     }
-
-    // Navigation
     $('toRegister').onclick = () => show('register');
     $('toLogin').onclick = () => show('login'); 
     $('toAbout').onclick = () => show('about');
@@ -158,63 +180,77 @@
     $('backHome3').onclick = () => show('home');
     $('backHome4').onclick = () => show('home');
     $('backDash').onclick = () => show('dashboard');
-
-    // REGISTER - Save to LocalStorage
+    $('backDash2').onclick = () => show('dashboard');
     $('regForm').onsubmit = e => {
       e.preventDefault();
       const name = $('regForm').name.value;
       const email = $('regForm').email.value;
       const password = $('regForm').password.value;
       let users = getUsers();
-      
       if(users.find(u => u.email === email)){
         $('regError').textContent = "Email already exists!";
         $('regError').classList.remove('hidden');
         return;
       }
-      
-      users.push({name, email, password});
+      users.push({name, email, password, balance: 0.00});
       saveUsers(users);
-      setCurrentUser({name, email});
-      
+      setCurrentUser({name, email, balance: 0.00});
       $('regSuccess').textContent = "Account created! Verifying...";
       $('regSuccess').classList.remove('hidden');
       show('verify');
       let t=30; $('timer').textContent=t;
-      const iv=setInterval(()=>{t--; $('timer').textContent=t; if(t<=0){clearInterval(iv); $('userName').textContent=name; show('dashboard')}},1000);
+      const iv=setInterval(()=>{t--; $('timer').textContent=t; if(t<=0){clearInterval(iv); $('userName').textContent=name; $('balance').textContent='$0.00'; show('dashboard')}},1000);
     }
-
-    // LOGIN - Check from LocalStorage
     $('loginForm').onsubmit = e => {
       e.preventDefault();
       const email = $('loginForm').email.value;
       const password = $('loginForm').password.value;
       let users = getUsers();
       let user = users.find(u => u.email === email && u.password === password);
-      
       if(user){
         $('loginError').classList.add('hidden');
         setCurrentUser(user);
         $('userName').textContent = user.name;
+        $('balance').textContent = '$' + (user.balance || 0).toFixed(2);
         show('dashboard'); 
       } else {
         $('loginError').classList.remove('hidden');
       }
     }
-
-    // LOGOUT
     $('logoutBtn').onclick = () => {
       logoutUser();
       show('home');
       alert('Logged out successfully!');
     }
-
-    // Dashboard
-    $('addEarn').onclick = () => alert('ADD EARN: Coming Soon!');
+    $('addEarn').onclick = () => {
+      let user = getCurrentUser();
+      let newBal = (user.balance || 0) + 0.10;
+      updateBalance(newBal);
+      alert('Added $0.10 to your balance!');
+    };
     $('watchVideo').onclick = () => show('video');
+    $('withdrawBtn').onclick = () => {
+      let user = getCurrentUser();
+      $('currentBal').value = '$' + (user.balance || 0).toFixed(2);
+      show('withdraw');
+    };
     $('task').onclick = () => alert('TASK: New tasks coming soon!');
-
-    // Video
+    $('withdrawForm').onsubmit = e => {
+      e.preventDefault();
+      const amount = parseFloat($('withdrawForm').amount.value);
+      const method = $('withdrawForm').method.value;
+      const account = $('withdrawForm').account.value;
+      let user = getCurrentUser();
+      if(amount > (user.balance || 0)){
+        alert('Insufficient Balance!');
+        return;
+      }
+      let newBal = (user.balance || 0) - amount;
+      updateBalance(newBal);
+      $('withdrawSuccess').textContent = `Request Submitted! $${amount} via ${method}. We will contact you.`;
+      $('withdrawSuccess').classList.remove('hidden');
+      setTimeout(()=>show('dashboard'), 2000);
+    }
     ['c1','c2','c3'].forEach(id=>$(id).onchange=()=>{
       $('openVideo').disabled = !($('c1').checked && $('c2').checked && $('c3').checked)
     });
@@ -226,3 +262,4 @@
 </script>
 </body>
 </html>
+
