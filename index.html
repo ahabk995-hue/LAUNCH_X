@@ -1,60 +1,17 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>LAUNCH X</title>
-<style>
-body{background:linear-gradient(-45deg,#00a86b,#000,#00a86b,#000);background-size:400% 400%;animation:bg 15s ease infinite;text-align:center;font-family:Arial;color:#fff;padding:20px}
-@keyframes bg{0%{background-position:0% 50%}50%{background-position:100% 50%}100%{background-position:0% 50%}}
-h1{color:#00ff88}
-.box{background:#111c;padding:20px;border-radius:15px;width:90%;max-width:400px;margin:20px auto;border:2px solid #00ff88}
-input{width:90%;padding:12px;margin:8px;border-radius:8px;border:0;background:#222;color:#fff}
-.btn{background:#00ff88;color:#000;border:0;padding:12px;width:90%;border-radius:10px;font-weight:bold;font-size:16px}
-.grid{display:grid;grid-template-columns:1fr 1fr;gap:15px;margin-top:15px}
-.card{background:#222;padding:30px 10px;border-radius:15px;border:2px solid #00ff88;box-shadow:0 5px 15px #00ff8844;cursor:pointer;transition:0.3s}
-.card:active{transform:scale(0.95)}
-.card b{font-size:18px;color:#00ff88}
-</style>
-</head>
-<body>
+<!DOCTYPE html><html><head><meta name="viewport" content="width=device-width,initial-scale=1">
+<style>body{text-align:center;background:#fff}div{width:280px;margin:20px auto;padding:15px;background:#eee;border:2px solid green;border-radius:10px}
+input,button{width:90%;padding:10px;margin:5px}button{background:green;color:#fff;border:0}</style></head><body>
 
-<h1>LAUNCH<span style="color:#fff">X</span></h1>
+<h2 style="color:green">LAUNCHX</h2>
+<div id="a"><input id="n" placeholder="Name"><input id="e" placeholder="Email"><input id="p" placeholder="Phone">
+<input id="pw" type="password" placeholder="Password"><button onclick="g()">Start</button></div>
 
-<!-- SIGNUP -->
-<div class="box" id="s">
-<h2>Create Account</h2>
-<input id="n" placeholder="Enter Name">
-<input id="e" placeholder="Enter Email">
-<input id="p" placeholder="Enter Phone">
-<input id="pass" type="password" placeholder="Set Password">
-<button class="btn" onclick="go()">Get Started</button>
-</div>
+<div id="b" style="display:none">Wait <span id="t">30</span>s</div>
 
-<!-- VERIFY 30s -->
-<div class="box" id="v" style="display:none">
-<h2>Verifying...</h2>
-<h1 id="t">30</h1>
-</div>
+<div id="c" style="display:none"><b id="u"></b><br>Bal:<b id="bal">0</b>PKR<br>
+<button onclick="alert('Task')">Task</button><button onclick="v()">Video</button>
+<button onclick="alert('Earn')">Earn</button><button onclick="open('https://wa.me/')">Invite</button></div>
 
-<!-- DASHBOARD -->
-<div class="box" id="d" style="display:none">
-<h2>Welcome <span id="u"></span></h2>
-<p>Balance: <b style="color:#00ff88" id="bal">0.00 PKR</b></p>
-<div class="grid">
-<div class="card" onclick="alert('Complete Tasks')"><b>📋<br>COMPLETE<br>TASK</b></div>
-<div class="card" onclick="vid()"><b>▶️<br>WATCH &<br>EARN</b></div>
-<div class="card" onclick="alert('Add Earn')"><b>💰<br>ADD<br>EARN</b></div>
-<div class="card" onclick="open('https://wa.me/')"><b>👥<br>INVITE<br>MEMBER</b></div>
-</div>
-</div>
-
-<script>
-let user=JSON.parse(localStorage.lx||'{}');
-if(user.n){show()}else{s.style.display='block'}
-
-function go(){
-if(!n.value||!e.value||!p.value||!pass.value){alert('All fields required');return}
-user={n:n.value,e:e.value,p:p.value,pass:pass.value,bal:0};
-localStorage.lx=JSON.stringify(user);
-s.style.display='none';v.style.display='block';
-let i=30;let x=setInterval(()=>{t.innerText=i--;if(i<0){clearInterval(x);show()}},1000)
+<script>let x=JSON.parse(localStorage.x||'{}');if(x.n)d();function g(){x={n:n.value,e:e.value,p:p.value,pw:pw.value,bal:0};localStorage.x=JSON.stringify(x);a.style.display='none';b.style.display='block';let i=30;let y=setInterval(()=>{t.innerText=i--;if(i<0){clearInterval(y);d()}},1000)}
+function d(){b.style.display='none';a.style.display='none';c.style.display='block';u.innerText=x.n;bal.innerText=x.bal}
+function v(){open('https://youtube.com');setTimeout(()=>{x.bal+=5;localStorage.x=JSON.stringify(x);d()},30000)}</script></body></html>
