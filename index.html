@@ -1,40 +1,60 @@
 <!DOCTYPE html>
-<html><head><meta name="viewport" content="width=device-width,initial-scale=1">
-<style>body{text-align:center;font-family:Arial;background:#fff}
-.b{background:#f2f2f2;padding:20px;border-radius:10px;width:300px;margin:20px auto;border:2px solid green}
-button{background:green;color:#fff;border:0;padding:10px;width:90%;border-radius:6px}
-input{width:90%;padding:8px;margin:5px}</style></head><body>
+<html lang="en">
+<head>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>LAUNCH X</title>
+<style>
+body{background:linear-gradient(-45deg,#00a86b,#000,#00a86b,#000);background-size:400% 400%;animation:bg 15s ease infinite;text-align:center;font-family:Arial;color:#fff;padding:20px}
+@keyframes bg{0%{background-position:0% 50%}50%{background-position:100% 50%}100%{background-position:0% 50%}}
+h1{color:#00ff88}
+.box{background:#111c;padding:20px;border-radius:15px;width:90%;max-width:400px;margin:20px auto;border:2px solid #00ff88}
+input{width:90%;padding:12px;margin:8px;border-radius:8px;border:0;background:#222;color:#fff}
+.btn{background:#00ff88;color:#000;border:0;padding:12px;width:90%;border-radius:10px;font-weight:bold;font-size:16px}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:15px;margin-top:15px}
+.card{background:#222;padding:30px 10px;border-radius:15px;border:2px solid #00ff88;box-shadow:0 5px 15px #00ff8844;cursor:pointer;transition:0.3s}
+.card:active{transform:scale(0.95)}
+.card b{font-size:18px;color:#00ff88}
+</style>
+</head>
+<body>
 
-<h2 style="color:green">LAUNCH<span style="color:#000">X</span></h2>
+<h1>LAUNCH<span style="color:#fff">X</span></h1>
 
-<div class="b" id="s">
-<input id="n" placeholder="Name"><br>
-<input id="e" placeholder="Email"><br>
-<button onclick="go()">Get Started</button>
+<!-- SIGNUP -->
+<div class="box" id="s">
+<h2>Create Account</h2>
+<input id="n" placeholder="Enter Name">
+<input id="e" placeholder="Enter Email">
+<input id="p" placeholder="Enter Phone">
+<input id="pass" type="password" placeholder="Set Password">
+<button class="btn" onclick="go()">Get Started</button>
 </div>
 
-<div class="b" id="v" style="display:none">
-Verifying... <b id="t">30</b>s
+<!-- VERIFY 30s -->
+<div class="box" id="v" style="display:none">
+<h2>Verifying...</h2>
+<h1 id="t">30</h1>
 </div>
 
-<div class="b" id="d" style="display:none">
-Hi <b id="u"></b><br>Bal: <b id="bal">0</b> PKR<br><br>
-<button onclick="alert('Tasks')">Tasks</button>
-<button onclick="alert('Earn')">Earn</button>
-<button onclick="vdo()">Video +5</button>
-<button onclick="open('https://wa.me/')">Members</button>
+<!-- DASHBOARD -->
+<div class="box" id="d" style="display:none">
+<h2>Welcome <span id="u"></span></h2>
+<p>Balance: <b style="color:#00ff88" id="bal">0.00 PKR</b></p>
+<div class="grid">
+<div class="card" onclick="alert('Complete Tasks')"><b>📋<br>COMPLETE<br>TASK</b></div>
+<div class="card" onclick="vid()"><b>▶️<br>WATCH &<br>EARN</b></div>
+<div class="card" onclick="alert('Add Earn')"><b>💰<br>ADD<br>EARN</b></div>
+<div class="card" onclick="open('https://wa.me/')"><b>👥<br>INVITE<br>MEMBER</b></div>
+</div>
 </div>
 
 <script>
-let u=JSON.parse(localStorage.x||'{}');
-if(u.n){show()}else{s.style.display='block'}
+let user=JSON.parse(localStorage.lx||'{}');
+if(user.n){show()}else{s.style.display='block'}
 
 function go(){
-if(!n.value){alert('Name?');return}
-u={n:n.value,e:e.value,bal:0};localStorage.x=JSON.stringify(u);
+if(!n.value||!e.value||!p.value||!pass.value){alert('All fields required');return}
+user={n:n.value,e:e.value,p:p.value,pass:pass.value,bal:0};
+localStorage.lx=JSON.stringify(user);
 s.style.display='none';v.style.display='block';
-let i=30;let z=setInterval(()=>{t.innerText=i--;if(i<0){clearInterval(z);show()}},1000)
-}
-function show(){v.style.display='none';s.style.display='none';d.style.display='block';u.innerText=u.n;bal.innerText=u.bal}
-function vdo(){open('https://youtube.com');setTimeout(()=>{u.bal+=5;localStorage.x=JSON.stringify(u);show();alert('+5')},30000)}
-</script></body></html>
+let i=30;let x=setInterval(()=>{t.innerText=i--;if(i<0){clearInterval(x);show()}},1000)
