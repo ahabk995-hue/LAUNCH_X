@@ -29,6 +29,8 @@
     .note{font-size:12px;color:#94a3b8;text-align:center;margin-top:16px}
     .link-btn{background:none;border:none;color:#3b82f6;text-decoration:underline;cursor:pointer;font-size:14px;padding:0}
     .video-links{display:grid;gap:8px;margin-bottom:16px}
+    .header{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px}
+    .btn-logout{padding:8px 14px;font-size:14px;width:auto;background:#ef4444;border-color:#dc2626}
   </style>
 </head>
 <body>
@@ -73,7 +75,11 @@
 
     <!-- DASHBOARD -->
     <section id="dashboard" class="card hidden">
-      <h1>Dashboard</h1>
+      <div class="header">
+        <h1>Dashboard</h1>
+        <button class="btn btn-logout" id="logoutBtn">LOGOUT</button>
+      </div>
+      <p>Choose an option below</p>
       <div class="dashboard">
         <button class="btn yellow" id="addEarn">ADD EARN</button>
         <button class="btn brand" id="watchVideo">WATCH VIDEO</button>
@@ -87,14 +93,12 @@
       <h1>Watch Video to Earn</h1>
       <p>Complete all 3 tasks to unlock video</p>
       
-      <!-- YOUTUBE LINKS -->
       <div class="video-links">
         <a class="btn red" href="https://youtube.com/shorts/PNsbWwa3Kwo?si=2uXJ2eHRmZRx7mQU" target="_blank">1. Subscribe Channel</a>
         <a class="btn red" href="https://youtube.com/shorts/PNsbWwa3Kwo?si=2uXJ2eHRmZRx7mQU" target="_blank">2. Like Video</a>
         <a class="btn red" href="https://youtube.com/shorts/PNsbWwa3Kwo?si=2uXJ2eHRmZRx7mQU" target="_blank">3. Watch Full Video</a>
       </div>
 
-      <!-- CONDITIONS -->
       <div class="checkbox"><input type="checkbox" id="c1"/><label for="c1">I Subscribed to the channel</label></div>
       <div class="checkbox"><input type="checkbox" id="c2"/><label for="c2">I Liked the video</label></div>
       <div class="checkbox"><input type="checkbox" id="c3"/><label for="c3">I Watched the full video</label></div>
@@ -102,7 +106,6 @@
       <button class="btn green" id="openVideo" disabled>Open Video Below</button>
       <button class="btn" id="backDash" style="margin-top:12px">← Back to Dashboard</button>
       
-      <!-- EMBEDDED VIDEO -->
       <div id="videoBox" class="hidden" style="margin-top:16px">
         <iframe class="video-frame" src="https://www.youtube.com/embed/PNsbWwa3Kwo" allowfullscreen></iframe>
       </div>
@@ -138,12 +141,18 @@
       show('dashboard'); 
     }
 
+    // LOGOUT - NEW
+    $('logoutBtn').onclick = () => {
+      show('home');
+      alert('Logged out successfully!');
+    }
+
     // Dashboard
     $('addEarn').onclick = () => alert('ADD EARN: Coming Soon!');
     $('watchVideo').onclick = () => show('video');
     $('task').onclick = () => alert('TASK: New tasks coming soon!');
 
-    // Video Conditions
+    // Video
     ['c1','c2','c3'].forEach(id=>$(id).onchange=()=>{
       $('openVideo').disabled = !($('c1').checked && $('c2').checked && $('c3').checked)
     });
