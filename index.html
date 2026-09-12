@@ -1,70 +1,41 @@
-<?php
-session_start();
-$conn = new mysqli("localhost","id_xxxxx","pass","id_xxxxx_launchx_db");
-
-$page = $_GET['page'] ?? 'home';
-?>
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-<title>LaunchX Earning Hub</title>
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>X EARNING - Welcome</title>
 <style>
-body{font-family:Arial;background:#0f172a;color:#fff;text-align:center;padding:20px;}
-.box{background:#1e293b;padding:25px;border-radius:15px;max-width:400px;margin:20px auto;}
-h1{color:#38bdf8;}
-input{width:90%;padding:12px;margin:8px 0;border-radius:8px;border:none;}
-.btn{background:#22c55e;color:#fff;padding:12px 20px;border:none;border-radius:10px;width:90%;margin:8px 0;font-size:16px;cursor:pointer;}
-.btn2{background:#3b82f6;}
-.btn3{background:#64748b;}
-.whatsapp{background:#25D366;}
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Segoe UI',sans-serif}
+body,html{height:100%;overflow:hidden}
+.bg{position:fixed;width:100%;height:100%;
+background:linear-gradient(-45deg,#ee7752,#e73c7e,#23a6d5,#23d5ab);
+background-size:400% 400%;animation:gradient 15s ease infinite;z-index:-1}
+@keyframes gradient{0%{background-position:0% 50%}50%{background-position:100% 50%}100%{background-position:0% 50%}}
+.container{display:flex;justify-content:center;align-items:center;height:100%;backdrop-filter:blur(8px)}
+.box{background:rgba(255,255,255,0.1);padding:30px;border-radius:20px;
+box-shadow:0 8px 32px 0 rgba(31,38,135,0.37);text-align:center;width:350px;color:#fff;
+border:1px solid rgba(255,255,255,0.18)}
+.box h1 { margin-bottom: 10px; font-size: 28px; }
+.btn{width:100%;padding:12px;margin:8px 0;border:none;border-radius:10px;cursor:pointer;
+background:#23a6d5;color:#fff;font-weight:bold;font-size:16px;transition:0.3s}
+.btn:hover{background:#1c8ab3;transform:scale(1.03)}
+.whatsapp{background:#25D366}.whatsapp:hover{background:#1ebe5a}
 </style>
 </head>
 <body>
-
-<?php if($page=='home'): ?>
-<div class="box">
-<h1>LaunchX Earning Hub</h1>
-<p>Create Account for User Earning</p>
-<a href="?page=signup"><button class="btn">Create Account for User Earning</button></a>
-<a href="?page=youtube"><button class="btn btn2">Payment for YouTubers</button></a>
-<a href="?page=admin"><button class="btn btn3">Admin Panel</button></a>
-<a href="https://wa.me/923361088011"><button class="btn whatsapp">WhatsApp Support: 0336 1088011</button></a>
+<div class="bg"></div>
+<div class="container">
+  <div class="box">
+    <h1>Welcome to X EARNING ♾️</h1>
+    <p>Earn money by completing simple tasks</p>
+    
+    <button class="btn" onclick="window.location='register.html'">1. Create Account</button>
+    <button class="btn" onclick="window.location='login.html'">2. Login</button>
+    <a href="https://wa.me/923316035482" target="_blank">
+      <button class="btn whatsapp">3. WhatsApp Support: 03316035482</button>
+    </a>
+    <button class="btn" onclick="window.location='admin.html'">4. Admin Panel</button>
+  </div>
 </div>
-
-<?php elseif($page=='signup'): ?>
-<div class="box">
-<h2>Create Account</h2>
-<form method="post">
-<input name="name" placeholder="Enter Your Name" required>
-<input name="email" placeholder="Enter Your Email" required>
-<input name="pass" placeholder="Create Password" required>
-<input name="whatsapp" placeholder="Enter Phone Number" required>
-<button class="btn" name="submit">Submit</button>
-</form>
-<p style="color:orange">Payment: Send Rs.50 to JazzCash: 0336 1088011 - Abdul Rehan</p>
-<p>Phir screenshot WhatsApp per send karo. Approval ke baad Dashboard milega.</p>
-<a href="?page=home"><button class="btn btn3">Back</button></a>
-</div>
-
-<?php 
-if(isset($_POST['submit'])){
-  $stmt=$conn->prepare("INSERT INTO users(name,email,pass,whatsapp) VALUES(?,?,?,?)");
-  $stmt->bind_param("ssss",$_POST['name'],$_POST['email'],$_POST['pass'],$_POST['whatsapp']);
-  $stmt->execute();
-  echo "<script>alert('Account bana diya! Ab Rs.50 send karke screenshot WhatsApp karo')</script>";
-}
-?>
-
-<?php elseif($page=='youtube'): ?>
-<div class="box">
-<h2>Payment for YouTubers</h2>
-<p style="color:orange;font-size:20px">RS 50 per Feedback</p>
-<button class="btn">Request Feedback</button>
-<p style="font-size:12px">Admin Panel: Available after Rs 50 payment</p>
-<a href="https://wa.me/923361088011"><button class="btn whatsapp">WhatsApp Support</button></a>
-</div>
-
-<?php endif; ?>
 </body>
 </html>
