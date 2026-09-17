@@ -6,28 +6,23 @@
 <title>HDM - Generation Z</title>
 <style>
 *{margin:0;padding:0;box-sizing:border-box;font-family:'Segoe UI',sans-serif;}
-body{background:#0f172a;min-height:100vh;display:flex;justify-content:center;align-items:center;overflow:hidden;position:relative;}
+body{background:#0f172a;min-height:100vh;overflow:hidden;position:relative;}
 .bg{position:fixed;width:100%;height:100%;top:0;left:0;z-index:0;}
 .bg h2{position:absolute;white-space:nowrap;font-size:75px;font-weight:900;color:rgba(56,189,248,0.07);animation:move 22s linear infinite;}
 .bg h2:nth-child(2){top:40%;color:rgba(251,191,36,0.06);animation-direction:reverse;animation-duration:28s;}
 .bg h2:nth-child(3){top:70%;color:rgba(34,197,94,0.05);animation-duration:35s;}
 @keyframes move{0%{transform:translateX(100%)}100%{transform:translateX(-100%)}}
-
-/* CENTER RECTANGLE */
-.center-box{position:relative;z-index:2;background:rgba(30,41,59,0.85);backdrop-filter:blur(12px);border:1px solid #334155;padding:35px;border-radius:24px;width:100%;max-width:650px;box-shadow:0 20px 60px rgba(0,0,0,0.6);}
-.logo{text-align:center;margin-bottom:30px;}
-.logo h1{font-size:55px;color:#38bdf8;letter-spacing:3px;}
-.logo p{color:#94a3b8;letter-spacing:3px;font-size:12px;margin-top:5px;}
-
-.grid{display:grid;grid-template-columns:1fr 1fr;gap:18px;}
-.btn{padding:18px 10px;border:none;border-radius:14px;font-weight:800;font-size:15px;cursor:pointer;color:white;box-shadow:0 8px 20px rgba(0,0,0,0.3);transition:0.2s;}
-.btn:hover{transform:scale(1.03);}
+.welcome-wrap{position:relative;z-index:2;min-height:100vh;display:flex;justify-content:center;align-items:center;flex-direction:column;padding:20px;}
+.logo{text-align:center;margin-bottom:35px;}
+.logo h1{font-size:70px;color:#38bdf8;letter-spacing:4px;text-shadow:0 0 30px rgba(56,189,248,0.6);}
+.logo p{color:#cbd5e1;letter-spacing:4px;font-size:13px;margin-top:8px;font-weight:600;}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:18px;width:100%;max-width:650px;}
+.btn{padding:18px 10px;border:none;border-radius:14px;font-weight:800;font-size:15px;cursor:pointer;color:white;box-shadow:0 8px 20px rgba(0,0,0,0.4);transition:0.2s;text-align:center;}
+.btn:hover{transform:scale(1.04);}
 .blue{background:linear-gradient(135deg,#38bdf8,#0284c7);}
 .green{background:linear-gradient(135deg,#22c55e,#16a34a);}
 .whats{background:linear-gradient(135deg,#25D366,#128C7E);}
 .red{background:linear-gradient(135deg,#ef4444,#dc2626);}
-
-/* PAGES */
 .page{position:fixed;top:0;left:0;width:100%;height:100%;background:#0f172a;z-index:10;display:flex;justify-content:center;align-items:center;padding:20px;}
 .card{background:#1e293b;border:1px solid #334155;padding:35px;border-radius:20px;width:100%;max-width:450px;text-align:center;}
 .card h2{color:#fbbf24;margin-bottom:20px;}
@@ -40,21 +35,28 @@ body{background:#0f172a;min-height:100vh;display:flex;justify-content:center;ali
 .timer{font-size:50px;color:#38bdf8;font-weight:900;margin:20px 0;}
 .bar{width:100%;height:8px;background:#334155;border-radius:10px;overflow:hidden;}
 .bar-fill{height:100%;width:0%;background:#22c55e;transition:width 1s linear;}
+#dashboardPage{position:fixed;top:0;left:0;width:100%;height:100%;background:#0f172a;z-index:20;display:flex;flex-direction:column;}
+.dash-top{display:flex;justify-content:space-between;align-items:center;padding:15px 25px;background:#1e293b;border-bottom:1px solid #334155;}
+.dash-top .user-name{color:#38bdf8;font-weight:800;font-size:18px;}
+.dash-top .balance{color:#22c55e;font-weight:900;font-size:22px;background:#0f172a;padding:8px 20px;border-radius:30px;border:1px solid #334155;}
+.dash-main{display:flex;flex:1;overflow:hidden;}
+.sidebar{width:260px;background:#1e293b;border-right:1px solid #334155;padding:20px;display:flex;flex-direction:column;gap:12px;}
+.side-btn{padding:14px;border-radius:12px;border:none;color:white;font-weight:700;cursor:pointer;text-align:left;transition:0.2s;background:#0f172a;border:1px solid #334155;}
+.side-btn:hover{background:#334155;transform:translateX(5px);}
+.side-btn.active{background:linear-gradient(135deg,#38bdf8,#0284c7);border:none;}
+.content{flex:1;padding:30px;overflow-y:auto;}
+.content-box{background:rgba(30,41,59,0.7);border:1px solid #334155;padding:25px;border-radius:16px;color:#94a3b8;}
+.content-box h3{color:#fbbf24;margin-bottom:15px;}
 </style>
 </head>
 <body>
-
 <div class="bg">
   <h2>START YOUR OWN EARNING SPECIALLY FOR YOUTH GENERATION Z</h2>
   <h2>YOUTH GENERATION Z EARNING PLATFORM FUTURE IS YOURS</h2>
   <h2>START YOUR OWN EARNING SPECIALLY FOR YOUTH GENERATION Z</h2>
 </div>
-
-<div class="center-box">
-  <div class="logo">
-    <h1>HDM</h1>
-    <p>START YOUR OWN EARNING</p>
-  </div>
+<div class="welcome-wrap" id="welcomeWrap">
+  <div class="logo"><h1>HDM</h1><p>START YOUR OWN EARNING</p></div>
   <div class="grid">
     <button class="btn blue" onclick="openPage('createPage')">Create Account</button>
     <button class="btn green" onclick="openPage('loginPage')">Login To Existing Account</button>
@@ -62,121 +64,74 @@ body{background:#0f172a;min-height:100vh;display:flex;justify-content:center;ali
     <button class="btn red" onclick="openPage('adminPage')">Admin Panel</button>
   </div>
 </div>
-
-<!-- CREATE ACCOUNT -->
 <div id="createPage" class="page hidden">
   <div class="card">
     <h2>Create Account</h2>
     <div class="input-wrap"><input type="text" id="c_name" placeholder="Full Name"></div>
-    <div class="input-wrap">
-      <input type="email" id="c_email" placeholder="Email Address (must be @gmail.com)" oninput="validateEmail(this)">
-      <div class="error-msg" id="e_error">Wrong Email! Must be @gmail.com</div>
-    </div>
-    <div class="input-wrap"><input type="text" placeholder="Phone Number"></div>
-    <div class="input-wrap">
-      <input type="password" id="c_pass" placeholder="Password">
-      <span class="eye" onclick="togglePass('c_pass',this)">👁️</span>
-    </div>
+    <div class="input-wrap"><input type="email" id="c_email" placeholder="Email Address (must be @gmail.com)" oninput="validateEmail(this)"><div class="error-msg">Wrong Email! Must be @gmail.com</div></div>
+    <div class="input-wrap"><input type="text" id="c_phone" placeholder="Phone Number"></div>
+    <div class="input-wrap"><input type="password" id="c_pass" placeholder="Password"><span class="eye" onclick="togglePass('c_pass',this)">👁️</span></div>
     <button class="btn green" style="width:100%;margin-top:15px;" onclick="startVerification()">Submit</button>
     <button class="btn" style="width:100%;background:#334155;margin-top:10px;" onclick="closePage()">Back</button>
   </div>
 </div>
-
-<!-- LOGIN -->
 <div id="loginPage" class="page hidden">
   <div class="card">
     <h2>Login</h2>
-    <div class="input-wrap">
-      <input type="email" id="l_email" placeholder="Email @gmail.com" oninput="validateEmail(this)">
-      <div class="error-msg" id="l_error">Wrong Email! Must be @gmail.com</div>
-    </div>
-    <div class="input-wrap">
-      <input type="password" id="l_pass" placeholder="Password">
-      <span class="eye" onclick="togglePass('l_pass',this)">👁️</span>
-    </div>
-    <button class="btn blue" style="width:100%;margin-top:15px;" onclick="alert('Login system added')">Login</button>
+    <div class="input-wrap"><input type="email" id="l_email" placeholder="Email @gmail.com" oninput="validateEmail(this)"><div class="error-msg">Wrong Email! Must be @gmail.com</div></div>
+    <div class="input-wrap"><input type="password" id="l_pass" placeholder="Password"><span class="eye" onclick="togglePass('l_pass',this)">👁️</span></div>
+    <button class="btn blue" style="width:100%;margin-top:15px;">Login</button>
     <button class="btn" style="width:100%;background:#334155;margin-top:10px;" onclick="closePage()">Back</button>
   </div>
 </div>
-
-<!-- ADMIN -->
 <div id="adminPage" class="page hidden">
   <div class="card">
     <h2>Admin Panel</h2>
-    <div class="input-wrap"><input type="email" value="ahabk995@gmail.com" readonly></div>
-    <div class="input-wrap">
-      <input type="password" id="a_pass" placeholder="Admin Password">
-      <span class="eye" onclick="togglePass('a_pass',this)">👁️</span>
-    </div>
-    <button class="btn red" style="width:100%;margin-top:15px;">Admin Login</button>
+    <p style="color:#94a3b8;font-size:13px;margin-bottom:15px;">Secure Admin Login</p>
+    <div class="input-wrap"><input type="email" id="a_email" placeholder="Admin Email"></div>
+    <div class="input-wrap"><input type="password" id="a_pass" placeholder="Admin Password"><span class="eye" onclick="togglePass('a_pass',this)">👁️</span></div>
+    <div class="error-msg" id="admin_error" style="display:none;">Wrong Email or Password!</div>
+    <button class="btn red" style="width:100%;margin-top:15px;" onclick="adminLogin()">Admin Login</button>
     <button class="btn" style="width:100%;background:#334155;margin-top:10px;" onclick="closePage()">Back</button>
   </div>
 </div>
-
-<!-- VERIFY -->
 <div id="verifyPage" class="page hidden">
-  <div class="card">
-    <h2>Verification</h2>
-    <p style="color:#94a3b8;">Please wait 30 seconds</p>
-    <div class="timer" id="timer">30</div>
-    <div class="bar"><div class="bar-fill" id="bar"></div></div>
+  <div class="card"><h2>Verification</h2><p style="color:#94a3b8;">Please wait 30 seconds</p><div class="timer" id="timer">30</div><div class="bar"><div class="bar-fill" id="bar"></div></div></div>
+</div>
+<div id="dashboardPage" class="hidden">
+  <div class="dash-top">
+    <div class="user-name" id="dashName">Hi, User</div>
+    <div class="balance">$ <span id="dashBalance">0.00</span></div>
+    <button class="btn red" style="padding:10px 20px;font-size:13px;" onclick="logout()">Logout</button>
+  </div>
+  <div class="dash-main">
+    <div class="sidebar">
+      <button class="side-btn active" onclick="showDashContent('task')">💼 Task Earns</button>
+      <button class="side-btn" onclick="showDashContent('video')">🎥 Video Earns</button>
+      <button class="side-btn" onclick="showDashContent('sold')">📦 Sold Things</button>
+      <button class="side-btn" onclick="showDashContent('skills')">🎓 Buy Skills</button>
+      <div style="flex:1"></div>
+      <button class="side-btn" style="background:#dc2626;" onclick="logout()">🚪 Logout</button>
+    </div>
+    <div class="content">
+      <div id="dash_task" class="content-box"><h3>Task Earns</h3><p>Complete daily tasks and earn money.</p><br><div style="background:#0f172a;padding:15px;border-radius:10px;">No tasks available right now.</div></div>
+      <div id="dash_video" class="content-box hidden"><h3>Video Earns</h3><p>Watch videos and earn.</p></div>
+      <div id="dash_sold" class="content-box hidden"><h3>Sold Things</h3><p>Your sold items history.</p></div>
+      <div id="dash_skills" class="content-box hidden"><h3>Buy Skills</h3><p>Buy premium skills to increase your earning.</p></div>
+    </div>
   </div>
 </div>
-
-<!-- PROCESS -->
-<div id="processPage" class="page hidden">
-  <div class="card">
-    <h2 style="color:#22c55e;">Your page is in process</h2>
-    <p style="color:#94a3b8;margin-top:15px;">Your request has been submitted. Admin will approve shortly.</p>
-    <button class="btn" style="width:100%;background:#334155;margin-top:20px;" onclick="closePage()">Back To Home</button>
-  </div>
-</div>
-
 <script>
+let currentUserName="User";
 function openPage(id){document.getElementById(id).classList.remove('hidden');}
 function closePage(){document.querySelectorAll('.page').forEach(p=>p.classList.add('hidden'));}
-
-function togglePass(id,el){
-  let input = document.getElementById(id);
-  if(input.type==='password'){input.type='text'; el.innerText='🙈';}
-  else{input.type='password'; el.innerText='👁️';}
-}
-
-function validateEmail(input){
-  let error = input.parentElement.querySelector('.error-msg');
-  if(input.value.length==0){input.classList.remove('error'); error.style.display='none'; return true;}
-  if(!input.value.includes('@gmail.com')){
-    input.classList.add('error');
-    error.style.display='block';
-    return false;
-  } else {
-    input.classList.remove('error');
-    error.style.display='none';
-    return true;
-  }
-}
-
-function startVerification(){
-  let emailInput = document.getElementById('c_email');
-  let passInput = document.getElementById('c_pass');
-  if(!validateEmail(emailInput)){alert('Please correct Email - must be @gmail.com'); return;}
-  if(passInput.value.length<4){alert('Password must be at least 4 characters'); return;}
-
-  closePage();
-  document.getElementById('verifyPage').classList.remove('hidden');
-  let time=30;
-  let timer=document.getElementById('timer');
-  let bar=document.getElementById('bar');
-  let interval=setInterval(()=>{
-    time--; timer.innerText=time;
-    bar.style.width=((30-time)/30*100)+"%";
-    if(time<=0){
-      clearInterval(interval);
-      document.getElementById('verifyPage').classList.add('hidden');
-      document.getElementById('processPage').classList.remove('hidden');
-    }
-  },1000);
-}
+function togglePass(id,el){let input=document.getElementById(id);if(input.type==='password'){input.type='text';el.innerText='🙈';}else{input.type='password';el.innerText='👁️';}}
+function validateEmail(input){let error=input.parentElement.querySelector('.error-msg');if(input.value.length==0){input.classList.remove('error');error.style.display='none';return true;}if(!input.value.toLowerCase().includes('@gmail.com')){input.classList.add('error');error.style.display='block';return false;}else{input.classList.remove('error');error.style.display='none';return true;}}
+function startVerification(){let nameInput=document.getElementById('c_name');let emailInput=document.getElementById('c_email');let passInput=document.getElementById('c_pass');if(nameInput.value.trim().length<2){alert('Enter Full Name');return;}if(!validateEmail(emailInput)||emailInput.value.trim()==""){alert('Please correct Email - must be @gmail.com');return;}if(passInput.value.length<4){alert('Password must be at least 4 characters');return;}currentUserName=nameInput.value.trim();closePage();document.getElementById('verifyPage').classList.remove('hidden');let time=30;let timer=document.getElementById('timer');let bar=document.getElementById('bar');timer.innerText=time;bar.style.width="0%";let interval=setInterval(()=>{time--;timer.innerText=time;bar.style.width=((30-time)/30*100)+"%";if(time<=0){clearInterval(interval);document.getElementById('verifyPage').classList.add('hidden');openDashboard();}},1000);}
+function openDashboard(){document.getElementById('welcomeWrap').style.display='none';document.getElementById('dashName').innerText="Hi, "+currentUserName;document.getElementById('dashBalance').innerText="0.00";document.getElementById('dashboardPage').classList.remove('hidden');}
+function logout(){document.getElementById('dashboardPage').classList.add('hidden');document.getElementById('welcomeWrap').style.display='flex';closePage();}
+function showDashContent(type){document.querySelectorAll('.content-box').forEach(b=>b.classList.add('hidden'));document.querySelectorAll('.side-btn').forEach(b=>b.classList.remove('active'));document.getElementById('dash_'+type).classList.remove('hidden');event.target.classList.add('active');}
+function adminLogin(){let email=document.getElementById('a_email').value.trim().toLowerCase();let pass=document.getElementById('a_pass').value.trim();let err=document.getElementById('admin_error');if(email==="ahabk995@gmail.com" && pass==="ahabkhan"){err.style.display='none';alert('Admin Login Successful!');closePage();}else{err.style.display='block';}}
 </script>
 </body>
 </html>
