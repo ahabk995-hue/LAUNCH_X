@@ -6,11 +6,10 @@
 <title>HDM - Generation Z</title>
 <style>
 *{margin:0;padding:0;box-sizing:border-box;font-family:'Segoe UI',sans-serif;}
-body{background:#0f172a;min-height:100vh;position:relative;overflow-x:hidden;}
-.bg{position:fixed;width:100%;height:100%;top:0;left:0;z-index:0;overflow:hidden;}
-.bg h2{position:absolute;white-space:nowrap;font-size:70px;font-weight:900;color:rgba(56,189,248,0.07);animation:move 25s linear infinite;top:15%;}
-.bg h2:nth-child(2){top:45%;color:rgba(251,191,36,0.06);animation-direction:reverse;animation-duration:30s;}
-.bg h2:nth-child(3){top:75%;color:rgba(34,197,94,0.05);animation-duration:35s;}
+body{background:#0f172a;min-height:100vh;position:relative;}
+.bg{position:fixed;width:100%;height:100%;top:0;left:0;z-index:0;}
+.bg h2{position:absolute;white-space:nowrap;font-size:70px;font-weight:900;color:rgba(56,189,248,0.07);animation:move 25s linear infinite;top:20%;}
+.bg h2:nth-child(2){top:50%;color:rgba(251,191,36,0.06);animation-direction:reverse;animation-duration:30s;}
 @keyframes move{0%{transform:translateX(100%)}100%{transform:translateX(-100%)}}
 .welcome-wrap{position:relative;z-index:2;min-height:100vh;display:flex;justify-content:center;align-items:center;flex-direction:column;padding:20px;}
 .logo{text-align:center;margin-bottom:40px;}
@@ -18,30 +17,35 @@ body{background:#0f172a;min-height:100vh;position:relative;overflow-x:hidden;}
 .logo p{color:#94a3b8;letter-spacing:3px;font-size:12px;margin-top:8px;font-weight:700;}
 .grid{display:grid;grid-template-columns:1fr 1fr;gap:18px;width:100%;max-width:680px;}
 .btn{padding:18px;border:none;border-radius:14px;font-weight:800;font-size:15px;cursor:pointer;color:white;box-shadow:0 8px 25px rgba(0,0,0,0.4);transition:0.2s;text-align:center;text-decoration:none;display:flex;justify-content:center;align-items:center;}
-.btn:hover{transform:translateY(-3px) scale(1.02);}
+.btn:hover{transform:translateY(-3px);}
 .blue{background:linear-gradient(135deg,#38bdf8,#0284c7);}.green{background:linear-gradient(135deg,#22c55e,#16a34a);}.whats{background:linear-gradient(135deg,#25D366,#128C7E);}.red{background:linear-gradient(135deg,#ef4444,#b91c1c);}
-.page{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(15,23,42,0.95);backdrop-filter:blur(10px);z-index:10;display:flex;justify-content:center;align-items:center;padding:20px;}
+.page{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(15,23,42,0.98);z-index:10;display:flex;justify-content:center;align-items:center;padding:20px;overflow-y:auto;}
 .card{background:#1e293b;border:1px solid #334155;padding:35px;border-radius:20px;width:100%;max-width:440px;text-align:center;}
-.card h2{color:#fbbf24;margin-bottom:20px;}.card p{color:#94a3b8;font-size:14px;}
-.input-wrap{position:relative;width:100%;margin:10px 0;}.input-wrap input,.input-wrap select{width:100%;padding:14px 45px 14px 14px;border-radius:10px;border:1px solid #475569;background:#0f172a;color:white;outline:none;font-size:14px;}
+.input-wrap{position:relative;width:100%;margin:10px 0;}.input-wrap input,.input-wrap select{width:100%;padding:14px 45px 14px 14px;border-radius:10px;border:1px solid #475569;background:#0f172a;color:white;outline:none;}
 .input-wrap input.error{border-color:#ef4444;}.error-msg{color:#ef4444;font-size:11px;text-align:left;margin-top:4px;display:none;}
 .eye{position:absolute;right:12px;top:50%;transform:translateY(-50%);cursor:pointer;}
 .hidden{display:none!important;}
 .timer{font-size:60px;color:#38bdf8;font-weight:900;margin:20px 0;}.bar{width:100%;height:8px;background:#334155;border-radius:10px;overflow:hidden;}.bar-fill{height:100%;width:0%;background:#22c55e;transition:width 1s linear;}
+
+/* DASHBOARD NEW STYLE */
 #dashboardPage{position:fixed;top:0;left:0;width:100%;height:100%;background:#0f172a;z-index:20;display:flex;flex-direction:column;}
-.dash-top{display:flex;justify-content:space-between;align-items:center;padding:14px 25px;background:#1e293b;border-bottom:1px solid #334155;flex-wrap:wrap;gap:10px;}
-.dash-top.user-name{color:#38bdf8;font-weight:800;font-size:16px;}.dash-top.balance{color:#22c55e;font-weight:900;font-size:20px;background:#0f172a;padding:8px 22px;border-radius:30px;border:1px solid #22c55e;}
-.dash-main{display:flex;flex:1;overflow:hidden;}
-.sidebar{width:270px;background:#1e293b;border-right:1px solid #334155;padding:20px;display:flex;flex-direction:column;gap:12px;overflow-y:auto;}
-.side-btn{padding:14px 16px;border-radius:12px;border:none;color:#cbd5e1;font-weight:700;cursor:pointer;text-align:left;transition:0.2s;background:#0f172a;border:1px solid #334155;}
-.side-btn:hover{background:#334155;color:white;}.side-btn.active{background:linear-gradient(135deg,#38bdf8,#0284c7);color:white;border:none;box-shadow:0 4px 15px rgba(56,189,248,0.3);}
-.content{flex:1;padding:25px;overflow-y:auto;}.content-box{background:#1e293b;border:1px solid #334155;padding:25px;border-radius:16px;color:#94a3b8;animation:fade 0.3s;}
-@keyframes fade{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
-.content-box h3{color:#fbbf24;margin-bottom:12px;font-size:20px;}.action-btn{margin-top:15px;padding:12px 22px;border:none;border-radius:10px;font-weight:800;cursor:pointer;}
+.dash-top{display:flex;justify-content:space-between;align-items:center;padding:15px 25px;background:#1e293b;border-bottom:1px solid #334155;}
+.dash-top.user-name{color:#38bdf8;font-weight:800;font-size:18px;}
+.dash-top.balance{color:#22c55e;font-weight:900;font-size:22px;background:#0f172a;padding:8px 22px;border-radius:30px;border:1px solid #22c55e;}
+.dash-body{flex:1;display:flex;justify-content:center;align-items:center;padding:30px;}
+.dash-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px;width:100%;max-width:700px;}
+.dash-btn{padding:25px 15px;border-radius:16px;border:1px solid #334155;background:#1e293b;color:white;font-weight:800;font-size:16px;cursor:pointer;transition:0.2s;box-shadow:0 6px 20px rgba(0,0,0,0.3);}
+.dash-btn:hover{transform:translateY(-4px);background:#334155;border-color:#38bdf8;}
+.dash-btn span{display:block;font-size:28px;margin-bottom:8px;}
+
+/* INNER PAGES */
+.inner-page{position:fixed;top:0;left:0;width:100%;height:100%;background:#0f172a;z-index:30;padding:20px;display:flex;justify-content:center;align-items:center;flex-direction:column;}
+.inner-card{background:#1e293b;border:1px solid #334155;padding:30px;border-radius:20px;width:100%;max-width:500px;text-align:center;color:#cbd5e1;}
+.inner-card h2{color:#fbbf24;margin-bottom:15px;}
 </style>
 </head>
 <body>
-<div class="bg"><h2>START YOUR OWN EARNING FOR YOUTH GENERATION Z</h2><h2>YOUTH GENERATION Z FUTURE IS YOURS</h2><h2>START YOUR OWN EARNING FOR YOUTH GENERATION Z</h2></div>
+<div class="bg"><h2>START YOUR OWN EARNING FOR YOUTH GENERATION Z</h2><h2>YOUTH GENERATION Z FUTURE IS YOURS</h2></div>
 
 <div class="welcome-wrap" id="welcomeWrap">
   <div class="logo"><h1>HDM</h1><p>START YOUR OWN EARNING</p></div>
@@ -53,85 +57,35 @@ body{background:#0f172a;min-height:100vh;position:relative;overflow-x:hidden;}
   </div>
 </div>
 
-<div id="createPage" class="page hidden">
-  <div class="card">
-    <h2>Create Account</h2>
-    <div class="input-wrap"><input type="text" id="c_name" placeholder="Full Name"></div>
-    <div class="input-wrap"><input type="email" id="c_email" placeholder="Email @gmail.com" oninput="validateEmail(this)"><div class="error-msg">Email must be @gmail.com</div></div>
-    <div class="input-wrap"><input type="text" id="c_phone" placeholder="Phone Number"></div>
-    <div class="input-wrap"><input type="password" id="c_pass" placeholder="Password"><span class="eye" onclick="togglePass('c_pass',this)">👁️</span></div>
-    <button class="btn green" style="width:100%;margin-top:15px;" onclick="startVerification()">Create</button>
-    <button class="btn" style="width:100%;background:#334155;margin-top:10px;" onclick="closePage()">Back</button>
-  </div>
-</div>
+<div id="createPage" class="page hidden"><div class="card"><h2 style="color:#fbbf24;margin-bottom:20px;">Create Account</h2><div class="input-wrap"><input type="text" id="c_name" placeholder="Full Name"></div><div class="input-wrap"><input type="email" id="c_email" placeholder="Email @gmail.com" oninput="validateEmail(this)"><div class="error-msg">Must be @gmail.com</div></div><div class="input-wrap"><input type="text" id="c_phone" placeholder="Phone Number"></div><div class="input-wrap"><input type="password" id="c_pass" placeholder="Password"><span class="eye" onclick="togglePass('c_pass',this)">👁️</span></div><button class="btn green" style="width:100%;margin-top:15px;" onclick="startVerification()">Create</button><button class="btn" style="width:100%;background:#334155;margin-top:10px;" onclick="closePage()">Back</button></div></div>
+<div id="loginPage" class="page hidden"><div class="card"><h2 style="color:#fbbf24;margin-bottom:20px;">Login</h2><div class="input-wrap"><input type="email" id="l_email" placeholder="Email @gmail.com" oninput="validateEmail(this)"><div class="error-msg">Must be @gmail.com</div></div><div class="input-wrap"><input type="password" id="l_pass" placeholder="Password"><span class="eye" onclick="togglePass('l_pass',this)">👁️</span></div><button class="btn blue" style="width:100%;margin-top:15px;" onclick="loginUser()">Login</button><button class="btn" style="width:100%;background:#334155;margin-top:10px;" onclick="closePage()">Back</button></div></div>
+<div id="adminPage" class="page hidden"><div class="card"><h2 style="color:#fbbf24;margin-bottom:20px;">Admin Panel</h2><div class="input-wrap"><input type="email" id="a_email" placeholder="Admin Email"></div><div class="input-wrap"><input type="password" id="a_pass" placeholder="Admin Password"><span class="eye" onclick="togglePass('a_pass',this)">👁️</span></div><div class="error-msg" id="admin_error">Wrong Email or Password!</div><button class="btn red" style="width:100%;margin-top:15px;" onclick="adminLogin()">Login</button><button class="btn" style="width:100%;background:#334155;margin-top:10px;" onclick="closePage()">Back</button></div></div>
+<div id="verifyPage" class="page hidden"><div class="card"><h2 style="color:#fbbf24;">Verification</h2><p style="color:#94a3b8;">Please wait 30 seconds...</p><div class="timer" id="timer">30</div><div class="bar"><div class="bar-fill" id="bar"></div></div></div></div>
 
-<div id="loginPage" class="page hidden">
-  <div class="card">
-    <h2>Login</h2>
-    <div class="input-wrap"><input type="email" id="l_email" placeholder="Email @gmail.com" oninput="validateEmail(this)"><div class="error-msg">Email must be @gmail.com</div></div>
-    <div class="input-wrap"><input type="password" id="l_pass" placeholder="Password"><span class="eye" onclick="togglePass('l_pass',this)">👁️</span></div>
-    <button class="btn blue" style="width:100%;margin-top:15px;" onclick="loginUser()">Login</button>
-    <button class="btn" style="width:100%;background:#334155;margin-top:10px;" onclick="closePage()">Back</button>
-  </div>
-</div>
-
-<div id="adminPage" class="page hidden">
-  <div class="card">
-    <h2>Admin Panel</h2>
-    <div class="input-wrap"><input type="email" id="a_email" placeholder="Admin Email"></div>
-    <div class="input-wrap"><input type="password" id="a_pass" placeholder="Admin Password"><span class="eye" onclick="togglePass('a_pass',this)">👁️</span></div>
-    <div class="error-msg" id="admin_error">Wrong Email or Password!</div>
-    <button class="btn red" style="width:100%;margin-top:15px;" onclick="adminLogin()">Login</button>
-    <button class="btn" style="width:100%;background:#334155;margin-top:10px;" onclick="closePage()">Back</button>
-  </div>
-</div>
-
-<div id="verifyPage" class="page hidden">
-  <div class="card"><h2>Verification</h2><p>Please wait 30 seconds...</p><div class="timer" id="timer">30</div><div class="bar"><div class="bar-fill" id="bar"></div></div></div>
-</div>
-
+<!-- MAIN DASHBOARD - ONLY BUTTONS -->
 <div id="dashboardPage" class="hidden">
   <div class="dash-top">
     <div class="user-name" id="dashName">Hi, User</div>
     <div class="balance">$ <span id="dashBalance">0.000</span></div>
     <button class="btn red" style="padding:8px 18px;font-size:12px;" onclick="logout()">Logout</button>
   </div>
-  <div class="dash-main">
-    <div class="sidebar">
-      <button class="side-btn active" onclick="showDashContent('task',this)">💼 Task Earning</button>
-      <button class="side-btn" onclick="showDashContent('sold',this)">📦 Sold Your Items</button>
-      <button class="side-btn" onclick="showDashContent('buy',this)">🛒 Buy Things</button>
-      <button class="side-btn" onclick="showDashContent('claim',this)">🎁 Claim Reward</button>
-      <button class="side-btn" onclick="showDashContent('withdraw',this)">💸 Withdraw</button>
-      <div style="flex:1"></div>
-      <button class="side-btn" style="background:#b91c1c;color:white;" onclick="logout()">🚪 Logout</button>
-    </div>
-    <div class="content">
-      <div id="dash_task" class="content-box"><h3>Task Earning</h3><p>Complete tasks to earn money.</p><br><div style="background:#0f172a;padding:20px;border-radius:12px;text-align:center;border:1px dashed #334155;">🚧 Coming Soon</div></div>
-      <div id="dash_sold" class="content-box hidden"><h3>Sold Your Items</h3><p>Your sold items history will show here.</p><br><div style="background:#0f172a;padding:20px;border-radius:12px;text-align:center;border:1px dashed #334155;">🚧 Coming Soon</div></div>
-      <div id="dash_buy" class="content-box hidden"><h3>Buy Things</h3><p>Buy products from here.</p><br><div style="background:#0f172a;padding:20px;border-radius:12px;text-align:center;border:1px dashed #334155;">🚧 Coming Soon</div></div>
-      <div id="dash_claim" class="content-box hidden">
-        <h3>Claim Daily Reward</h3><p>Claim $0.003 every 24 hours.</p><br>
-        <div style="background:#0f172a;padding:20px;border-radius:12px;text-align:center;">
-          <p id="claimMsg" style="margin-bottom:15px;color:#22c55e;font-weight:700;">Ready to claim!</p>
-          <button class="btn green action-btn" onclick="claimReward()">Claim $0.003</button>
-        </div>
-      </div>
-      <div id="dash_withdraw" class="content-box hidden">
-        <h3>Withdraw</h3><p>Minimum withdraw $2.00</p><br>
-        <div style="background:#0f172a;padding:20px;border-radius:12px;">
-          <div class="input-wrap"><select id="w_method"><option value="">Select Method</option><option value="JazzCash">JazzCash</option><option value="Easypaisa">Easypaisa</option></select></div>
-          <div class="input-wrap"><input type="text" id="w_number" placeholder="JazzCash / Easypaisa Number"></div>
-          <div class="input-wrap"><input type="email" id="w_email" placeholder="Your Account Email (same as login)"></div>
-          <div class="input-wrap"><input type="number" id="w_amount" placeholder="Amount $"></div>
-          <p id="w_error" style="color:#ef4444;font-size:13px;display:none;margin-top:10px;"></p>
-          <p id="w_success" style="color:#22c55e;font-size:13px;display:none;margin-top:10px;"></p>
-          <button class="btn blue action-btn" style="width:100%;margin-top:15px;" onclick="withdraw()">Withdraw Now</button>
-        </div>
-      </div>
+  <div class="dash-body">
+    <div class="dash-grid">
+      <button class="dash-btn" onclick="openInner('taskPage')"><span>💼</span>Task Earning</button>
+      <button class="dash-btn" onclick="openInner('soldPage')"><span>📦</span>Sold Your Items</button>
+      <button class="dash-btn" onclick="openInner('buyPage')"><span>🛒</span>Buy Things</button>
+      <button class="dash-btn" onclick="openInner('claimPage')"><span>🎁</span>Claim Reward</button>
+      <button class="dash-btn" style="grid-column: span 2; background: linear-gradient(135deg,#f59e0b,#d97706);" onclick="openInner('withdrawPage')"><span>💸</span>Withdraw</button>
     </div>
   </div>
 </div>
+
+<!-- INNER PAGES - NEW PAGE ON CLICK -->
+<div id="taskPage" class="inner-page hidden"><div class="inner-card"><h2>Task Earning</h2><p>Complete daily tasks and earn money.</p><br><div style="background:#0f172a;padding:20px;border-radius:12px;border:1px dashed #334155;">🚧 Coming Soon</div><br><button class="btn blue" style="width:100%;" onclick="closeInner('taskPage')">Back to Dashboard</button></div></div>
+<div id="soldPage" class="inner-page hidden"><div class="inner-card"><h2>Sold Your Items</h2><p>Your sold history will appear here.</p><br><div style="background:#0f172a;padding:20px;border-radius:12px;border:1px dashed #334155;">🚧 Coming Soon</div><br><button class="btn blue" style="width:100%;" onclick="closeInner('soldPage')">Back to Dashboard</button></div></div>
+<div id="buyPage" class="inner-page hidden"><div class="inner-card"><h2>Buy Things</h2><p>Buy premium products here.</p><br><div style="background:#0f172a;padding:20px;border-radius:12px;border:1px dashed #334155;">🚧 Coming Soon</div><br><button class="btn blue" style="width:100%;" onclick="closeInner('buyPage')">Back to Dashboard</button></div></div>
+<div id="claimPage" class="inner-page hidden"><div class="inner-card"><h2>Claim Daily Reward</h2><p>Claim $0.003 every 24 hours</p><br><div style="background:#0f172a;padding:20px;border-radius:12px;"><p id="claimMsg" style="margin-bottom:15px;color:#22c55e;font-weight:700;">Ready to claim!</p><button class="btn green" style="width:100%;" onclick="claimReward()">Claim $0.003 Now</button></div><br><button class="btn" style="width:100%;background:#334155;" onclick="closeInner('claimPage')">Back to Dashboard</button></div></div>
+<div id="withdrawPage" class="inner-page hidden"><div class="inner-card"><h2>Withdraw</h2><p>Minimum $2.00 Required</p><br><div style="text-align:left;"><div class="input-wrap"><select id="w_method"><option value="">Select Method</option><option value="JazzCash">JazzCash</option><option value="Easypaisa">Easypaisa</option></select></div><div class="input-wrap"><input type="text" id="w_number" placeholder="JazzCash / Easypaisa Number"></div><div class="input-wrap"><input type="email" id="w_email" placeholder="Your Account Email"></div><div class="input-wrap"><input type="number" id="w_amount" placeholder="Amount $"></div><p id="w_error" style="color:#ef4444;font-size:13px;display:none;margin-top:10px;"></p><p id="w_success" style="color:#22c55e;font-size:13px;display:none;margin-top:10px;"></p><button class="btn blue" style="width:100%;margin-top:15px;" onclick="withdraw()">Withdraw Now</button></div><br><button class="btn" style="width:100%;background:#334155;" onclick="closeInner('withdrawPage')">Back to Dashboard</button></div></div>
 
 <script>
 let currentUserName="User"; let currentEmail=""; let balance=0;
@@ -139,68 +93,16 @@ function openPage(id){document.getElementById(id).classList.remove('hidden');}
 function closePage(){document.querySelectorAll('.page').forEach(p=>p.classList.add('hidden'));}
 function togglePass(id,el){let i=document.getElementById(id);i.type=i.type==='password'?'text':'password';el.textContent=i.type==='password'?'👁️':'🙈';}
 function validateEmail(input){let err=input.parentElement.querySelector('.error-msg');if(input.value.length==0){input.classList.remove('error');if(err)err.style.display='none';return true;}if(!input.value.toLowerCase().includes('@gmail.com')){input.classList.add('error');if(err)err.style.display='block';return false;}else{input.classList.remove('error');if(err)err.style.display='none';return true;}}
-function startVerification(){
- let n=document.getElementById('c_name').value.trim(); let e=document.getElementById('c_email'); let ph=document.getElementById('c_phone').value.trim(); let p=document.getElementById('c_pass').value.trim();
- if(n.length<2){alert('Enter Full Name');return;} if(!validateEmail(e)||e.value.trim()==""){alert('Valid @gmail.com Email Required');return;} if(ph.length<5){alert('Enter Phone Number');return;} if(p.length<4){alert('Password min 4 chars');return;}
- currentUserName=n; currentEmail=e.value.trim().toLowerCase();
- localStorage.setItem('hdm_name',currentUserName); localStorage.setItem('hdm_email',currentEmail);
- if(!localStorage.getItem('hdm_balance')){balance=0; localStorage.setItem('hdm_balance','0');}
- closePage(); document.getElementById('verifyPage').classList.remove('hidden');
- let time=30; let timer=document.getElementById('timer'); let bar=document.getElementById('bar'); timer.innerText=time; bar.style.width="0%";
- let interval=setInterval(()=>{time--; timer.innerText=time; bar.style.width=((30-time)/30*100)+"%"; if(time<=0){clearInterval(interval); document.getElementById('verifyPage').classList.add('hidden'); openDashboard();}},1000);
-}
-function loginUser(){
- let e=document.getElementById('l_email'); let p=document.getElementById('l_pass').value;
- if(!validateEmail(e)||e.value.trim()==""){alert('Valid @gmail.com Email Required');return;}
- currentUserName=localStorage.getItem('hdm_name')||e.value.split('@')[0]; currentEmail=e.value.trim().toLowerCase();
- closePage(); openDashboard();
-}
-function openDashboard(){
- document.getElementById('welcomeWrap').style.display='none';
- document.getElementById('dashName').innerText="Hi, "+currentUserName;
- let savedBal=parseFloat(localStorage.getItem('hdm_balance')||'0'); balance=savedBal;
- document.getElementById('dashBalance').innerText=balance.toFixed(3);
- document.getElementById('dashboardPage').classList.remove('hidden');
- checkClaimStatus();
-}
-function logout(){document.getElementById('dashboardPage').classList.add('hidden'); document.getElementById('welcomeWrap').style.display='flex'; closePage();}
-function showDashContent(type,btn){
- document.querySelectorAll('.content-box').forEach(b=>b.classList.add('hidden')); document.getElementById('dash_'+type).classList.remove('hidden');
- document.querySelectorAll('.side-btn').forEach(b=>b.classList.remove('active')); if(btn)btn.classList.add('active');
-}
-function claimReward(){
- let lastClaim=localStorage.getItem('hdm_last_claim'); let now=new Date().toDateString();
- if(lastClaim===now){document.getElementById('claimMsg').innerText="Already claimed today! Come tomorrow."; document.getElementById('claimMsg').style.color="#ef4444"; return;}
- balance+=0.003; localStorage.setItem('hdm_balance',balance.toString()); localStorage.setItem('hdm_last_claim',now);
- document.getElementById('dashBalance').innerText=balance.toFixed(3);
- document.getElementById('claimMsg').innerText="Claimed $0.003! New Balance: $"+balance.toFixed(3); document.getElementById('claimMsg').style.color="#22c55e";
-}
-function checkClaimStatus(){
- let lastClaim=localStorage.getItem('hdm_last_claim'); let now=new Date().toDateString();
- if(lastClaim===now){document.getElementById('claimMsg').innerText="Already claimed today. Come tomorrow."; document.getElementById('claimMsg').style.color="#ef4444";}
- else{document.getElementById('claimMsg').innerText="Ready to claim $0.003"; document.getElementById('claimMsg').style.color="#22c55e";}
-}
-function withdraw(){
- let method=document.getElementById('w_method').value; let number=document.getElementById('w_number').value.trim(); let email=document.getElementById('w_email').value.trim().toLowerCase(); let amount=parseFloat(document.getElementById('w_amount').value);
- let err=document.getElementById('w_error'); let suc=document.getElementById('w_success'); err.style.display='none'; suc.style.display='none';
- if(!method){err.innerText="Select JazzCash or Easypaisa"; err.style.display='block'; return;}
- if(number.length<10){err.innerText="Enter valid JazzCash/Easypaisa Number"; err.style.display='block'; return;}
- if(!email.includes('@gmail.com')){err.innerText="Enter your account email (@gmail.com)"; err.style.display='block'; return;}
- if(isNaN(amount)||amount<=0){err.innerText="Enter valid amount"; err.style.display='block'; return;}
- if(amount<2){err.innerText="Minimum withdraw is $2.00 - Your balance is $"+balance.toFixed(3); err.style.display='block'; return;}
- if(amount>balance){err.innerText="Insufficient balance! You have $"+balance.toFixed(3); err.style.display='block'; return;}
- err.style.display='none'; balance-=amount; localStorage.setItem('hdm_balance',balance.toString()); document.getElementById('dashBalance').innerText=balance.toFixed(3);
- suc.innerText="Withdraw request sent! "+method+" - "+number+" - $"+amount.toFixed(3); suc.style.display='block';
-}
-function adminLogin(){
- let email=document.getElementById('a_email').value.trim().toLowerCase(); let pass=document.getElementById('a_pass').value.trim(); let er=document.getElementById('admin_error');
- if(email==="ahabk995@gmail.com" && pass==="ahabkhan"){er.style.display='none'; alert('Admin Login Successful!'); closePage();}
- else{er.style.display='block';}
-}
-window.onload=()=>{
- let savedName=localStorage.getItem('hdm_name'); let savedBal=localStorage.getItem('hdm_balance');
- if(savedBal){balance=parseFloat(savedBal);}
-}
+function startVerification(){let n=document.getElementById('c_name').value.trim();let e=document.getElementById('c_email');let ph=document.getElementById('c_phone').value.trim();let p=document.getElementById('c_pass').value.trim();if(n.length<2){alert('Enter Full Name');return;}if(!validateEmail(e)||e.value.trim()==""){alert('Valid @gmail.com Required');return;}if(ph.length<5){alert('Enter Phone');return;}if(p.length<4){alert('Password min 4');return;}currentUserName=n;currentEmail=e.value.trim().toLowerCase();localStorage.setItem('hdm_name',n);localStorage.setItem('hdm_email',currentEmail);if(!localStorage.getItem('hdm_balance'))localStorage.setItem('hdm_balance','0');closePage();document.getElementById('verifyPage').classList.remove('hidden');let time=30;let timer=document.getElementById('timer');let bar=document.getElementById('bar');timer.innerText=time;bar.style.width="0%";let interval=setInterval(()=>{time--;timer.innerText=time;bar.style.width=((30-time)/30*100)+"%";if(time<=0){clearInterval(interval);document.getElementById('verifyPage').classList.add('hidden');openDashboard();}},1000);}
+function loginUser(){let e=document.getElementById('l_email');if(!validateEmail(e)||e.value.trim()==""){alert('Valid @gmail.com Required');return;}currentUserName=localStorage.getItem('hdm_name')||e.value.split('@')[0];currentEmail=e.value.trim().toLowerCase();closePage();openDashboard();}
+function openDashboard(){document.getElementById('welcomeWrap').style.display='none';document.getElementById('dashName').innerText="Hi, "+currentUserName;let savedBal=parseFloat(localStorage.getItem('hdm_balance')||'0');balance=savedBal;document.getElementById('dashBalance').innerText=balance.toFixed(3);document.getElementById('dashboardPage').classList.remove('hidden');checkClaimStatus();}
+function logout(){document.getElementById('dashboardPage').classList.add('hidden');document.querySelectorAll('.inner-page').forEach(p=>p.classList.add('hidden'));document.getElementById('welcomeWrap').style.display='flex';closePage();}
+function openInner(id){document.getElementById(id).classList.remove('hidden');}
+function closeInner(id){document.getElementById(id).classList.add('hidden');}
+function claimReward(){let last=localStorage.getItem('hdm_last_claim');let now=new Date().toDateString();if(last===now){document.getElementById('claimMsg').innerText="Already claimed today! Come tomorrow.";document.getElementById('claimMsg').style.color="#ef4444";return;}balance+=0.003;localStorage.setItem('hdm_balance',balance.toString());localStorage.setItem('hdm_last_claim',now);document.getElementById('dashBalance').innerText=balance.toFixed(3);document.getElementById('claimMsg').innerText="Claimed $0.003! Balance: $"+balance.toFixed(3);document.getElementById('claimMsg').style.color="#22c55e";}
+function checkClaimStatus(){let last=localStorage.getItem('hdm_last_claim');let now=new Date().toDateString();if(last===now){document.getElementById('claimMsg').innerText="Already claimed today. Come tomorrow.";document.getElementById('claimMsg').style.color="#ef4444";}else{document.getElementById('claimMsg').innerText="Ready to claim $0.003";document.getElementById('claimMsg').style.color="#22c55e";}}
+function withdraw(){let method=document.getElementById('w_method').value;let number=document.getElementById('w_number').value.trim();let email=document.getElementById('w_email').value.trim().toLowerCase();let amount=parseFloat(document.getElementById('w_amount').value);let err=document.getElementById('w_error');let suc=document.getElementById('w_success');err.style.display='none';suc.style.display='none';if(!method){err.innerText="Select JazzCash or Easypaisa";err.style.display='block';return;}if(number.length<10){err.innerText="Enter valid Number";err.style.display='block';return;}if(!email.includes('@gmail.com')){err.innerText="Enter your account email";err.style.display='block';return;}if(isNaN(amount)){err.innerText="Enter amount";err.style.display='block';return;}if(amount<2){err.innerText="Minimum withdraw $2.00 - You have $"+balance.toFixed(3);err.style.display='block';return;}if(amount>balance){err.innerText="Insufficient balance! You have $"+balance.toFixed(3);err.style.display='block';return;}balance-=amount;localStorage.setItem('hdm_balance',balance.toString());document.getElementById('dashBalance').innerText=balance.toFixed(3);suc.innerText="Withdraw request sent! "+method+" - $"+amount.toFixed(3);suc.style.display='block';}
+function adminLogin(){let email=document.getElementById('a_email').value.trim().toLowerCase();let pass=document.getElementById('a_pass').value.trim();let er=document.getElementById('admin_error');if(email==="ahabk995@gmail.com" && pass==="ahabkhan"){er.style.display='none';alert('Admin Login Successful!');closePage();}else{er.style.display='block';}}
 </script>
 </body>
 </html>
