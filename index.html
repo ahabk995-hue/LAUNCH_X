@@ -24,8 +24,8 @@ body{background:#0f172a;min-height:100vh;}
 .error-msg{color:#ef4444;font-size:12px;display:none;margin-top:6px;}
 #dashboardPage{position:fixed;top:0;left:0;width:100%;height:100%;background:#0f172a;z-index:25;display:flex;flex-direction:column;}
 .dash-top{display:flex;justify-content:space-between;align-items:center;padding:14px 20px;background:#1e293b;border-bottom:1px solid #334155;flex-wrap:wrap;gap:10px;}
-.user-badge{background:linear-gradient(135deg,#38bdf8,#a78bfa);padding:9px 16px;border-radius:30px;color:white;font-weight:900;box-shadow:0 0 15px rgba(56,189,248,0.4);}
-.balance-badge{background:linear-gradient(135deg,#22c55e,#fbbf24);padding:9px 18px;border-radius:30px;color:#0f172a;font-weight:900;box-shadow:0 0 15px rgba(34,197,94,0.5);}
+.user-badge{background:linear-gradient(135deg,#38bdf8,#a78bfa);padding:9px 16px;border-radius:30px;color:white;font-weight:900;}
+.balance-badge{background:linear-gradient(135deg,#22c55e,#fbbf24);padding:9px 18px;border-radius:30px;color:#0f172a;font-weight:900;}
 .dash-body{flex:1;display:flex;justify-content:center;align-items:center;padding:25px;}
 .dash-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px;width:100%;max-width:650px;}
 .dash-btn{padding:22px;border-radius:16px;border:1px solid #334155;background:#1e293b;color:white;font-weight:800;cursor:pointer;}
@@ -36,7 +36,6 @@ body{background:#0f172a;min-height:100vh;}
 </head>
 <body>
 <div class="bg"><h2>LAUNCH X YOUTH EARNING GENERATION Z</h2><h2>START YOUR OWN EARNING</h2></div>
-
 <div class="welcome-wrap" id="welcomeWrap">
 <div class="logo"><h1>LAUNCH X</h1><p>START YOUR OWN EARNING</p></div>
 <div class="grid">
@@ -48,25 +47,19 @@ body{background:#0f172a;min-height:100vh;}
 </div>
 
 <div id="createPage" class="page hidden"><div class="card"><h2 style="color:#fbbf24">Create Account</h2><div class="input-wrap"><input id="c_name" placeholder="Full Name"></div><div class="input-wrap"><input id="c_email" placeholder="Email @gmail.com"></div><div class="input-wrap"><input id="c_phone" placeholder="Phone Number"></div><div class="input-wrap"><input id="c_pass" type="password" placeholder="Password"></div><button class="btn green" style="width:100%;margin-top:12px;" onclick="startVerify()">Create</button><button class="btn" style="width:100%;background:#334155;margin-top:8px;" onclick="closeP()">Back</button></div></div>
-
 <div id="verifyPage" class="page hidden"><div class="card"><h2 style="color:#fbbf24">Verification</h2><p style="color:#94a3b8">Wait 30 sec...</p><div class="timer" id="timer">30</div><div class="bar"><div class="bar-fill" id="bar"></div></div></div></div>
-
-<div id="paymentPage" class="page hidden"><div class="card"><h2 style="color:#fbbf24">Premium Membership</h2><p style="color:#94a3b8;font-size:14px;">Pay 50 Rupees to Activate Account<br><br><b style="color:#22c55e">JazzCash / Easypaisa: 03316035482</b><br>Name: HDM</p><br><div class="input-wrap"><input id="p_email" placeholder="Your Account Email" readonly></div><div class="input-wrap"><input id="p_sender" placeholder="Sender Number (Jis se paise bheje)"></div><div class="input-wrap"><input id="p_trx" placeholder="Transaction ID / Trx ID"></div><button class="btn blue" style="width:100%;" onclick="submitPayment()">Submit Request</button><p style="color:#94a3b8;font-size:11px;margin-top:10px;">After submit admin will check and approve in 1-2 hours</p></div></div>
-
-<div id="loginPage" class="page hidden"><div class="card"><h2 style="color:#fbbf24">Login</h2><div class="input-wrap"><input id="l_email" placeholder="Email"></div><div class="input-wrap"><input id="l_pass" type="password" placeholder="Password"></div><div class="error-msg" id="login_error">Email or Password Wrong or Not Approved Yet</div><button class="btn blue" style="width:100%;margin-top:12px;" onclick="loginUser()">Login</button><button class="btn" style="width:100%;background:#334155;margin-top:8px;" onclick="closeP()">Back</button></div></div>
-
-<div id="adminPage" class="page hidden"><div class="card" style="max-width:700px;"><h2 style="color:#fbbf24">Admin Panel</h2><div class="input-wrap"><input id="a_email" placeholder="Admin Email"></div><div class="input-wrap"><input id="a_pass" type="password" placeholder="Password"></div><div class="error-msg" id="admin_error">Wrong!</div><button class="btn red" style="width:100%;" onclick="adminLogin()">Login</button><div id="adminContent" class="hidden" style="text-align:left;margin-top:20px;"><h3 style="color:#22c55e">Pending Approvals</h3><div id="pendingList" style="margin-top:10px;max-height:400px;overflow-y:auto;"></div><button class="btn" style="width:100%;background:#334155;margin-top:15px;" onclick="closeP()">Close</button></div><button class="btn" style="width:100%;background:#334155;margin-top:10px;" onclick="closeP()">Back</button></div></div>
-
-<div id="dashboardPage" class="hidden"><div class="dash-top"><div class="user-badge" id="dashName">Hi, User</div><div class="balance-badge">$ <span id="dashBalance">0.000</span></div><button class="btn red" style="padding:7px 15px;font-size:12px;" onclick="logout()">Logout</button></div><div class="dash-body"><div class="dash-grid"><button class="dash-btn" onclick="openInner('taskPage')"><span>💼</span>Task Earning</button><button class="dash-btn" onclick="openInner('soldPage')"><span>📦</span>Sold Your Items</button><button class="dash-btn" onclick="openInner('buyPage')"><span>🛒</span>Buy Things</button><button class="dash-btn" onclick="openInner('claimPage')"><span>🎁</span>Claim Reward</button><button class="dash-btn" style="grid-column: span 2;background:linear-gradient(135deg,#f59e0b,#d97706)" onclick="openInner('withdrawPage')"><span>💸</span>Withdraw</button></div></div></div>
-
+<div id="paymentPage" class="page hidden"><div class="card"><h2 style="color:#fbbf24">Premium Membership</h2><p style="color:#94a3b8;font-size:14px;">Pay 50 Rupees to Activate Account<br><br><b style="color:#22c55e">JazzCash / Easypaisa: 03316035482</b><br>Name: HDM</p><br><div class="input-wrap"><input id="p_email" placeholder="Your Account Email" readonly></div><div class="input-wrap"><input id="p_sender" placeholder="Sender Number"></div><div class="input-wrap"><input id="p_trx" placeholder="Transaction ID"></div><button class="btn blue" style="width:100%;" onclick="submitPayment()">Submit Request</button></div></div>
+<div id="loginPage" class="page hidden"><div class="card"><h2 style="color:#fbbf24">Login</h2><div class="input-wrap"><input id="l_email" placeholder="Email"></div><div class="input-wrap"><input id="l_pass" type="password" placeholder="Password"></div><div class="error-msg" id="login_error">Wrong or Not Approved Yet</div><button class="btn blue" style="width:100%;margin-top:12px;" onclick="loginUser()">Login</button><button class="btn" style="width:100%;background:#334155;margin-top:8px;" onclick="closeP()">Back</button></div></div>
+<div id="adminPage" class="page hidden"><div class="card" style="max-width:700px;"><h2 style="color:#fbbf24">Admin Panel</h2><div class="input-wrap"><input id="a_email" placeholder="Admin Email"></div><div class="input-wrap"><input id="a_pass" type="password" placeholder="Password"></div><div class="error-msg" id="admin_error">Wrong!</div><button class="btn red" style="width:100%;" onclick="adminLogin()">Login</button><div id="adminContent" class="hidden" style="text-align:left;margin-top:20px;"><h3 style="color:#22c55e">All Users (Live from CrudCrud)</h3><div id="pendingList" style="margin-top:10px;max-height:400px;overflow-y:auto;"></div><button class="btn" style="width:100%;background:#334155;margin-top:15px;" onclick="closeP()">Close</button></div><button class="btn" style="width:100%;background:#334155;margin-top:10px;" onclick="closeP()">Back</button></div></div>
+<div id="dashboardPage" class="hidden"><div class="dash-top"><div class="user-badge" id="dashName">Hi, User</div><div class="balance-badge">$ <span id="dashBalance">0.000</span></div><button class="btn red" style="padding:7px 15px;font-size:12px;" onclick="logout()">Logout</button></div><div class="dash-body"><div class="dash-grid"><button class="dash-btn" onclick="openInner('taskPage')"><span>💼</span>Task Earning</button><button class="dash-btn" onclick="openInner('soldPage')"><span>📦</span>Sold Items</button><button class="dash-btn" onclick="openInner('buyPage')"><span>🛒</span>Buy Things</button><button class="dash-btn" onclick="openInner('claimPage')"><span>🎁</span>Claim Reward</button><button class="dash-btn" style="grid-column: span 2;background:linear-gradient(135deg,#f59e0b,#d97706)" onclick="openInner('withdrawPage')"><span>💸</span>Withdraw</button></div></div></div>
 <div id="taskPage" class="inner-page hidden"><div class="inner-card"><h2>Task Earning</h2><p>🚧 Coming Soon</p><br><button class="btn blue" style="width:100%" onclick="closeInner('taskPage')">Back</button></div></div>
-<div id="soldPage" class="inner-page hidden"><div class="inner-card"><h2>Sold Your Items</h2><p>🚧 Coming Soon</p><br><button class="btn blue" style="width:100%" onclick="closeInner('soldPage')">Back</button></div></div>
+<div id="soldPage" class="inner-page hidden"><div class="inner-card"><h2>Sold Items</h2><p>🚧 Coming Soon</p><br><button class="btn blue" style="width:100%" onclick="closeInner('soldPage')">Back</button></div></div>
 <div id="buyPage" class="inner-page hidden"><div class="inner-card"><h2>Buy Things</h2><p>🚧 Coming Soon</p><br><button class="btn blue" style="width:100%" onclick="closeInner('buyPage')">Back</button></div></div>
 <div id="claimPage" class="inner-page hidden"><div class="inner-card"><h2>Claim Reward</h2><p id="claimMsg" style="color:#22c55e;font-weight:700;margin:15px 0;">Ready!</p><button class="btn green" style="width:100%" onclick="claimReward()">Claim $0.003</button><br><br><button class="btn" style="width:100%;background:#334155" onclick="closeInner('claimPage')">Back</button></div></div>
 <div id="withdrawPage" class="inner-page hidden"><div class="inner-card"><h2>Withdraw - Min $2</h2><div style="text-align:left"><div class="input-wrap"><select id="w_method"><option value="">Select</option><option>JazzCash</option><option>Easypaisa</option></select></div><div class="input-wrap"><input id="w_number" placeholder="Number"></div><div class="input-wrap"><input id="w_email" placeholder="Your Email"></div><div class="input-wrap"><input id="w_amount" type="number" placeholder="Amount"></div><p id="w_error" style="color:#ef4444;font-size:12px;display:none"></p><p id="w_success" style="color:#22c55e;font-size:12px;display:none"></p><button class="btn blue" style="width:100%;margin-top:10px;" onclick="withdraw()">Withdraw</button></div><br><button class="btn" style="width:100%;background:#334155" onclick="closeInner('withdrawPage')">Back</button></div></div>
 
 <script>
-const NPOINT_URL = "https://api.npoint.io/3d6e67e883d0f5d3b6ed";
+const API = "https://crudcrud.com/api/d99973ee6a6441cebd87e0bcb387a79e";
 let tempUser = {}; let currentUser = null;
 
 function openP(id){document.getElementById(id).classList.remove('hidden');}
@@ -74,25 +67,28 @@ function closeP(){document.querySelectorAll('.page').forEach(p=>p.classList.add(
 function openInner(id){document.getElementById(id).classList.remove('hidden');}
 function closeInner(id){document.getElementById(id).classList.add('hidden');}
 
-async function getData(){let r=await fetch(NPOINT_URL);return await r.json();}
-async function saveData(d){await fetch(NPOINT_URL,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(d)});}
+async function getUsers(){
+ let r = await fetch(API + "/users");
+ return await r.json();
+}
 
 function startVerify(){
  let n=document.getElementById('c_name').value.trim();
  let e=document.getElementById('c_email').value.trim().toLowerCase();
  let ph=document.getElementById('c_phone').value.trim();
  let p=document.getElementById('c_pass').value.trim();
- if(n.length<2||!e.includes('@gmail.com')||ph.length<5||p.length<4){alert('Fill all correctly, email must @gmail.com');return;}
+ if(n.length<2||!e.includes('@gmail.com')||ph.length<5||p.length<4){alert('Fill all correctly');return;}
  tempUser={name:n,email:e,phone:ph,pass:p,balance:0,status:'pending_payment',sender:'',trx:'',lastClaim:''};
  closeP(); document.getElementById('verifyPage').classList.remove('hidden');
  let t=30; document.getElementById('timer').innerText=t; document.getElementById('bar').style.width='0%';
  let inter=setInterval(async()=>{
   t--; document.getElementById('timer').innerText=t;
   document.getElementById('bar').style.width=((30-t)/30*100)+'%';
-  if(t<=0){clearInterval(inter);
-   let data=await getData();
-   if(data.users.find(u=>u.email==e)){alert('Email already exists'); document.getElementById('verifyPage').classList.add('hidden'); return;}
-   data.users.push(tempUser); await saveData(data);
+  if(t<=0){
+   clearInterval(inter);
+   let users = await getUsers();
+   if(users.find(u=>u.email==e)){alert('Email already exists'); document.getElementById('verifyPage').classList.add('hidden'); return;}
+   await fetch(API+"/users",{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(tempUser)});
    document.getElementById('verifyPage').classList.add('hidden');
    document.getElementById('p_email').value=e;
    openP('paymentPage');
@@ -104,21 +100,22 @@ async function submitPayment(){
  let email=document.getElementById('p_email').value;
  let sender=document.getElementById('p_sender').value.trim();
  let trx=document.getElementById('p_trx').value.trim();
- if(sender.length<8||trx.length<3){alert('Enter Sender Number and Transaction ID');return;}
- let data=await getData(); let u=data.users.find(x=>x.email==email);
+ if(sender.length<5||trx.length<2){alert('Enter Sender and Trx ID');return;}
+ let users = await getUsers(); let u = users.find(x=>x.email==email);
  if(!u){alert('User not found');return;}
+ let id = u._id; delete u._id;
  u.sender=sender; u.trx=trx; u.status='pending_approval';
- await saveData(data); closeP(); alert('Request sent to Admin! Wait 1-2 hours then login.');
+ await fetch(API+"/users/"+id,{method:'PUT',headers:{'Content-Type':'application/json'},body:JSON.stringify(u)});
+ closeP(); alert('Request sent to Admin! Now admin will approve from his mobile.');
 }
 
 async function loginUser(){
  let e=document.getElementById('l_email').value.toLowerCase().trim();
  let p=document.getElementById('l_pass').value.trim();
- let data=await getData(); let u=data.users.find(x=>x.email==e && x.pass==p);
- let err=document.getElementById('login_error');
- if(!u){err.style.display='block';return;}
- if(u.status!='active'){alert('Your account is '+u.status+'. Admin approval pending.');return;}
- err.style.display='none'; currentUser=u; closeP();
+ let users = await getUsers(); let u=users.find(x=>x.email==e && x.pass==p);
+ if(!u){document.getElementById('login_error').style.display='block';return;}
+ if(u.status!='active'){alert('Account status: '+u.status+' - Admin approval pending');return;}
+ document.getElementById('login_error').style.display='none'; currentUser=u; closeP();
  document.getElementById('welcomeWrap').style.display='none';
  document.getElementById('dashName').innerText='Hi, '+u.name;
  document.getElementById('dashBalance').innerText=parseFloat(u.balance).toFixed(3);
@@ -132,36 +129,37 @@ async function adminLogin(){
  if(e!='ahabk995@gmail.com' || p!='ahabkhan'){document.getElementById('admin_error').style.display='block';return;}
  document.getElementById('admin_error').style.display='none';
  document.getElementById('adminContent').classList.remove('hidden');
- let data=await getData();
- let pend=data.users.filter(u=>u.status=='pending_approval');
+ let users = await getUsers();
  let list=document.getElementById('pendingList');
- if(pend.length==0){list.innerHTML='<p>No pending</p>';return;}
+ if(users.length==0){list.innerHTML='<p>No users</p>';return;}
  list.innerHTML='';
- pend.forEach(u=>{
+ users.forEach(u=>{
   list.innerHTML+=`<div style="background:#0f172a;padding:10px;border-radius:10px;margin-bottom:10px;border:1px solid #334155">
-  <b>${u.name}</b> - ${u.email}<br>Phone:${u.phone}<br>Sender:${u.sender}<br>Trx:${u.trx}<br>Balance:$${u.balance}<br>
-  <button class="btn green" style="padding:6px 12px;margin-top:8px;font-size:12px;" onclick="approveUser('${u.email}')">Approve Active</button>
-  <button class="btn red" style="padding:6px 12px;margin-top:8px;font-size:12px;" onclick="rejectUser('${u.email}')">Reject</button></div>`;
+  <b>${u.name}</b> - ${u.email}<br>Status: <b style="color:#fbbf24">${u.status}</b><br>Phone:${u.phone}<br>Sender:${u.sender}<br>Trx:${u.trx}<br>Balance:$${u.balance}<br>
+  <button class="btn green" style="padding:6px 12px;margin-top:8px;font-size:12px;" onclick="approveUser('${u._id}')">Approve</button>
+  <button class="btn red" style="padding:6px 12px;margin-top:8px;font-size:12px;" onclick="deleteUser('${u._id}')">Delete</button></div>`;
  });
 }
-async function approveUser(email){
- let data=await getData(); let u=data.users.find(x=>x.email==email); u.status='active'; await saveData(data); alert('Approved '+email); adminLogin();
+async function approveUser(id){
+ let r = await fetch(API+"/users/"+id); let u = await r.json(); let oldId = u._id; delete u._id; u.status='active';
+ await fetch(API+"/users/"+oldId,{method:'PUT',headers:{'Content-Type':'application/json'},body:JSON.stringify(u)});
+ alert('Approved!'); adminLogin();
 }
-async function rejectUser(email){
- let data=await getData(); data.users=data.users.filter(x=>x.email!=email); await saveData(data); alert('Rejected'); adminLogin();
-}
+async function deleteUser(id){ await fetch(API+"/users/"+id,{method:'DELETE'}); alert('Deleted'); adminLogin(); }
+
 async function claimReward(){
  if(!currentUser) return;
  let today=new Date().toDateString();
  if(currentUser.lastClaim==today){document.getElementById('claimMsg').innerText='Already claimed today'; return;}
  currentUser.balance=parseFloat(currentUser.balance)+0.003; currentUser.lastClaim=today;
  document.getElementById('dashBalance').innerText=currentUser.balance.toFixed(3);
- document.getElementById('claimMsg').innerText='Claimed! Balance $'+currentUser.balance.toFixed(3);
- let data=await getData(); let u=data.users.find(x=>x.email==currentUser.email); u.balance=currentUser.balance; u.lastClaim=today; await saveData(data);
+ document.getElementById('claimMsg').innerText='Claimed! $'+currentUser.balance.toFixed(3);
+ let id=currentUser._id; let u={...currentUser}; delete u._id;
+ await fetch(API+"/users/"+id,{method:'PUT',headers:{'Content-Type':'application/json'},body:JSON.stringify(u)});
 }
 function checkClaim(){
  if(!currentUser) return;
- if(currentUser.lastClaim==new Date().toDateString()) document.getElementById('claimMsg').innerText='Already claimed today, come tomorrow';
+ if(currentUser.lastClaim==new Date().toDateString()) document.getElementById('claimMsg').innerText='Already claimed today';
  else document.getElementById('claimMsg').innerText='Ready to claim $0.003';
 }
 async function withdraw(){
@@ -169,13 +167,14 @@ async function withdraw(){
  let email=document.getElementById('w_email').value.trim(); let amt=parseFloat(document.getElementById('w_amount').value);
  let err=document.getElementById('w_error'); let suc=document.getElementById('w_success'); err.style.display='none'; suc.style.display='none';
  if(!method||num.length<10||!email.includes('@gmail.com')||isNaN(amt)){err.innerText='Fill all';err.style.display='block';return;}
- if(amt<2){err.innerText='Minimum $2 - You have $'+currentUser.balance.toFixed(3);err.style.display='block';return;}
- if(amt>currentUser.balance){err.innerText='Insufficient $'+currentUser.balance.toFixed(3);err.style.display='block';return;}
+ if(amt<2){err.innerText='Min $2 - You have $'+currentUser.balance.toFixed(3);err.style.display='block';return;}
+ if(amt>currentUser.balance){err.innerText='Low balance $'+currentUser.balance.toFixed(3);err.style.display='block';return;}
  currentUser.balance-=amt; document.getElementById('dashBalance').innerText=currentUser.balance.toFixed(3);
- let data=await getData(); let u=data.users.find(x=>x.email==currentUser.email); u.balance=currentUser.balance; await saveData(data);
- suc.innerText='Withdraw request sent! '+method+' $'+amt; suc.style.display='block';
+ let id=currentUser._id; let u={...currentUser}; delete u._id;
+ await fetch(API+"/users/"+id,{method:'PUT',headers:{'Content-Type':'application/json'},body:JSON.stringify(u)});
+ suc.innerText='Withdraw sent! '+method+' $'+amt; suc.style.display='block';
 }
 function logout(){document.getElementById('dashboardPage').classList.add('hidden'); document.querySelectorAll('.inner-page').forEach(p=>p.classList.add('hidden')); document.getElementById('welcomeWrap').style.display='flex'; currentUser=null; closeP();}
 </script>
 </body>
-                                               </html>
+</html>
