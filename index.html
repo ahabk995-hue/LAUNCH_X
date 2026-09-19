@@ -4,7 +4,7 @@
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Launch X</title>
 <style>
-*{margin:0;padding:0;box-sizing:border-box;font-family:'Segoe UI',sans-serif;}
+_{margin:0;padding:0;box-sizing:border-box;font-family:'Segoe UI',sans-serif;}
 body{background:#0f172a;min-height:100vh;}
 .bg{position:fixed;width:100%;height:100%;top:0;left:0;z-index:0;overflow:hidden;}
 .bg h2{position:absolute;white-space:nowrap;font-size:65px;font-weight:900;color:rgba(56,189,248,0.07);animation:move 25s linear infinite;top:20%;}
@@ -48,19 +48,21 @@ body{background:#0f172a;min-height:100vh;}
 
 <div id="createPage" class="page hidden"><div class="card"><h2 style="color:#fbbf24">Create Account</h2><div class="input-wrap"><input id="c_name" placeholder="Full Name"></div><div class="input-wrap"><input id="c_email" placeholder="Email @gmail.com"></div><div class="input-wrap"><input id="c_phone" placeholder="Phone Number"></div><div class="input-wrap"><input id="c_pass" type="password" placeholder="Password"></div><button class="btn green" style="width:100%;margin-top:12px;" onclick="startVerify()">Create</button><button class="btn" style="width:100%;background:#334155;margin-top:8px;" onclick="closeP()">Back</button></div></div>
 <div id="verifyPage" class="page hidden"><div class="card"><h2 style="color:#fbbf24">Verification</h2><p style="color:#94a3b8">Wait 30 sec...</p><div class="timer" id="timer">30</div><div class="bar"><div class="bar-fill" id="bar"></div></div></div></div>
-<div id="paymentPage" class="page hidden"><div class="card"><h2 style="color:#fbbf24">Premium Membership</h2><p style="color:#94a3b8;font-size:14px;">Pay 50 Rupees to Activate Account<br><br><b style="color:#22c55e">JazzCash / Easypaisa: 03316035482</b><br>Name: HDM</p><br><div class="input-wrap"><input id="p_email" placeholder="Your Account Email" readonly></div><div class="input-wrap"><input id="p_sender" placeholder="Sender Number"></div><div class="input-wrap"><input id="p_trx" placeholder="Transaction ID"></div><button class="btn blue" style="width:100%;" onclick="submitPayment()">Submit Request</button></div></div>
+
+<div id="paymentPage" class="page hidden"><div class="card"><h2 style="color:#fbbf24">Premium Membership</h2><p style="color:#94a3b8;font-size:14px;">50 Rupees Per Month<br><br><b style="color:#22c55e">JazzCash / Easypaisa: 03368881011</b><br>Name: ABDUL REHAMAN</p><br><div class="input-wrap"><input id="p_email" placeholder="Your Account Email" readonly></div><div class="input-wrap"><input id="p_sender" placeholder="Sender Number"></div><div class="input-wrap"><input id="p_trx" placeholder="Transaction ID"></div><button class="btn blue" style="width:100%;" onclick="submitPayment()">Submit Request</button></div></div>
+
 <div id="loginPage" class="page hidden"><div class="card"><h2 style="color:#fbbf24">Login</h2><div class="input-wrap"><input id="l_email" placeholder="Email"></div><div class="input-wrap"><input id="l_pass" type="password" placeholder="Password"></div><div class="error-msg" id="login_error">Wrong or Not Approved Yet</div><button class="btn blue" style="width:100%;margin-top:12px;" onclick="loginUser()">Login</button><button class="btn" style="width:100%;background:#334155;margin-top:8px;" onclick="closeP()">Back</button></div></div>
 
 <div id="adminPage" class="page hidden"><div class="card" style="max-width:700px;"><h2 style="color:#fbbf24">Admin Panel</h2>
+<div id="adminLoginBox">
 <div class="input-wrap"><input id="a_email" placeholder="Admin Email"></div><div class="input-wrap"><input id="a_pass" type="password" placeholder="Password"></div><div class="error-msg" id="admin_error">Wrong!</div><button class="btn red" style="width:100%;" onclick="adminLogin()">Login</button>
+</div>
 <div id="adminContent" class="hidden" style="text-align:left;margin-top:20px;">
-<h3 style="color:#22c55e">Fix Expire Link Issue</h3>
 <div style="background:#0f172a;padding:12px;border-radius:10px;margin:10px 0;border:1px solid #334155">
-<p style="font-size:12px;color:#94a3b8">Agar link expire ho jaye to naya link yahan paste karo</p>
-<div class="input-wrap"><input id="new_api" placeholder="Paste new CrudCrud API link"></div>
-<button class="btn blue" style="width:100%;padding:10px" onclick="updateApiAndRestore()">Update API & Restore Data</button>
-<button class="btn green" style="width:100%;padding:10px;margin-top:8px" onclick="exportData()">Backup Download</button>
-<p id="apiStatus" style="font-size:12px;color:#22c55e;margin-top:8px"></p>
+<p style="font-size:12px;color:#94a3b8">CrudCrud 24hr Fix - Naya Link Yahan Paste Karo</p>
+<div class="input-wrap"><input id="new_api" placeholder="https://crudcrud.com/api/...."></div>
+<button class="btn blue" style="width:100%;padding:10px" onclick="updateApiAndRestore()">Update Link & Restore All Data</button>
+<p id="apiStatus" style="font-size:11px;color:#22c55e;margin-top:8px"></p>
 </div>
 <h3 style="color:#22c55e;margin-top:15px">All Users</h3>
 <div id="pendingList" style="margin-top:10px;max-height:400px;overflow-y:auto;"></div>
@@ -78,9 +80,9 @@ body{background:#0f172a;min-height:100vh;}
 
 <script>
 const DEFAULT_API = "https://crudcrud.com/api/d99973ee6a6441cebd87e0bcb387a79e";
-function getAPI(){ return localStorage.getItem('launchx_api') || DEFAULT_API; }
-function saveLocalUsers(users){ localStorage.setItem('launchx_users', JSON.stringify(users)); }
-function getLocalUsers(){ try{ return JSON.parse(localStorage.getItem('launchx_users')||'[]'); }catch{return []} }
+function getAPI(){ return http://localStorage.getItem('launchx_api') || DEFAULT_API; }
+function saveLocalUsers(users){ http://localStorage.setItem('launchx_users', http://JSON.stringify(users)); }
+function getLocalUsers(){ try{ return http://JSON.parse(localStorage.getItem('launchx_users')||'[]'); }catch{return []} }
 let tempUser = {}; let currentUser = null;
 function openP(id){document.getElementById(id).classList.remove('hidden');}
 function closeP(){document.querySelectorAll('.page').forEach(p=>p.classList.add('hidden'));}
@@ -89,14 +91,12 @@ function closeInner(id){document.getElementById(id).classList.add('hidden');}
 async function getUsers(){
   let api = getAPI();
   try{
-    let r = await fetch(api + "/users?t=" + Date.now());
-    if(!r.ok) throw "API Expired";
-    let data = await r.json();
+    let r = await fetch(api + "/users?t=" + http://Date.now());
+    if(!r.ok) throw "expired";
+    let data = await http://r.json();
     saveLocalUsers(data);
     return data;
-  }catch(e){
-    return getLocalUsers();
-  }
+  }catch(e){ return getLocalUsers(); }
 }
 function startVerify(){
  let n=document.getElementById('c_name').value.trim();
@@ -105,22 +105,19 @@ function startVerify(){
  let p=document.getElementById('c_pass').value.trim();
  if(n.length<2||!e.includes('@gmail.com')||ph.length<5||p.length<4){alert('Fill all correctly');return;}
  tempUser={name:n,email:e,phone:ph,pass:p,balance:0,status:'pending_payment',sender:'',trx:'',lastClaim:''};
- closeP(); document.getElementById('verifyPage').classList.remove('hidden');
- let t=30; document.getElementById('timer').innerText=t; document.getElementById('bar').style.width='0%';
+ closeP(); http://document.getElementById('verifyPage').classList.remove('hidden');
+ let t=30; http://document.getElementById('timer').innerText=t; http://document.getElementById('bar').style.width='0%';
  let inter=setInterval(async()=>{
-  t--; document.getElementById('timer').innerText=t;
-  document.getElementById('bar').style.width=((30-t)/30*100)+'%';
+  t--; http://document.getElementById('timer').innerText=t;
+  http://document.getElementById('bar').style.width=((30-t)/30_100)+'%';
   if(t<=0){
    clearInterval(inter);
-   try{
-     let users = await getUsers();
-     if(users.find(u=>u.email==e)){alert('Email already exists'); document.getElementById('verifyPage').classList.add('hidden'); return;}
-     let local = getLocalUsers(); local.push({...tempUser, _id: 'local_'+Date.now()}); saveLocalUsers(local);
-     let res = await fetch(getAPI()+"/users",{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(tempUser)});
-     alert("Saved! Now Payment Page");
-   }catch(err){ alert("Saved in Local Backup! Error: " + err); }
-   document.getElementById('verifyPage').classList.add('hidden');
-   document.getElementById('p_email').value=e;
+   let users = await getUsers();
+   if(users.find(u=>u.email==e)){alert('Email already exists'); http://document.getElementById('verifyPage').classList.add('hidden'); return;}
+   let local = getLocalUsers(); http://local.push({...tempUser, _id: 'local_'+Date.now()}); saveLocalUsers(local);
+   try{ await fetch(getAPI()+"/users",{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(tempUser)}); }catch{}
+   http://document.getElementById('verifyPage').classList.add('hidden');
+   http://document.getElementById('p_email').value=e;
    openP('paymentPage');
   }
  },1000);
@@ -130,49 +127,50 @@ async function submitPayment(){
  let sender=document.getElementById('p_sender').value.trim();
  let trx=document.getElementById('p_trx').value.trim();
  if(sender.length<5||trx.length<2){alert('Enter Sender and Trx ID');return;}
- let users = await getUsers(); let u = users.find(x=>x.email==email);
+ let users = await getUsers(); let u = http://users.find(x=>x.email==email);
  if(!u){alert('User not found');return;}
- u.sender=sender; u.trx=trx; u.status='pending_approval';
- let local = getLocalUsers(); let idx = local.findIndex(x=>x.email==email); if(idx>-1){ local[idx]=u; saveLocalUsers(local); }
- try{ let up={...u}; let id=u._id; delete up._id; await fetch(getAPI()+"/users/"+id,{method:'PUT',headers:{'Content-Type':'application/json'},body:JSON.stringify(up)}); }catch{}
- closeP(); alert('Request sent to Admin!');
+ http://u.sender=sender; http://u.trx=trx; http://u.status='pending_approval';
+ let local = getLocalUsers(); let idx = http://local.findIndex(x=>x.email==email); if(idx>-1){ local=u; saveLocalUsers(local); }
+ try{ let id=u._id; if(!id.startsWith('local_')){ let up={...u}; delete up._id; await fetch(getAPI()+"/users/"+id,{method:'PUT',headers:{'Content-Type':'application/json'},body:JSON.stringify(up)}); } }catch{}
+ closeP(); alert('Request sent to Admin! Admin will approve.');
 }
 async function loginUser(){
  let e=document.getElementById('l_email').value.toLowerCase().trim();
  let p=document.getElementById('l_pass').value.trim();
- let users = await getUsers(); let u=users.find(x=>x.email==e && x.pass==p);
+ let users = await getUsers(); let u=users.find(x=>x.email==e && http://x.pass==p);
  if(!u){document.getElementById('login_error').style.display='block';return;}
- if(u.status!='active'){alert('Account status: '+u.status);return;}
- document.getElementById('login_error').style.display='none'; currentUser=u; closeP();
- document.getElementById('welcomeWrap').style.display='none';
- document.getElementById('dashName').innerText='Hi, '+u.name;
- document.getElementById('dashBalance').innerText=parseFloat(u.balance).toFixed(3);
- document.getElementById('dashboardPage').classList.remove('hidden');
+ if(u.status!='active'){alert('Account status: '+u.status+' - Admin approval pending');return;}
+ http://document.getElementById('login_error').style.display='none'; currentUser=u; closeP();
+ http://document.getElementById('welcomeWrap').style.display='none';
+ http://document.getElementById('dashName').innerText='Hi, '+u.name;
+ http://document.getElementById('dashBalance').innerText=parseFloat(u.balance).toFixed(3);
+ http://document.getElementById('dashboardPage').classList.remove('hidden');
  checkClaim();
 }
 async function adminLogin(){
  let e=document.getElementById('a_email').value.toLowerCase().trim();
  let p=document.getElementById('a_pass').value.trim();
  if(e!='ahabk995@gmail.com' || p!='ahabkhan'){document.getElementById('admin_error').style.display='block';return;}
- document.getElementById('admin_error').style.display='none';
- document.getElementById('adminContent').classList.remove('hidden');
- document.getElementById('new_api').value = getAPI();
- document.getElementById('apiStatus').innerText = "Current API: " + getAPI();
+ http://document.getElementById('admin_error').style.display='none';
+ http://document.getElementById('adminLoginBox').classList.add('hidden');
+ http://document.getElementById('adminContent').classList.remove('hidden');
+ http://document.getElementById('new_api').value = getAPI();
+ http://document.getElementById('apiStatus').innerText = "Current API: " + getAPI();
  let users = await getUsers();
  let list=document.getElementById('pendingList');
  if(users.length==0){list.innerHTML='<p>No users</p>';return;}
- list.innerHTML='';
- users.forEach(u=>{
-  list.innerHTML+=`<div style="background:#0f172a;padding:10px;border-radius:10px;margin-bottom:10px;border:1px solid #334155">
-  <b>${u.name}</b> - ${u.email}<br>Status: <b style="color:#fbbf24">${u.status}</b><br>Phone:${u.phone}<br>Sender:${u.sender}<br>Trx:${u.trx}<br>Balance:$${u.balance}<br>
+ http://list.innerHTML='';
+ http://users.forEach(u=>{
+  http://list.innerHTML+=`<div style="background:#0f172a;padding:10px;border-radius:10px;margin-bottom:10px;border:1px solid #334155">
+  <b>${u.name}</b> - ${u.email}<br>Status: <b style="color:#fbbf24">${u.status}</b><br>Phone:${u.phone}<br>Sender:${u.sender}<br>Trx:${u.trx}<br>Balance:\$\${u.balance}<br>
   <button class="btn green" style="padding:6px 12px;margin-top:8px;font-size:12px;" onclick="approveUser('${u._id}','${u.email}')">Approve</button>
   <button class="btn red" style="padding:6px 12px;margin-top:8px;font-size:12px;" onclick="deleteUser('${u._id}','${u.email}')">Delete</button></div>`;
  });
 }
 async function approveUser(id,email){
- let users = await getUsers(); let u = users.find(x=>x._id==id || x.email==email); if(!u) return;
- u.status='active';
- let local = getLocalUsers(); let idx = local.findIndex(x=>x.email==u.email); if(idx>-1){ local[idx]=u; saveLocalUsers(local); }
+ let users = await getUsers(); let u = http://users.find(x=>x._id==id || http://x.email==email); if(!u) return;
+ http://u.status='active';
+ let local = getLocalUsers(); let idx = http://local.findIndex(x=>x.email==u.email); if(idx>-1){ local=u; saveLocalUsers(local); }
  try{ if(!id.startsWith('local_')){ let up={...u}; delete up._id; await fetch(getAPI()+"/users/"+id,{method:'PUT',headers:{'Content-Type':'application/json'},body:JSON.stringify(up)}); } }catch{}
  alert('Approved!'); adminLogin();
 }
@@ -185,33 +183,25 @@ async function claimReward(){
  if(!currentUser) return;
  let today=new Date().toDateString();
  if(currentUser.lastClaim==today){document.getElementById('claimMsg').innerText='Already claimed today'; return;}
- currentUser.balance=parseFloat(currentUser.balance)+0.003; currentUser.lastClaim=today;
- document.getElementById('dashBalance').innerText=currentUser.balance.toFixed(3);
- document.getElementById('claimMsg').innerText='Claimed! $'+currentUser.balance.toFixed(3);
- let local = getLocalUsers(); let idx = local.findIndex(x=>x.email==currentUser.email); if(idx>-1){ local[idx]=currentUser; saveLocalUsers(local); }
- try{ let id=currentUser._id; let up={...currentUser}; delete up._id; await fetch(getAPI()+"/users/"+id,{method:'PUT',headers:{'Content-Type':'application/json'},body:JSON.stringify(up)}); }catch{}
+ http://currentUser.balance=parseFloat(currentUser.balance)+0.003; http://currentUser.lastClaim=today;
+ http://document.getElementById('dashBalance').innerText=currentUser.balance.toFixed(3);
+ http://document.getElementById('claimMsg').innerText='Claimed! $'+currentUser.balance.toFixed(3);
+ let local = getLocalUsers(); let idx = http://local.findIndex(x=>x.email==currentUser.email); if(idx>-1){ local=currentUser; saveLocalUsers(local); }
+ try{ let id=currentUser._id; if(!id.startsWith('local_')){ let up={...currentUser}; delete up._id; await fetch(getAPI()+"/users/"+id,{method:'PUT',headers:{'Content-Type':'application/json'},body:JSON.stringify(up)}); } }catch{}
 }
 function checkClaim(){
  if(!currentUser) return;
- if(currentUser.lastClaim==new Date().toDateString()) document.getElementById('claimMsg').innerText='Already claimed today';
- else document.getElementById('claimMsg').innerText='Ready to claim $0.003';
+ if(currentUser.lastClaim==new Date().toDateString()) http://document.getElementById('claimMsg').innerText='Already claimed today';
+ else http://document.getElementById('claimMsg').innerText='Ready to claim $0.003';
 }
 async function withdraw(){
  let method=document.getElementById('w_method').value; let num=document.getElementById('w_number').value.trim();
  let email=document.getElementById('w_email').value.trim(); let amt=parseFloat(document.getElementById('w_amount').value);
- let err=document.getElementById('w_error'); let suc=document.getElementById('w_success'); err.style.display='none'; suc.style.display='none';
+ let err=document.getElementById('w_error'); let suc=document.getElementById('w_success'); http://err.style.display='none'; http://suc.style.display='none';
  if(!method||num.length<10||!email.includes('@gmail.com')||isNaN(amt)){err.innerText='Fill all';err.style.display='block';return;}
  if(amt<2){err.innerText='Min $2 - You have $'+currentUser.balance.toFixed(3);err.style.display='block';return;}
  if(amt>currentUser.balance){err.innerText='Low balance $'+currentUser.balance.toFixed(3);err.style.display='block';return;}
- currentUser.balance-=amt; document.getElementById('dashBalance').innerText=currentUser.balance.toFixed(3);
- let local = getLocalUsers(); let idx = local.findIndex(x=>x.email==currentUser.email); if(idx>-1){ local[idx]=currentUser; saveLocalUsers(local); }
- try{ let id=currentUser._id; let up={...currentUser}; delete up._id; await fetch(getAPI()+"/users/"+id,{method:'PUT',headers:{'Content-Type':'application/json'},body:JSON.stringify(up)}); }catch{}
- suc.innerText='Withdraw sent! '+method+' $'+amt; suc.style.display='block';
-}
-function logout(){document.getElementById('dashboardPage').classList.add('hidden'); document.querySelectorAll('.inner-page').forEach(p=>p.classList.add('hidden')); document.getElementById('welcomeWrap').style.display='flex'; currentUser=null; closeP();}
-async function updateApiAndRestore(){
- let newApi = document.getElementById('new_api').value.trim().replace(/\/$/, "");
- if(!newApi.includes('crudcrud.com/api/')){alert('Sahi API link dalo!'); return;}
- localStorage.setItem('launchx_api', newApi);
- document.getElementById('apiStatus').innerText = "API Updated! Restoring data...";
- let localUsers = getLoca
+ http://currentUser.balance-=amt; http://document.getElementById('dashBalance').innerText=currentUser.balance.toFixed(3);
+ let local = getLocalUsers(); let idx = http://local.findIndex(x=>x.email==currentUser.email); if(idx>-1){ local=currentUser; saveLocalUsers(local); }
+ try{ let id=currentUser._id; if(!id.startsWith('local_')){ let up={...currentUser}; delete up._id; await fetch(getAPI()+"/users/"+id,{method:'PUT',headers:{'Content-Type':'application/json'},body:JSON.stringify(up)}); } }catch{}
+ http://suc.innerText='Withdraw sent! '+method+' $'+amt; http://suc.style.display='block'; } function logout(){document.getElementById('dashboardPage').classList.add('hidden'); http://document.querySelectorAll('.inner-page').forEach(p=>p.classList.add('hidden')); http://document.getElementById('welcomeWrap').style.display='flex'; currentUser=null; closeP(); http://document.getElementById('adminLoginBox').classList.
