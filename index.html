@@ -53,34 +53,28 @@ body{background:#f8fafc;min-height:100vh;overflow-x:hidden;}
 <button class="btn red" onclick="openP('adminPage')">Admin Panel</button>
 </div>
 </div>
-
 <div id="createPage" class="page hidden"><div class="card"><h2 style="color:#0ea5e9;font-family:'Great Vibes',cursive;font-size:42px;">Create Account</h2><div class="input-wrap"><label>Full Name</label><input id="c_name" placeholder=""></div><div class="input-wrap"><label>Email (must @gmail.com)</label><input id="c_email" placeholder=""></div><div class="input-wrap"><label>Phone Number</label><input id="c_phone" placeholder=""></div><div class="input-wrap"><label>Password</label><input id="c_pass" type="password" placeholder=""></div><div class="input-wrap"><label>Referral Email (Optional)</label><input id="c_ref" placeholder=""></div><button class="btn green" style="width:100%;margin-top:14px;" onclick="startVerify()">Submit</button><button class="btn" style="width:100%;background:#e2e8f0;color:#475569;margin-top:8px;" onclick="closeP()">Back</button></div></div>
 <div id="verifyPage" class="page hidden"><div class="card"><h2 style="color:#0ea5e9">Verification</h2><p style="color:#64748b">Please wait 30 seconds...</p><div class="timer" id="timer">30</div><div class="bar"><div class="bar-fill" id="bar"></div></div></div></div>
 <div id="paymentPage" class="page hidden"><div class="card"><h2 style="color:#f59e0b">Premium Membership</h2><p style="color:#475569;font-size:14px;margin-top:10px;">Rs 50 Rupees Per Month<br><br><b style="color:#16a34a;font-size:16px;">JazzCash / Easypaisa: 03316035482</b><br><span style="font-weight:800;">Name: Muhammad AHAB</span></p><br><div class="input-wrap"><label>Your Account Email</label><input id="p_email" readonly placeholder=""></div><div class="input-wrap"><label>Sender Number</label><input id="p_sender" placeholder=""></div><div class="input-wrap"><label>Transaction ID</label><input id="p_trx" placeholder=""></div><button class="btn blue" style="width:100%;" onclick="submitPayment()">Submit Request</button></div></div>
 <div id="loginPage" class="page hidden"><div class="card"><h2 style="color:#0ea5e9;font-family:'Great Vibes',cursive;font-size:42px;">Login</h2><div class="input-wrap"><label>Email</label><input id="l_email" placeholder=""></div><div class="input-wrap"><label>Password</label><input id="l_pass" type="password" placeholder=""></div><div id="login_error" style="color:#ef4444;font-size:12px;display:none;margin-top:8px;">Wrong Email/Password or Not Approved Yet</div><button class="btn blue" style="width:100%;margin-top:12px;" onclick="loginUser()">Login</button><button class="btn" style="width:100%;background:#e2e8f0;color:#475569;margin-top:8px;" onclick="closeP()">Back</button></div></div>
-<div id="adminPage" class="page hidden"><div class="card" style="max-width:750px;"><h2 style="color:#be123c">Admin Panel</h2><div id="adminLoginBox"><div class="input-wrap"><input id="a_email" placeholder=""></div><div class="input-wrap"><input id="a_pass" type="password" placeholder=""></div><div id="admin_error" style="color:#ef4444;font-size:12px;display:none;">Wrong Credentials!</div><button class="btn red" style="width:100%;margin-top:10px;" onclick="adminLogin()">Login</button></div><div id="adminContent" class="hidden" style="text-align:left;margin-top:20px;"><h3 style="color:#16a34a;margin-top:15px">Pending / All Users</h3><div id="pendingList" style="margin-top:10px;max-height:400px;overflow-y:auto;"></div><button class="btn" style="width:100%;background:#e2e8f0;color:#475569;margin-top:15px;" onclick="logout()">Logout</button></div><button class="btn" style="width:100%;background:#e2e8f0;color:#475569;margin-top:10px;" onclick="closeP()">Back</button></div></div>
-
+<div id="adminPage" class="page hidden"><div class="card" style="max-width:750px;"><h2 style="color:#be123c">Admin Panel</h2><div id="adminLoginBox"><div class="input-wrap"><input id="a_email" placeholder=""></div><div class="input-wrap"><input id="a_pass" type="password" placeholder=""></div><div id="admin_error" style="color:#ef4444;font-size:12px;display:none;">Wrong Credentials!</div><button class="btn red" style="width:100%;margin-top:10px;" onclick="adminLogin()">Login</button></div><div id="adminContent" class="hidden" style="text-align:left;margin-top:20px;"><h3 style="color:#16a34a;margin-top:15px">All Users From CrudCrud</h3><div id="pendingList" style="margin-top:10px;max-height:400px;overflow-y:auto;"></div><button class="btn" style="width:100%;background:#e2e8f0;color:#475569;margin-top:15px;" onclick="logout()">Logout</button></div><button class="btn" style="width:100%;background:#e2e8f0;color:#475569;margin-top:10px;" onclick="closeP()">Back</button></div></div>
 <div id="dashboardPage" class="hidden"><div class="dash-top"><div class="user-badge" id="dashName">Hi, User</div><div class="balance-badge">$ <span id="dashBalance">0.000</span></div><button class="btn red" style="padding:8px 16px;font-size:12px;" onclick="logout()">Logout</button></div><div class="dash-body"><div class="dash-grid"><button class="dash-btn" onclick="openInner('claimPage')"><span>🎁</span>Claim Reward<br><small style="color:#64748b">$0.003 / day</small></button><button class="dash-btn" onclick="openInner('taskPage')"><span>⭐</span>Complete Task<br><small style="color:#64748b">Rate 10 pics $0.01</small></button><button class="dash-btn" onclick="openInner('referralPage')"><span>👥</span>Referral Reward<br><small style="color:#64748b">Earn by invite</small></button><button class="dash-btn" onclick="openInner('withdrawPage')"><span>💸</span>Withdraw<br><small style="color:#64748b">Min $2</small></button></div></div></div>
-
 <div id="claimPage" class="inner-page hidden"><div class="card" style="margin:auto;"><h2>Claim Reward</h2><p id="claimMsg" style="color:#16a34a;font-weight:700;margin:15px 0;">Ready to claim $0.003 today!</p><button class="btn green" style="width:100%" onclick="claimReward()">Claim $0.003</button><br><br><button class="btn" style="width:100%;background:#e2e8f0;color:#475569" onclick="closeInner('claimPage')">Back</button></div></div>
 <div id="taskPage" class="inner-page hidden"><div class="card" style="max-width:650px;margin:auto;"><h2>Complete Task - Rate 10 Images</h2><div class="task-grid" id="taskGrid"></div><button class="btn green" style="width:100%;margin-top:12px;" onclick="submitTask()">Submit Task & Earn $0.01</button><p id="taskMsg" style="font-size:12px;margin-top:8px;"></p><button class="btn" style="width:100%;background:#e2e8f0;color:#475569;margin-top:10px;" onclick="closeInner('taskPage')">Back</button></div></div>
 <div id="referralPage" class="inner-page hidden"><div class="card" style="margin:auto;"><h2>Referral Reward</h2><div class="ref-box" id="refLink"></div><button class="btn blue" style="width:100%" onclick="copyRef()">Copy Link</button><br><br><div style="background:#f1f5f9;padding:12px;border-radius:12px;text-align:left;"><b>Your Referrals:</b><div id="refList" style="font-size:12px;margin-top:6px;">No referrals yet</div></div><br><button class="btn" style="width:100%;background:#e2e8f0;color:#475569" onclick="closeInner('referralPage')">Back</button></div></div>
 <div id="withdrawPage" class="inner-page hidden"><div class="card" style="margin:auto;"><h2>Withdraw - Min $2</h2><div style="text-align:left;margin-top:12px;"><div class="input-wrap"><select id="w_method" style="width:100%;padding:13px;border-radius:12px;border:1.5px solid #cbd5e1;background:#f8fafc;"><option value="">Select Method</option><option>JazzCash</option><option>Easypaisa</option></select></div><div class="input-wrap"><input id="w_number" placeholder=""></div><div class="input-wrap"><input id="w_amount" type="number" placeholder=""></div><p id="w_error" style="color:#ef4444;font-size:12px;display:none"></p><p id="w_success" style="color:#16a34a;font-size:12px;display:none"></p><button class="btn blue" style="width:100%;margin-top:10px;" onclick="withdraw()">Withdraw</button></div><br><button class="btn" style="width:100%;background:#e2e8f0;color:#475569" onclick="closeInner('withdrawPage')">Back</button></div></div>
-
 <script>
 const API = "https://crudcrud.com/api/d99973ee6a6441cebd87e0bcb387a79e";
 let tempUser={}, currentUser=null; let taskRatings={};
-
 window.openP=(id)=>document.getElementById(id).classList.remove('hidden');
 window.closeP=()=>document.querySelectorAll('.page').forEach(p=>p.classList.add('hidden'));
 window.openInner=(id)=>{ document.getElementById(id).classList.remove('hidden'); if(id=='taskPage') loadTasks(); if(id=='referralPage') loadReferral(); }
 window.closeInner=(id)=>document.getElementById(id).classList.add('hidden');
-
 async function getUsers(){
  let r = await fetch(API + "/users");
+ if(!r.ok) throw new Error("API Expired");
  return await r.json();
 }
-
 (function(){ let params=new URLSearchParams(window.location.search); let ref=params.get('ref'); if(ref){ document.addEventListener('DOMContentLoaded',()=>{ let el=document.getElementById('c_ref'); if(el) el.value=ref; openP('createPage'); }); } })();
 
 window.startVerify=async function(){
@@ -95,48 +89,54 @@ window.startVerify=async function(){
  if(p.length<4){alert('Password min 4 chars');return;}
  tempUser={name:n,email:e,phone:ph,pass:p,referralFrom:rf,balance:0,status:'pending_payment',sender:'',trx:'',lastClaim:'',lastTask:''};
  closeP(); document.getElementById('verifyPage').classList.remove('hidden');
- let t=30; document.getElementById('timer').innerText=t; document.getElementById('bar').style.width='0%';
+ let t=30;
+ document.getElementById('timer').innerText=t;
+ document.getElementById('bar').style.width='0%';
  let inter=setInterval(async()=>{
-  t--; document.getElementById('timer').innerText=t; document.getElementById('bar').style.width=((30-t)/30*100)+'%';
+  document.getElementById('timer').innerText=t;
+  document.getElementById('bar').style.width=((30-t)/30*100)+'%';
   if(t<=0){
    clearInterval(inter);
-   let users=await getUsers();
-   if(users.find(u=>u.email==e)){alert('Email already exists'); document.getElementById('verifyPage').classList.add('hidden'); return;}
-   await fetch(API+"/users",{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(tempUser)});
    document.getElementById('verifyPage').classList.add('hidden');
    document.getElementById('p_email').value=e;
    openP('paymentPage');
+   try{
+     let users=await getUsers();
+     if(users.find(u=>u.email==e)){alert('Email already exists'); closeP(); return;}
+     await fetch(API+"/users",{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(tempUser)});
+   }catch(err){
+     try{ await fetch(API+"/users",{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(tempUser)}); }catch{}
+   }
   }
+  t--;
  },1000);
 }
-
 window.submitPayment=async function(){
  let email=document.getElementById('p_email').value;
  let sender=document.getElementById('p_sender').value.trim();
  let trx=document.getElementById('p_trx').value.trim();
  if(sender.length<5||trx.length<2){alert('Enter Sender & Transaction ID');return;}
  let users=await getUsers(); let u=users.find(x=>x.email==email);
+ if(!u){alert('User not found, make account again');return;}
  u.sender=sender; u.trx=trx; u.status='pending_approval';
  let up={...u}; let id=u._id; delete up._id;
  await fetch(API+"/users/"+id,{method:'PUT',headers:{'Content-Type':'application/json'},body:JSON.stringify(up)});
- alert('Request sent to Admin!');
- closeP();
+ alert('Request sent to Admin!'); closeP();
 }
-
 window.loginUser=async function(){
  let e=document.getElementById('l_email').value.toLowerCase().trim();
  let p=document.getElementById('l_pass').value.trim();
- let users=await getUsers(); let u=users.find(x=>x.email==e && x.pass==p);
- if(!u){document.getElementById('login_error').style.display='block';return;}
- if(u.status!='active'){alert('Account status: '+u.status+' - Admin approval pending');return;}
- document.getElementById('login_error').style.display='none'; currentUser=u; closeP();
- document.getElementById('welcomeWrap').style.display='none';
- document.getElementById('dashName').innerText='Hi, '+u.name;
- document.getElementById('dashBalance').innerText=parseFloat(u.balance).toFixed(3);
- document.getElementById('dashboardPage').classList.remove('hidden');
- checkClaim();
+ try{
+   let users=await getUsers(); let u=users.find(x=>x.email==e && x.pass==p);
+   if(!u){document.getElementById('login_error').style.display='block';return;}
+   if(u.status!='active'){alert('Account status: '+u.status+' - Admin approval pending');return;}
+   document.getElementById('login_error').style.display='none'; currentUser=u; closeP();
+   document.getElementById('welcomeWrap').style.display='none';
+   document.getElementById('dashName').innerText='Hi, '+u.name;
+   document.getElementById('dashBalance').innerText=parseFloat(u.balance).toFixed(3);
+   document.getElementById('dashboardPage').classList.remove('hidden');
+ }catch{ alert('API Expired! Please create new CrudCrud link'); }
 }
-
 window.adminLogin=async function(){
  let e=document.getElementById('a_email').value.toLowerCase().trim();
  let p=document.getElementById('a_pass').value.trim();
@@ -144,18 +144,19 @@ window.adminLogin=async function(){
  document.getElementById('admin_error').style.display='none';
  document.getElementById('adminLoginBox').classList.add('hidden');
  document.getElementById('adminContent').classList.remove('hidden');
- let users=await getUsers();
- let list=document.getElementById('pendingList');
- if(users.length==0){list.innerHTML='<p>No users</p>';return;}
- list.innerHTML='';
- users.forEach(u=>{
-  list.innerHTML+=`<div style="background:white;padding:12px;border-radius:12px;margin-bottom:10px;border:1px solid #e2e8f0">
-  <b>${u.name}</b> - ${u.email}<br>Status: <b>${u.status}</b><br>Phone:${u.phone}<br>Sender:${u.sender}<br>Trx:${u.trx}<br>Referral: ${u.referralFrom||'None'}<br>Balance:$${u.balance}<br>
-  <button class="btn green" style="padding:7px 12px;margin-top:8px;font-size:12px;" onclick="approveUser('${u._id}')">Approve</button>
-  <button class="btn red" style="padding:7px 12px;margin-top:8px;font-size:12px;" onclick="deleteUser('${u._id}')">Reject</button></div>`;
- });
+ try{
+   let users=await getUsers();
+   let list=document.getElementById('pendingList');
+   if(users.length==0){list.innerHTML='<p>No users</p>';return;}
+   list.innerHTML='';
+   users.forEach(u=>{
+    list.innerHTML+=`<div style="background:white;padding:12px;border-radius:12px;margin-bottom:10px;border:1px solid #e2e8f0">
+    <b>${u.name}</b> - ${u.email}<br>Status: <b>${u.status}</b><br>Phone:${u.phone}<br>Sender:${u.sender}<br>Trx:${u.trx}<br>Referral: ${u.referralFrom||'None'}<br>Balance:$${u.balance}<br>
+    <button class="btn green" style="padding:7px 12px;margin-top:8px;font-size:12px;" onclick="approveUser('${u._id}')">Approve</button>
+    <button class="btn red" style="padding:7px 12px;margin-top:8px;font-size:12px;" onclick="deleteUser('${u._id}')">Reject</button></div>`;
+   });
+ }catch{ document.getElementById('pendingList').innerHTML='<p style="color:red">API Expired! Create new link and update const API in code</p>'; }
 }
-
 window.approveUser=async function(id){
  let users=await getUsers(); let u=users.find(x=>x._id==id); u.status='active';
  let up={...u}; delete up._id;
@@ -166,7 +167,6 @@ window.deleteUser=async function(id){
  await fetch(API+"/users/"+id,{method:'DELETE'});
  alert('Deleted'); adminLogin();
 }
-
 window.claimReward=async function(){
  let today=new Date().toDateString();
  if(currentUser.lastClaim==today){document.getElementById('claimMsg').innerText='Already claimed today!';return;}
@@ -176,7 +176,6 @@ window.claimReward=async function(){
  let up={...currentUser}; let id=currentUser._id; delete up._id;
  await fetch(API+"/users/"+id,{method:'PUT',headers:{'Content-Type':'application/json'},body:JSON.stringify(up)});
 }
-function checkClaim(){ if(currentUser.lastClaim==new Date().toDateString()) document.getElementById('claimMsg').innerText='Already claimed today!'; }
 function loadTasks(){
  let grid=document.getElementById('taskGrid'); grid.innerHTML=''; taskRatings={};
  let imgs=["https://picsum.photos/seed/1/200/200","https://picsum.photos/seed/2/200/200","https://picsum.photos/seed/3/200/200","https://picsum.photos/seed/4/200/200","https://picsum.photos/seed/5/200/200","https://picsum.photos/seed/6/200/200","https://picsum.photos/seed/7/200/200","https://picsum.photos/seed/8/200/200","https://picsum.photos/seed/9/200/200","https://picsum.photos/seed/10/200/200"];
