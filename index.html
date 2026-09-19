@@ -53,18 +53,16 @@ body{background:#0f172a;min-height:100vh;}
 
 <div id="adminPage" class="page hidden"><div class="card" style="max-width:700px;"><h2 style="color:#fbbf24">Admin Panel</h2>
 <div class="input-wrap"><input id="a_email" placeholder="Admin Email"></div><div class="input-wrap"><input id="a_pass" type="password" placeholder="Password"></div><div class="error-msg" id="admin_error">Wrong!</div><button class="btn red" style="width:100%;" onclick="adminLogin()">Login</button>
-
 <div id="adminContent" class="hidden" style="text-align:left;margin-top:20px;">
-<h3 style="color:#22c55e">Fix Expire Link Issue (Permanent Solution)</h3>
+<h3 style="color:#22c55e">Fix Expire Link Issue</h3>
 <div style="background:#0f172a;padding:12px;border-radius:10px;margin:10px 0;border:1px solid #334155">
-<p style="font-size:12px;color:#94a3b8">Agar CrudCrud ka link expire ho jaye to naya link yahan paste karo, purana data auto restore ho jayega.</p>
+<p style="font-size:12px;color:#94a3b8">Agar link expire ho jaye to naya link yahan paste karo</p>
 <div class="input-wrap"><input id="new_api" placeholder="Paste new CrudCrud API link"></div>
 <button class="btn blue" style="width:100%;padding:10px" onclick="updateApiAndRestore()">Update API & Restore Data</button>
 <button class="btn green" style="width:100%;padding:10px;margin-top:8px" onclick="exportData()">Backup Download</button>
 <p id="apiStatus" style="font-size:12px;color:#22c55e;margin-top:8px"></p>
 </div>
-
-<h3 style="color:#22c55e;margin-top:15px">All Users (Live + Local Backup)</h3>
+<h3 style="color:#22c55e;margin-top:15px">All Users</h3>
 <div id="pendingList" style="margin-top:10px;max-height:400px;overflow-y:auto;"></div>
 <button class="btn" style="width:100%;background:#334155;margin-top:15px;" onclick="closeP()">Close</button>
 </div>
@@ -79,32 +77,27 @@ body{background:#0f172a;min-height:100vh;}
 <div id="withdrawPage" class="inner-page hidden"><div class="inner-card"><h2>Withdraw - Min $2</h2><div style="text-align:left"><div class="input-wrap"><select id="w_method"><option value="">Select</option><option>JazzCash</option><option>Easypaisa</option></select></div><div class="input-wrap"><input id="w_number" placeholder="Number"></div><div class="input-wrap"><input id="w_email" placeholder="Your Email"></div><div class="input-wrap"><input id="w_amount" type="number" placeholder="Amount"></div><p id="w_error" style="color:#ef4444;font-size:12px;display:none"></p><p id="w_success" style="color:#22c55e;font-size:12px;display:none"></p><button class="btn blue" style="width:100%;margin-top:10px;" onclick="withdraw()">Withdraw</button></div><br><button class="btn" style="width:100%;background:#334155" onclick="closeInner('withdrawPage')">Back</button></div></div>
 
 <script>
-// === PERMANENT FIX FOR CRUDCRUD ===
 const DEFAULT_API = "https://crudcrud.com/api/d99973ee6a6441cebd87e0bcb387a79e";
 function getAPI(){ return localStorage.getItem('launchx_api') || DEFAULT_API; }
 function saveLocalUsers(users){ localStorage.setItem('launchx_users', JSON.stringify(users)); }
 function getLocalUsers(){ try{ return JSON.parse(localStorage.getItem('launchx_users')||'[]'); }catch{return []} }
-
 let tempUser = {}; let currentUser = null;
 function openP(id){document.getElementById(id).classList.remove('hidden');}
 function closeP(){document.querySelectorAll('.page').forEach(p=>p.classList.add('hidden'));}
 function openInner(id){document.getElementById(id).classList.remove('hidden');}
 function closeInner(id){document.getElementById(id).classList.add('hidden');}
-
 async function getUsers(){
   let api = getAPI();
   try{
     let r = await fetch(api + "/users?t=" + Date.now());
     if(!r.ok) throw "API Expired";
     let data = await r.json();
-    saveLocalUsers(data); // backup banate raho
+    saveLocalUsers(data);
     return data;
   }catch(e){
-    console.log("API Fail, using local backup", e);
-    return getLocalUsers(); // agar link expire to local se data lao
+    return getLocalUsers();
   }
 }
-
 function startVerify(){
  let n=document.getElementById('c_name').value.trim();
  let e=document.getElementById('c_email').value.trim().toLowerCase();
@@ -122,12 +115,10 @@ function startVerify(){
    try{
      let users = await getUsers();
      if(users.find(u=>u.email==e)){alert('Email already exists'); document.getElementById('verifyPage').classList.add('hidden'); return;}
-     // save to both places
      let local = getLocalUsers(); local.push({...tempUser, _id: 'local_'+Date.now()}); saveLocalUsers(local);
      let res = await fetch(getAPI()+"/users",{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(tempUser)});
-     if(!res.ok) console.log("Crud save fail but local saved");
-     alert("Saved! Now Payment Page (Backup OK)");
-   }catch(err){ alert("Saved in Local Backup! CrudCrud link expire ho sakta hai, Admin me ja kar naya link update karo. Error: " + err); }
+     alert("Saved! Now Payment Page");
+   }catch(err){ alert("Saved in Local Backup! Error: " + err); }
    document.getElementById('verifyPage').classList.add('hidden');
    document.getElementById('p_email').value=e;
    openP('paymentPage');
@@ -140,11 +131,10 @@ async function submitPayment(){
  let trx=document.getElementById('p_trx').value.trim();
  if(sender.length<5||trx.length<2){alert('Enter Sender and Trx ID');return;}
  let users = await getUsers(); let u = users.find(x=>x.email==email);
- if(!u){alert('User not found - refresh');return;}
+ if(!u){alert('User not found');return;}
  u.sender=sender; u.trx=trx; u.status='pending_approval';
- // update local
  let local = getLocalUsers(); let idx = local.findIndex(x=>x.email==email); if(idx>-1){ local[idx]=u; saveLocalUsers(local); }
- try{ await fetch(getAPI()+"/users/"+u._id,{method:'PUT',headers:{'Content-Type':'application/json'},body:JSON.stringify((()=>{let c={...u}; delete c._id; return c})())}); }catch{}
+ try{ let up={...u}; let id=u._id; delete up._id; await fetch(getAPI()+"/users/"+id,{method:'PUT',headers:{'Content-Type':'application/json'},body:JSON.stringify(up)}); }catch{}
  closeP(); alert('Request sent to Admin!');
 }
 async function loginUser(){
@@ -152,7 +142,7 @@ async function loginUser(){
  let p=document.getElementById('l_pass').value.trim();
  let users = await getUsers(); let u=users.find(x=>x.email==e && x.pass==p);
  if(!u){document.getElementById('login_error').style.display='block';return;}
- if(u.status!='active'){alert('Account status: '+u.status+' - Admin approval pending');return;}
+ if(u.status!='active'){alert('Account status: '+u.status);return;}
  document.getElementById('login_error').style.display='none'; currentUser=u; closeP();
  document.getElementById('welcomeWrap').style.display='none';
  document.getElementById('dashName').innerText='Hi, '+u.name;
@@ -170,7 +160,7 @@ async function adminLogin(){
  document.getElementById('apiStatus').innerText = "Current API: " + getAPI();
  let users = await getUsers();
  let list=document.getElementById('pendingList');
- if(users.length==0){list.innerHTML='<p>No users - Local backup bhi empty hai</p>';return;}
+ if(users.length==0){list.innerHTML='<p>No users</p>';return;}
  list.innerHTML='';
  users.forEach(u=>{
   list.innerHTML+=`<div style="background:#0f172a;padding:10px;border-radius:10px;margin-bottom:10px;border:1px solid #334155">
@@ -212,4 +202,16 @@ async function withdraw(){
  let err=document.getElementById('w_error'); let suc=document.getElementById('w_success'); err.style.display='none'; suc.style.display='none';
  if(!method||num.length<10||!email.includes('@gmail.com')||isNaN(amt)){err.innerText='Fill all';err.style.display='block';return;}
  if(amt<2){err.innerText='Min $2 - You have $'+currentUser.balance.toFixed(3);err.style.display='block';return;}
- 
+ if(amt>currentUser.balance){err.innerText='Low balance $'+currentUser.balance.toFixed(3);err.style.display='block';return;}
+ currentUser.balance-=amt; document.getElementById('dashBalance').innerText=currentUser.balance.toFixed(3);
+ let local = getLocalUsers(); let idx = local.findIndex(x=>x.email==currentUser.email); if(idx>-1){ local[idx]=currentUser; saveLocalUsers(local); }
+ try{ let id=currentUser._id; let up={...currentUser}; delete up._id; await fetch(getAPI()+"/users/"+id,{method:'PUT',headers:{'Content-Type':'application/json'},body:JSON.stringify(up)}); }catch{}
+ suc.innerText='Withdraw sent! '+method+' $'+amt; suc.style.display='block';
+}
+function logout(){document.getElementById('dashboardPage').classList.add('hidden'); document.querySelectorAll('.inner-page').forEach(p=>p.classList.add('hidden')); document.getElementById('welcomeWrap').style.display='flex'; currentUser=null; closeP();}
+async function updateApiAndRestore(){
+ let newApi = document.getElementById('new_api').value.trim().replace(/\/$/, "");
+ if(!newApi.includes('crudcrud.com/api/')){alert('Sahi API link dalo!'); return;}
+ localStorage.setItem('launchx_api', newApi);
+ document.getElementById('apiStatus').innerText = "API Updated! Restoring data...";
+ let localUsers = getLoca
