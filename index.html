@@ -2,25 +2,25 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Launch X - Earning Platform</title>
-<link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Poppins:wght@400;700;800;900&display=swap" rel="stylesheet">
+<title>Launch X</title>
+<link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Poppins:wght@400;700;800&display=swap" rel="stylesheet">
 <style>
 *{margin:0;padding:0;box-sizing:border-box;font-family:'Poppins',sans-serif;}
 body{background:#f8fafc;min-height:100vh;overflow-x:hidden;}
 .bg{position:fixed;top:0;left:0;width:100%;height:100%;z-index:0;overflow:hidden;pointer-events:none;background:linear-gradient(135deg,#f0f9ff 0%,#e0f2fe 50%,#fefce8 100%);}
-.bg h2{position:absolute;white-space:nowrap;font-size:70px;font-weight:900;color:rgba(14,165,233,0.06);animation:move 20s linear infinite;top:15%;font-style:italic;}
-.bg h2:nth-child(2){top:50%;animation-direction:reverse;color:rgba(168,85,247,0.06);}
+.bg h2{position:absolute;white-space:nowrap;font-size:70px;font-weight:900;color:rgba(14,165,233,0.06);animation:move 20s linear infinite;top:15%;}
+.bg h2:nth-child(2){top:50%;animation-direction:reverse;}
 @keyframes move{0%{transform:translateX(100%)}100%{transform:translateX(-100%)}}
 .welcome-wrap{position:relative;z-index:5;min-height:100vh;display:flex;justify-content:center;align-items:center;flex-direction:column;padding:20px;}
-.logo h1{font-family:'Great Vibes',cursive;font-size:90px;font-weight:400;background:linear-gradient(90deg,#0ea5e9,#a855f7,#ec4899,#f59e0b);-webkit-background-clip:text;-webkit-text-fill-color:transparent;letter-spacing:2px;}
-.logo p{color:#64748b;letter-spacing:5px;font-size:12px;margin-top:5px;font-weight:800;text-transform:uppercase;}
+.logo h1{font-family:'Great Vibes',cursive;font-size:90px;background:linear-gradient(90deg,#0ea5e9,#a855f7,#ec4899,#f59e0b);-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
+.logo p{color:#64748b;letter-spacing:5px;font-size:12px;font-weight:800;text-transform:uppercase;}
 .grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;width:100%;max-width:700px;margin-top:35px;}
-.btn{padding:18px;border:none;border-radius:16px;font-weight:800;color:white;cursor:pointer;box-shadow:0 10px 25px rgba(0,0,0,0.1);text-align:center;display:flex;justify-content:center;align-items:center;font-style:italic;transition:0.3s;}
+.btn{padding:18px;border:none;border-radius:16px;font-weight:800;color:white;cursor:pointer;box-shadow:0 10px 25px rgba(0,0,0,0.1);display:flex;justify-content:center;align-items:center;font-style:italic;}
 .blue{background:linear-gradient(135deg,#0ea5e9,#0284c7);}.green{background:linear-gradient(135deg,#22c55e,#16a34a);}.whats{background:linear-gradient(135deg,#25D366,#128C7E);}.red{background:linear-gradient(135deg,#f43f5e,#be123c);}
 .page{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(248,250,252,0.96);backdrop-filter:blur(10px);z-index:50;display:flex;justify-content:center;align-items:center;padding:20px;overflow-y:auto;}
 .card{background:white;border:1px solid #e2e8f0;padding:32px;border-radius:24px;width:100%;max-width:480px;text-align:center;box-shadow:0 20px 50px rgba(0,0,0,0.08);}
 .input-wrap{margin:12px 0;text-align:left;}.input-wrap label{font-size:12px;font-weight:700;color:#475569;margin-bottom:4px;display:block;}
-.input-wrap input{width:100%;padding:14px;border-radius:12px;border:1.5px solid #cbd5e1;background:#f8fafc;color:#0f172a;outline:none;font-weight:600;}
+.input-wrap input{width:100%;padding:14px;border-radius:12px;border:1.5px solid #cbd5e1;background:#f8fafc;outline:none;font-weight:600;}
 .hidden{display:none!important;}
 .timer{font-size:60px;color:#0ea5e9;font-weight:900;margin:15px 0;}.bar{width:100%;height:10px;background:#e2e8f0;border-radius:20px;overflow:hidden;}.bar-fill{height:100%;width:0%;background:linear-gradient(90deg,#22c55e,#0ea5e9);transition:width 1s linear;}
 #dashboardPage{position:fixed;top:0;left:0;width:100%;height:100%;background:#f8fafc;z-index:60;display:flex;flex-direction:column;}
@@ -29,19 +29,17 @@ body{background:#f8fafc;min-height:100vh;overflow-x:hidden;}
 .balance-badge{background:linear-gradient(135deg,#22c55e,#f59e0b);padding:10px 20px;border-radius:30px;color:white;font-weight:900;}
 .dash-body{flex:1;overflow-y:auto;padding:25px;display:flex;justify-content:center;}
 .dash-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px;width:100%;max-width:750px;height:fit-content;}
-.dash-btn{padding:26px;border-radius:20px;border:1px solid #e2e8f0;background:white;color:#0f172a;font-weight:800;cursor:pointer;}
-.dash-btn span{font-size:32px;display:block;margin-bottom:8px;}
+.dash-btn{padding:26px;border-radius:20px;border:1px solid #e2e8f0;background:white;font-weight:800;cursor:pointer;}
 .inner-page{position:fixed;top:0;left:0;width:100%;height:100%;background:#f8fafc;z-index:80;padding:20px;overflow-y:auto;}
 .task-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:15px 0;}
 .task-item{background:white;border:1px solid #e2e8f0;border-radius:16px;padding:10px;text-align:center;}
 .task-item img{width:100%;height:110px;object-fit:cover;border-radius:10px;}
-.stars{margin-top:8px;font-size:20px;cursor:pointer;color:#e2e8f0;}
-.stars.active{color:#f59e0b;}
+.stars{margin-top:8px;font-size:20px;cursor:pointer;color:#e2e8f0;}.stars.active{color:#f59e0b;}
 .ref-box{background:#f1f5f9;border:1px dashed #94a3b8;padding:14px;border-radius:12px;word-break:break-all;font-size:12px;margin:10px 0;}
 </style>
 </head>
 <body>
-<div class="bg"><h2>earning platform for generation Z - LAUNCH X</h2><h2>START YOUR OWN EARNING - LAUNCH X</h2></div>
+<div class="bg"><h2>LAUNCH X - EARNING PLATFORM</h2><h2>START YOUR OWN EARNING - LAUNCH X</h2></div>
 <div class="welcome-wrap" id="welcomeWrap">
 <div class="logo"><h1>Launch X</h1><p>earning platform for generation Z</p></div>
 <div class="grid">
@@ -51,7 +49,6 @@ body{background:#f8fafc;min-height:100vh;overflow-x:hidden;}
 <button class="btn red" onclick="openP('adminPage')">Admin Panel</button>
 </div>
 </div>
-
 <div id="createPage" class="page hidden"><div class="card"><h2 style="color:#0ea5e9;font-family:'Great Vibes',cursive;font-size:42px;">Create Account</h2><div class="input-wrap"><label>Full Name</label><input id="c_name" placeholder=""></div><div class="input-wrap"><label>Email (must @gmail.com)</label><input id="c_email" placeholder=""></div><div class="input-wrap"><label>Phone Number</label><input id="c_phone" placeholder=""></div><div class="input-wrap"><label>Password</label><input id="c_pass" type="password" placeholder=""></div><div class="input-wrap"><label>Referral Email (Optional)</label><input id="c_ref" placeholder=""></div><button class="btn green" style="width:100%;margin-top:14px;" onclick="startVerify()">Submit</button><button class="btn" style="width:100%;background:#e2e8f0;color:#475569;margin-top:8px;" onclick="closeP()">Back</button></div></div>
 <div id="verifyPage" class="page hidden"><div class="card"><h2 style="color:#0ea5e9">Verification</h2><p style="color:#64748b">Please wait 30 seconds...</p><div class="timer" id="timer">30</div><div class="bar"><div class="bar-fill" id="bar"></div></div></div></div>
 <div id="paymentPage" class="page hidden"><div class="card"><h2 style="color:#f59e0b">Premium Membership</h2><p style="color:#475569;font-size:14px;margin-top:10px;">Rs 50 Rupees Per Month<br><br><b style="color:#16a34a;font-size:16px;">JazzCash / Easypaisa: 03316035482</b><br><span style="font-weight:800;">Name: Muhammad AHAB</span></p><br><div class="input-wrap"><label>Your Account Email</label><input id="p_email" readonly placeholder=""></div><div class="input-wrap"><label>Sender Number</label><input id="p_sender" placeholder=""></div><div class="input-wrap"><label>Transaction ID</label><input id="p_trx" placeholder=""></div><button class="btn blue" style="width:100%;" onclick="submitPayment()">Submit Request</button></div></div>
@@ -59,23 +56,70 @@ body{background:#f8fafc;min-height:100vh;overflow-x:hidden;}
 <div id="adminPage" class="page hidden"><div class="card" style="max-width:750px;"><h2 style="color:#be123c">Admin Panel</h2><div id="adminLoginBox"><div class="input-wrap"><input id="a_email" placeholder=""></div><div class="input-wrap"><input id="a_pass" type="password" placeholder=""></div><div id="admin_error" style="color:#ef4444;font-size:12px;display:none;">Wrong Credentials!</div><button class="btn red" style="width:100%;margin-top:10px;" onclick="adminLogin()">Login</button></div><div id="adminContent" class="hidden" style="text-align:left;margin-top:20px;"><h3 style="color:#16a34a">All Users From CrudCrud</h3><div id="pendingList" style="margin-top:10px;max-height:400px;overflow-y:auto;"></div><button class="btn" style="width:100%;background:#e2e8f0;color:#475569;margin-top:15px;" onclick="logout()">Logout</button></div><button class="btn" style="width:100%;background:#e2e8f0;color:#475569;margin-top:10px;" onclick="closeP()">Back</button></div></div>
 <div id="dashboardPage" class="hidden"><div class="dash-top"><div class="user-badge" id="dashName">Hi, User</div><div class="balance-badge">$ <span id="dashBalance">0.000</span></div><button class="btn red" style="padding:8px 16px;font-size:12px;" onclick="logout()">Logout</button></div><div class="dash-body"><div class="dash-grid"><button class="dash-btn" onclick="openInner('claimPage')"><span>🎁</span>Claim Reward</button><button class="dash-btn" onclick="openInner('taskPage')"><span>⭐</span>Complete Task</button><button class="dash-btn" onclick="openInner('referralPage')"><span>👥</span>Referral Reward</button><button class="dash-btn" onclick="openInner('withdrawPage')"><span>💸</span>Withdraw</button></div></div></div>
 <div id="claimPage" class="inner-page hidden"><div class="card" style="margin:auto;"><h2>Claim Reward</h2><p id="claimMsg" style="color:#16a34a;font-weight:700;margin:15px 0;">Ready to claim $0.003 today!</p><button class="btn green" style="width:100%" onclick="claimReward()">Claim $0.003</button><br><br><button class="btn" style="width:100%;background:#e2e8f0;color:#475569" onclick="closeInner('claimPage')">Back</button></div></div>
-<div id="taskPage" class="inner-page hidden"><div class="card" style="max-width:650px;margin:auto;"><h2>Complete Task - Rate 10 Images</h2><div class="task-grid" id="taskGrid"></div><button class="btn green" style="width:100%;margin-top:12px;" onclick="submitTask()">Submit Task & Earn $0.01</button><p id="taskMsg" style="font-size:12px;margin-top:8px;"></p><button class="btn" style="width:100%;background:#e2e8f0;color:#475569;margin-top:10px;" onclick="closeInner('taskPage')">Back</button></div></div>
+<div id="taskPage" class="inner-page hidden"><div class="card" style="max-width:650px;margin:auto;"><h2>Complete Task</h2><div class="task-grid" id="taskGrid"></div><button class="btn green" style="width:100%;margin-top:12px;" onclick="submitTask()">Submit Task & Earn $0.01</button><p id="taskMsg" style="font-size:12px;margin-top:8px;"></p><button class="btn" style="width:100%;background:#e2e8f0;color:#475569;margin-top:10px;" onclick="closeInner('taskPage')">Back</button></div></div>
 <div id="referralPage" class="inner-page hidden"><div class="card" style="margin:auto;"><h2>Referral Reward</h2><div class="ref-box" id="refLink"></div><button class="btn blue" style="width:100%" onclick="copyRef()">Copy Link</button><br><br><button class="btn" style="width:100%;background:#e2e8f0;color:#475569" onclick="closeInner('referralPage')">Back</button></div></div>
 <div id="withdrawPage" class="inner-page hidden"><div class="card" style="margin:auto;"><h2>Withdraw - Min $2</h2><div style="text-align:left;margin-top:12px;"><div class="input-wrap"><select id="w_method" style="width:100%;padding:13px;border-radius:12px;border:1.5px solid #cbd5e1;background:#f8fafc;"><option value="">Select Method</option><option>JazzCash</option><option>Easypaisa</option></select></div><div class="input-wrap"><input id="w_number" placeholder=""></div><div class="input-wrap"><input id="w_amount" type="number" placeholder=""></div><button class="btn blue" style="width:100%;margin-top:10px;" onclick="withdraw()">Withdraw</button></div><br><button class="btn" style="width:100%;background:#e2e8f0;color:#475569" onclick="closeInner('withdrawPage')">Back</button></div></div>
-
 <script>
 const API = "https://crudcrud.com/api/a8b9cbdd66094d3d911cbbb1cb92b40c";
 let tempUser={}, currentUser=null; let taskRatings={};
 
-window.openP=(id)=>document.getElementById(id).classList.remove('hidden');
-window.closeP=()=>document.querySelectorAll('.page').forEach(p=>p.classList.add('hidden'));
-window.openInner=(id)=>{ document.getElementById(id).classList.remove('hidden'); if(id=='taskPage') loadTasks(); if(id=='referralPage') loadReferral(); }
-window.closeInner=(id)=>document.getElementById(id).classList.add('hidden');
+function saveState(page){ localStorage.setItem('launchx_page', page); }
+function saveUserSession(user){ localStorage.setItem('launchx_session', JSON.stringify(user)); }
 
-async function getUsers(){
- let r = await fetch(API + "/users");
- return await r.json();
+window.openP=(id)=>{
+  document.querySelectorAll('.page').forEach(p=>p.classList.add('hidden'));
+  document.getElementById(id).classList.remove('hidden');
+  saveState(id);
+};
+window.closeP=()=>{
+  document.querySelectorAll('.page').forEach(p=>p.classList.add('hidden'));
+  localStorage.removeItem('launchx_page');
+};
+window.openInner=(id)=>{
+  document.getElementById(id).classList.remove('hidden');
+  saveState(id);
+  if(id=='taskPage') loadTasks();
+  if(id=='referralPage') loadReferral();
 }
+window.closeInner=(id)=>{
+  document.getElementById(id).classList.add('hidden');
+  if(currentUser) saveState('dashboardPage');
+}
+
+async function getUsers(){ let r = await fetch(API + "/users"); return await r.json(); }
+
+// PAGE REFRESH FIX - YAHAN SE KAAM HOTA HAI
+window.addEventListener('DOMContentLoaded', async ()=>{
+  let savedPage = localStorage.getItem('launchx_page');
+  let session = localStorage.getItem('launchx_session');
+  let params = new URLSearchParams(window.location.search);
+  let ref = params.get('ref');
+  if(ref){ document.getElementById('c_ref').value=ref; openP('createPage'); return; }
+  if(session){
+    try{
+      let users = await getUsers();
+      let u = users.find(x=>x._id == JSON.parse(session)._id);
+      if(u && u.status=='active'){
+        currentUser = u;
+        document.getElementById('welcomeWrap').style.display='none';
+        document.getElementById('dashName').innerText='Hi, '+u.name;
+        document.getElementById('dashBalance').innerText=parseFloat(u.balance).toFixed(3);
+        document.getElementById('dashboardPage').classList.remove('hidden');
+        if(savedPage && savedPage.includes('Page') && savedPage!='dashboardPage'){
+          openInner(savedPage);
+        }
+        return;
+      }
+    }catch{}
+  }
+  if(savedPage){
+    if(savedPage=='dashboardPage'){
+      // dashboard without session will be ignored
+    }else{
+      openP(savedPage);
+    }
+  }
+});
 
 window.startVerify=async function(){
  let n=document.getElementById('c_name').value.trim();
@@ -88,10 +132,8 @@ window.startVerify=async function(){
  if(ph.length<10){alert('Enter valid phone');return;}
  if(p.length<4){alert('Password min 4 chars');return;}
  tempUser={name:n,email:e,phone:ph,pass:p,referralFrom:rf,balance:0,status:'pending_payment',sender:'',trx:'',lastClaim:'',lastTask:''};
- closeP(); document.getElementById('verifyPage').classList.remove('hidden');
- let t=30;
- document.getElementById('timer').innerText=t;
- document.getElementById('bar').style.width='0%';
+ closeP(); document.getElementById('verifyPage').classList.remove('hidden'); saveState('verifyPage');
+ let t=30; document.getElementById('timer').innerText=t; document.getElementById('bar').style.width='0%';
  let inter=setInterval(async()=>{
   document.getElementById('timer').innerText=t;
   document.getElementById('bar').style.width=((30-t)/30*100)+'%';
@@ -100,48 +142,35 @@ window.startVerify=async function(){
    document.getElementById('verifyPage').classList.add('hidden');
    document.getElementById('p_email').value=e;
    openP('paymentPage');
-   try{
-     let users=await getUsers();
-     if(users.find(u=>u.email==e)){alert('Email already exists'); closeP(); return;}
-     await fetch(API+"/users",{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(tempUser)});
-   }catch{}
+   try{ await fetch(API+"/users",{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(tempUser)}); }catch{}
   }
   t--;
  },1000);
 }
-
 window.submitPayment=async function(){
  let email=document.getElementById('p_email').value;
  let sender=document.getElementById('p_sender').value.trim();
  let trx=document.getElementById('p_trx').value.trim();
  if(sender.length<5||trx.length<2){alert('Enter Sender & Transaction ID');return;}
-
  alert('Request sent to Admin! Wait for approval');
  closeP();
-
  try{
-  let users=await getUsers();
-  let u=users.find(x=>x.email==email);
-  if(u){
-    u.sender=sender; u.trx=trx; u.status='pending_approval';
-    let up={...u}; let id=u._id; delete up._id;
-    await fetch(API+"/users/"+id,{method:'PUT',headers:{'Content-Type':'application/json'},body:JSON.stringify(up)});
-  }
- }catch(e){ console.log(e); }
+  let users=await getUsers(); let u=users.find(x=>x.email==email);
+  if(u){ u.sender=sender; u.trx=trx; u.status='pending_approval'; let up={...u}; let id=u._id; delete up._id; await fetch(API+"/users/"+id,{method:'PUT',headers:{'Content-Type':'application/json'},body:JSON.stringify(up)}); }
+ }catch{}
 }
-
 window.loginUser=async function(){
  let e=document.getElementById('l_email').value.toLowerCase().trim();
  let p=document.getElementById('l_pass').value.trim();
- let users=await getUsers();
- let u=users.find(x=>x.email==e && x.pass==p);
+ let users=await getUsers(); let u=users.find(x=>x.email==e && x.pass==p);
  if(!u){document.getElementById('login_error').style.display='block';return;}
- if(u.status!='active'){alert('Account status: '+u.status+' - Admin approval pending');return;}
- currentUser=u; closeP();
- document.getElementById('welcomeWrap').style.display='none';
+ if(u.status!='active'){alert('Account status: '+u.status);return;}
+ currentUser=u; saveUserSession(u);
+ closeP(); document.getElementById('welcomeWrap').style.display='none';
  document.getElementById('dashName').innerText='Hi, '+u.name;
  document.getElementById('dashBalance').innerText=parseFloat(u.balance).toFixed(3);
  document.getElementById('dashboardPage').classList.remove('hidden');
+ saveState('dashboardPage');
 }
 window.adminLogin=async function(){
  let e=document.getElementById('a_email').value.toLowerCase().trim();
@@ -150,68 +179,23 @@ window.adminLogin=async function(){
  document.getElementById('admin_error').style.display='none';
  document.getElementById('adminLoginBox').classList.add('hidden');
  document.getElementById('adminContent').classList.remove('hidden');
- let users=await getUsers();
- let list=document.getElementById('pendingList');
+ let users=await getUsers(); let list=document.getElementById('pendingList');
  if(users.length==0){list.innerHTML='<p>No users</p>';return;}
  list.innerHTML='';
  users.forEach(u=>{
-  list.innerHTML+=`<div style="background:white;padding:12px;border-radius:12px;margin-bottom:10px;border:1px solid #e2e8f0">
-  <b>${u.name}</b> - ${u.email}<br>Status: <b>${u.status}</b><br>Phone:${u.phone}<br>Sender:${u.sender}<br>Trx:${u.trx}<br>Ref: ${u.referralFrom||'None'}<br>$${u.balance}<br>
-  <button class="btn green" style="padding:7px 12px;margin-top:8px;font-size:12px;" onclick="approveUser('${u._id}')">Approve</button>
-  <button class="btn red" style="padding:7px 12px;margin-top:8px;font-size:12px;" onclick="deleteUser('${u._id}')">Reject</button></div>`;
+  list.innerHTML+=`<div style="background:white;padding:12px;border-radius:12px;margin-bottom:10px;border:1px solid #e2e8f0"><b>${u.name}</b> - ${u.email}<br>Status: <b>${u.status}</b><br>Phone:${u.phone}<br>Sender:${u.sender}<br>Trx:${u.trx}<br>Ref: ${u.referralFrom||'None'}<br>$${u.balance}<br><button class="btn green" style="padding:7px 12px;margin-top:8px;font-size:12px;" onclick="approveUser('${u._id}')">Approve</button><button class="btn red" style="padding:7px 12px;margin-top:8px;font-size:12px;" onclick="deleteUser('${u._id}')">Reject</button></div>`;
  });
 }
-window.approveUser=async function(id){
- let users=await getUsers(); let u=users.find(x=>x._id==id); u.status='active';
- let up={...u}; delete up._id;
- await fetch(API+"/users/"+id,{method:'PUT',headers:{'Content-Type':'application/json'},body:JSON.stringify(up)});
- alert('Approved'); adminLogin();
-}
-window.deleteUser=async function(id){
- await fetch(API+"/users/"+id,{method:'DELETE'});
- alert('Deleted'); adminLogin();
-}
-window.claimReward=async function(){
- let today=new Date().toDateString();
- if(currentUser.lastClaim==today){alert('Already claimed');return;}
- currentUser.balance+=0.003; currentUser.lastClaim=today;
- document.getElementById('dashBalance').innerText=currentUser.balance.toFixed(3);
- let up={...currentUser}; let id=currentUser._id; delete up._id;
- await fetch(API+"/users/"+id,{method:'PUT',headers:{'Content-Type':'application/json'},body:JSON.stringify(up)});
-}
-function loadTasks(){
- let grid=document.getElementById('taskGrid'); grid.innerHTML=''; taskRatings={};
- let imgs=["https://picsum.photos/seed/1/200/200","https://picsum.photos/seed/2/200/200","https://picsum.photos/seed/3/200/200","https://picsum.photos/seed/4/200/200","https://picsum.photos/seed/5/200/200","https://picsum.photos/seed/6/200/200","https://picsum.photos/seed/7/200/200","https://picsum.photos/seed/8/200/200","https://picsum.photos/seed/9/200/200","https://picsum.photos/seed/10/200/200"];
- imgs.forEach((src,i)=>{
-  let div=document.createElement('div'); div.className='task-item';
-  div.innerHTML=`<img src="${src}"><div class="stars" id="stars-${i}"><span onclick="rate(${i},1)">★</span><span onclick="rate(${i},2)">★</span><span onclick="rate(${i},3)">★</span><span onclick="rate(${i},4)">★</span><span onclick="rate(${i},5)">★</span></div>`;
-  grid.appendChild(div);
- });
-}
+window.approveUser=async function(id){ let users=await getUsers(); let u=users.find(x=>x._id==id); u.status='active'; let up={...u}; delete up._id; await fetch(API+"/users/"+id,{method:'PUT',headers:{'Content-Type':'application/json'},body:JSON.stringify(up)}); alert('Approved'); adminLogin(); }
+window.deleteUser=async function(id){ await fetch(API+"/users/"+id,{method:'DELETE'}); alert('Deleted'); adminLogin(); }
+window.claimReward=async function(){ let today=new Date().toDateString(); if(currentUser.lastClaim==today){alert('Already claimed');return;} currentUser.balance+=0.003; currentUser.lastClaim=today; document.getElementById('dashBalance').innerText=currentUser.balance.toFixed(3); let up={...currentUser}; let id=currentUser._id; delete up._id; await fetch(API+"/users/"+id,{method:'PUT',headers:{'Content-Type':'application/json'},body:JSON.stringify(up)}); saveUserSession(currentUser); }
+function loadTasks(){ let grid=document.getElementById('taskGrid'); grid.innerHTML=''; taskRatings={}; let imgs=["https://picsum.photos/seed/1/200/200","https://picsum.photos/seed/2/200/200","https://picsum.photos/seed/3/200/200","https://picsum.photos/seed/4/200/200","https://picsum.photos/seed/5/200/200","https://picsum.photos/seed/6/200/200","https://picsum.photos/seed/7/200/200","https://picsum.photos/seed/8/200/200","https://picsum.photos/seed/9/200/200","https://picsum.photos/seed/10/200/200"]; imgs.forEach((src,i)=>{ let div=document.createElement('div'); div.className='task-item'; div.innerHTML=`<img src="${src}"><div class="stars" id="stars-${i}"><span onclick="rate(${i},1)">★</span><span onclick="rate(${i},2)">★</span><span onclick="rate(${i},3)">★</span><span onclick="rate(${i},4)">★</span><span onclick="rate(${i},5)">★</span></div>`; grid.appendChild(div); }); }
 window.rate=function(idx,stars){ taskRatings[idx]=stars; let el=document.getElementById('stars-'+idx); [...el.children].forEach((s,i)=>{ if(i<stars) s.classList.add('active'); else s.classList.remove('active'); }); }
-window.submitTask=async function(){
- if(Object.keys(taskRatings).length<10){ alert('Rate all 10'); return; }
- if(currentUser.lastTask==new Date().toDateString()){ alert('Already done today'); return; }
- currentUser.balance+=0.01; currentUser.lastTask=new Date().toDateString();
- document.getElementById('dashBalance').innerText=currentUser.balance.toFixed(3);
- let up={...currentUser}; let id=currentUser._id; delete up._id;
- await fetch(API+"/users/"+id,{method:'PUT',headers:{'Content-Type':'application/json'},body:JSON.stringify(up)});
- alert('Task Completed $0.01 Added');
-}
-function loadReferral(){
- let base=window.location.origin+window.location.pathname;
- document.getElementById('refLink').innerText=base+'?ref='+currentUser.email;
-}
+window.submitTask=async function(){ if(Object.keys(taskRatings).length<10){ alert('Rate all 10'); return; } if(currentUser.lastTask==new Date().toDateString()){ alert('Already done today'); return; } currentUser.balance+=0.01; currentUser.lastTask=new Date().toDateString(); document.getElementById('dashBalance').innerText=currentUser.balance.toFixed(3); let up={...currentUser}; let id=currentUser._id; delete up._id; await fetch(API+"/users/"+id,{method:'PUT',headers:{'Content-Type':'application/json'},body:JSON.stringify(up)}); saveUserSession(currentUser); alert('Task Completed $0.01 Added'); }
+function loadReferral(){ let base=window.location.origin+window.location.pathname; document.getElementById('refLink').innerText=base+'?ref='+currentUser.email; }
 window.copyRef=function(){ navigator.clipboard.writeText(document.getElementById('refLink').innerText); alert('Copied!'); }
-window.withdraw=async function(){
- let amt=parseFloat(document.getElementById('w_amount').value);
- if(amt<2||amt>currentUser.balance){alert('Min $2 and check balance');return;}
- currentUser.balance-=amt; document.getElementById('dashBalance').innerText=currentUser.balance.toFixed(3);
- let up={...currentUser}; let id=currentUser._id; delete up._id;
- await fetch(API+"/users/"+id,{method:'PUT',headers:{'Content-Type':'application/json'},body:JSON.stringify(up)});
- alert('Withdraw request sent!');
-}
-window.logout=function(){ location.reload(); }
+window.withdraw=async function(){ let amt=parseFloat(document.getElementById('w_amount').value); if(amt<2||amt>currentUser.balance){alert('Min $2 and check balance');return;} currentUser.balance-=amt; document.getElementById('dashBalance').innerText=currentUser.balance.toFixed(3); let up={...currentUser}; let id=currentUser._id; delete up._id; await fetch(API+"/users/"+id,{method:'PUT',headers:{'Content-Type':'application/json'},body:JSON.stringify(up)}); saveUserSession(currentUser); alert('Withdraw request sent!'); }
+window.logout=function(){ localStorage.removeItem('launchx_page'); localStorage.removeItem('launchx_session'); location.reload(); }
 </script>
 </body>
 </html>
