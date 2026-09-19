@@ -53,30 +53,36 @@ body{background:#f8fafc;min-height:100vh;overflow-x:hidden;}
 <button class="btn red" onclick="openP('adminPage')">Admin Panel</button>
 </div>
 </div>
+
 <div id="createPage" class="page hidden"><div class="card"><h2 style="color:#0ea5e9;font-family:'Great Vibes',cursive;font-size:42px;">Create Account</h2><div class="input-wrap"><label>Full Name</label><input id="c_name" placeholder=""></div><div class="input-wrap"><label>Email (must @gmail.com)</label><input id="c_email" placeholder=""></div><div class="input-wrap"><label>Phone Number</label><input id="c_phone" placeholder=""></div><div class="input-wrap"><label>Password</label><input id="c_pass" type="password" placeholder=""></div><div class="input-wrap"><label>Referral Email (Optional)</label><input id="c_ref" placeholder=""></div><button class="btn green" style="width:100%;margin-top:14px;" onclick="startVerify()">Submit</button><button class="btn" style="width:100%;background:#e2e8f0;color:#475569;margin-top:8px;" onclick="closeP()">Back</button></div></div>
 <div id="verifyPage" class="page hidden"><div class="card"><h2 style="color:#0ea5e9">Verification</h2><p style="color:#64748b">Please wait 30 seconds...</p><div class="timer" id="timer">30</div><div class="bar"><div class="bar-fill" id="bar"></div></div></div></div>
-<div id="paymentPage" class="page hidden"><div class="card"><h2 style="color:#f59e0b">Premium Membership</h2><p style="color:#475569;font-size:14px;margin-top:10px;">Rs 50 Rupees Per Month<br><br><b style="color:#16a34a;font-size:16px;">JazzCash / Easypaisa: 03316035482</b><br><span style="font-weight:800;">Name: Muhammad AHAB</span></p><br><div class="input-wrap"><label>Your Account Email</label><input id="p_email" readonly placeholder=""></div><div class="input-wrap"><label>Sender Number (JazzCash/Easypaisa)</label><input id="p_sender" placeholder=""></div><div class="input-wrap"><label>Transaction ID</label><input id="p_trx" placeholder=""></div><button class="btn blue" style="width:100%;" onclick="submitPayment()">Submit Request</button><p id="payMsg" style="font-size:12px;color:#16a34a;margin-top:10px;display:none;">Request sent to CrudCrud & Admin!</p></div></div>
+<div id="paymentPage" class="page hidden"><div class="card"><h2 style="color:#f59e0b">Premium Membership</h2><p style="color:#475569;font-size:14px;margin-top:10px;">Rs 50 Rupees Per Month<br><br><b style="color:#16a34a;font-size:16px;">JazzCash / Easypaisa: 03316035482</b><br><span style="font-weight:800;">Name: Muhammad AHAB</span></p><br><div class="input-wrap"><label>Your Account Email</label><input id="p_email" readonly placeholder=""></div><div class="input-wrap"><label>Sender Number</label><input id="p_sender" placeholder=""></div><div class="input-wrap"><label>Transaction ID</label><input id="p_trx" placeholder=""></div><button class="btn blue" style="width:100%;" onclick="submitPayment()">Submit Request</button></div></div>
 <div id="loginPage" class="page hidden"><div class="card"><h2 style="color:#0ea5e9;font-family:'Great Vibes',cursive;font-size:42px;">Login</h2><div class="input-wrap"><label>Email</label><input id="l_email" placeholder=""></div><div class="input-wrap"><label>Password</label><input id="l_pass" type="password" placeholder=""></div><div id="login_error" style="color:#ef4444;font-size:12px;display:none;margin-top:8px;">Wrong Email/Password or Not Approved Yet</div><button class="btn blue" style="width:100%;margin-top:12px;" onclick="loginUser()">Login</button><button class="btn" style="width:100%;background:#e2e8f0;color:#475569;margin-top:8px;" onclick="closeP()">Back</button></div></div>
-<div id="adminPage" class="page hidden"><div class="card" style="max-width:750px;"><h2 style="color:#be123c">Admin Panel</h2><div id="adminLoginBox"><div class="input-wrap"><input id="a_email" placeholder=""></div><div class="input-wrap"><input id="a_pass" type="password" placeholder=""></div><div id="admin_error" style="color:#ef4444;font-size:12px;display:none;">Wrong Credentials!</div><button class="btn red" style="width:100%;margin-top:10px;" onclick="adminLogin()">Login</button></div><div id="adminContent" class="hidden" style="text-align:left;margin-top:20px;"><div style="background:#f1f5f9;padding:12px;border-radius:12px;border:1px solid #e2e8f0;"><p style="font-size:12px;color:#64748b">CrudCrud API Link (24hr fix)</p><div class="input-wrap"><input id="new_api" placeholder=""></div><button class="btn blue" style="width:100%;padding:10px" onclick="updateApiAndRestore()">Update & Restore</button><p id="apiStatus" style="font-size:11px;color:#16a34a;margin-top:6px"></p></div><h3 style="color:#16a34a;margin-top:15px">Pending / All Users</h3><div id="pendingList" style="margin-top:10px;max-height:400px;overflow-y:auto;"></div><button class="btn" style="width:100%;background:#e2e8f0;color:#475569;margin-top:15px;" onclick="logout()">Logout</button></div><button class="btn" style="width:100%;background:#e2e8f0;color:#475569;margin-top:10px;" onclick="closeP()">Back</button></div></div>
+<div id="adminPage" class="page hidden"><div class="card" style="max-width:750px;"><h2 style="color:#be123c">Admin Panel</h2><div id="adminLoginBox"><div class="input-wrap"><input id="a_email" placeholder=""></div><div class="input-wrap"><input id="a_pass" type="password" placeholder=""></div><div id="admin_error" style="color:#ef4444;font-size:12px;display:none;">Wrong Credentials!</div><button class="btn red" style="width:100%;margin-top:10px;" onclick="adminLogin()">Login</button></div><div id="adminContent" class="hidden" style="text-align:left;margin-top:20px;"><h3 style="color:#16a34a;margin-top:15px">Pending / All Users</h3><div id="pendingList" style="margin-top:10px;max-height:400px;overflow-y:auto;"></div><button class="btn" style="width:100%;background:#e2e8f0;color:#475569;margin-top:15px;" onclick="logout()">Logout</button></div><button class="btn" style="width:100%;background:#e2e8f0;color:#475569;margin-top:10px;" onclick="closeP()">Back</button></div></div>
+
 <div id="dashboardPage" class="hidden"><div class="dash-top"><div class="user-badge" id="dashName">Hi, User</div><div class="balance-badge">$ <span id="dashBalance">0.000</span></div><button class="btn red" style="padding:8px 16px;font-size:12px;" onclick="logout()">Logout</button></div><div class="dash-body"><div class="dash-grid"><button class="dash-btn" onclick="openInner('claimPage')"><span>🎁</span>Claim Reward<br><small style="color:#64748b">$0.003 / day</small></button><button class="dash-btn" onclick="openInner('taskPage')"><span>⭐</span>Complete Task<br><small style="color:#64748b">Rate 10 pics $0.01</small></button><button class="dash-btn" onclick="openInner('referralPage')"><span>👥</span>Referral Reward<br><small style="color:#64748b">Earn by invite</small></button><button class="dash-btn" onclick="openInner('withdrawPage')"><span>💸</span>Withdraw<br><small style="color:#64748b">Min $2</small></button></div></div></div>
+
 <div id="claimPage" class="inner-page hidden"><div class="card" style="margin:auto;"><h2>Claim Reward</h2><p id="claimMsg" style="color:#16a34a;font-weight:700;margin:15px 0;">Ready to claim $0.003 today!</p><button class="btn green" style="width:100%" onclick="claimReward()">Claim $0.003</button><br><br><button class="btn" style="width:100%;background:#e2e8f0;color:#475569" onclick="closeInner('claimPage')">Back</button></div></div>
-<div id="taskPage" class="inner-page hidden"><div class="card" style="max-width:650px;margin:auto;"><h2>Complete Task - Rate 10 Images</h2><p style="font-size:12px;color:#64748b">Rate all 10 images with 5 stars to earn $0.01</p><div class="task-grid" id="taskGrid"></div><button class="btn green" style="width:100%;margin-top:12px;" onclick="submitTask()">Submit Task & Earn $0.01</button><p id="taskMsg" style="font-size:12px;margin-top:8px;"></p><button class="btn" style="width:100%;background:#e2e8f0;color:#475569;margin-top:10px;" onclick="closeInner('taskPage')">Back</button></div></div>
-<div id="referralPage" class="inner-page hidden"><div class="card" style="margin:auto;"><h2>Referral Reward</h2><p style="font-size:13px;color:#475569;margin-top:10px;">Share your referral link. When someone creates account with your email as referral, you will see in Admin.</p><div class="ref-box" id="refLink">Your link will appear here after login</div><button class="btn blue" style="width:100%" onclick="copyRef()">Copy Link</button><br><br><div style="background:#f1f5f9;padding:12px;border-radius:12px;text-align:left;"><b>Your Referrals:</b><div id="refList" style="font-size:12px;margin-top:6px;">No referrals yet</div></div><br><button class="btn" style="width:100%;background:#e2e8f0;color:#475569" onclick="closeInner('referralPage')">Back</button></div></div>
+<div id="taskPage" class="inner-page hidden"><div class="card" style="max-width:650px;margin:auto;"><h2>Complete Task - Rate 10 Images</h2><div class="task-grid" id="taskGrid"></div><button class="btn green" style="width:100%;margin-top:12px;" onclick="submitTask()">Submit Task & Earn $0.01</button><p id="taskMsg" style="font-size:12px;margin-top:8px;"></p><button class="btn" style="width:100%;background:#e2e8f0;color:#475569;margin-top:10px;" onclick="closeInner('taskPage')">Back</button></div></div>
+<div id="referralPage" class="inner-page hidden"><div class="card" style="margin:auto;"><h2>Referral Reward</h2><div class="ref-box" id="refLink"></div><button class="btn blue" style="width:100%" onclick="copyRef()">Copy Link</button><br><br><div style="background:#f1f5f9;padding:12px;border-radius:12px;text-align:left;"><b>Your Referrals:</b><div id="refList" style="font-size:12px;margin-top:6px;">No referrals yet</div></div><br><button class="btn" style="width:100%;background:#e2e8f0;color:#475569" onclick="closeInner('referralPage')">Back</button></div></div>
 <div id="withdrawPage" class="inner-page hidden"><div class="card" style="margin:auto;"><h2>Withdraw - Min $2</h2><div style="text-align:left;margin-top:12px;"><div class="input-wrap"><select id="w_method" style="width:100%;padding:13px;border-radius:12px;border:1.5px solid #cbd5e1;background:#f8fafc;"><option value="">Select Method</option><option>JazzCash</option><option>Easypaisa</option></select></div><div class="input-wrap"><input id="w_number" placeholder=""></div><div class="input-wrap"><input id="w_amount" type="number" placeholder=""></div><p id="w_error" style="color:#ef4444;font-size:12px;display:none"></p><p id="w_success" style="color:#16a34a;font-size:12px;display:none"></p><button class="btn blue" style="width:100%;margin-top:10px;" onclick="withdraw()">Withdraw</button></div><br><button class="btn" style="width:100%;background:#e2e8f0;color:#475569" onclick="closeInner('withdrawPage')">Back</button></div></div>
+
 <script>
-const DEFAULT_API = "https://crudcrud.com/api/d99973ee6a6441cebd87e0bcb387a79e";
-function getAPI(){ return localStorage.getItem('launchx_api') || DEFAULT_API; }
-function saveUsers(u){ localStorage.setItem('launchx_users', JSON.stringify(u)); }
-function getLocal(){ try{ return JSON.parse(localStorage.getItem('launchx_users')||'[]'); }catch{return []} }
+const API = "https://crudcrud.com/api/d99973ee6a6441cebd87e0bcb387a79e";
 let tempUser={}, currentUser=null; let taskRatings={};
+
 window.openP=(id)=>document.getElementById(id).classList.remove('hidden');
 window.closeP=()=>document.querySelectorAll('.page').forEach(p=>p.classList.add('hidden'));
 window.openInner=(id)=>{ document.getElementById(id).classList.remove('hidden'); if(id=='taskPage') loadTasks(); if(id=='referralPage') loadReferral(); }
 window.closeInner=(id)=>document.getElementById(id).classList.add('hidden');
+
 async function getUsers(){
- try{ let r=await fetch(getAPI()+"/users"); if(!r.ok) throw "exp"; let d=await r.json(); saveUsers(d); return d; }catch{ return getLocal(); }
+ let r = await fetch(API + "/users");
+ return await r.json();
 }
+
 (function(){ let params=new URLSearchParams(window.location.search); let ref=params.get('ref'); if(ref){ document.addEventListener('DOMContentLoaded',()=>{ let el=document.getElementById('c_ref'); if(el) el.value=ref; openP('createPage'); }); } })();
+
 window.startVerify=async function(){
  let n=document.getElementById('c_name').value.trim();
  let e=document.getElementById('c_email').value.trim().toLowerCase();
@@ -84,10 +90,10 @@ window.startVerify=async function(){
  let p=document.getElementById('c_pass').value.trim();
  let rf=document.getElementById('c_ref').value.trim().toLowerCase();
  if(n.length<2){alert('Enter Full Name');return;}
- if(!e.includes('@gmail.com')||!e.includes('.com')){alert('Email must be @gmail.com');return;}
+ if(!e.includes('@gmail.com')){alert('Email must be @gmail.com');return;}
  if(ph.length<10){alert('Enter valid phone');return;}
  if(p.length<4){alert('Password min 4 chars');return;}
- tempUser={name:n,email:e,phone:ph,pass:p,referralFrom:rf,balance:0,status:'pending_payment',sender:'',trx:'',lastClaim:'',lastTask:'', referrals:[]};
+ tempUser={name:n,email:e,phone:ph,pass:p,referralFrom:rf,balance:0,status:'pending_payment',sender:'',trx:'',lastClaim:'',lastTask:''};
  closeP(); document.getElementById('verifyPage').classList.remove('hidden');
  let t=30; document.getElementById('timer').innerText=t; document.getElementById('bar').style.width='0%';
  let inter=setInterval(async()=>{
@@ -96,26 +102,27 @@ window.startVerify=async function(){
    clearInterval(inter);
    let users=await getUsers();
    if(users.find(u=>u.email==e)){alert('Email already exists'); document.getElementById('verifyPage').classList.add('hidden'); return;}
-   let local=getLocal(); local.push({...tempUser,_id:'local_'+Date.now()}); saveUsers(local);
-   try{ await fetch(getAPI()+"/users",{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(tempUser)}); }catch{}
+   await fetch(API+"/users",{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(tempUser)});
    document.getElementById('verifyPage').classList.add('hidden');
    document.getElementById('p_email').value=e;
    openP('paymentPage');
   }
  },1000);
 }
+
 window.submitPayment=async function(){
  let email=document.getElementById('p_email').value;
  let sender=document.getElementById('p_sender').value.trim();
  let trx=document.getElementById('p_trx').value.trim();
  if(sender.length<5||trx.length<2){alert('Enter Sender & Transaction ID');return;}
- let users=await getUsers(); let u=users.find(x=>x.email==email); if(!u){alert('User not found');return;}
+ let users=await getUsers(); let u=users.find(x=>x.email==email);
  u.sender=sender; u.trx=trx; u.status='pending_approval';
- let local=getLocal(); let idx=local.findIndex(x=>x.email==email); if(idx>-1){ local[idx]=u; saveUsers(local); }
- try{ if(u._id &&!u._id.startsWith('local_')){ let up={...u}; let id=u._id; delete up._id; await fetch(getAPI()+"/users/"+id,{method:'PUT',headers:{'Content-Type':'application/json'},body:JSON.stringify(up)}); } }catch{}
- document.getElementById('payMsg').style.display='block';
- setTimeout(()=>{ closeP(); alert('Request sent to Admin! Wait for approval.'); },1000);
+ let up={...u}; let id=u._id; delete up._id;
+ await fetch(API+"/users/"+id,{method:'PUT',headers:{'Content-Type':'application/json'},body:JSON.stringify(up)});
+ alert('Request sent to Admin!');
+ closeP();
 }
+
 window.loginUser=async function(){
  let e=document.getElementById('l_email').value.toLowerCase().trim();
  let p=document.getElementById('l_pass').value.trim();
@@ -129,6 +136,7 @@ window.loginUser=async function(){
  document.getElementById('dashboardPage').classList.remove('hidden');
  checkClaim();
 }
+
 window.adminLogin=async function(){
  let e=document.getElementById('a_email').value.toLowerCase().trim();
  let p=document.getElementById('a_pass').value.trim();
@@ -136,87 +144,73 @@ window.adminLogin=async function(){
  document.getElementById('admin_error').style.display='none';
  document.getElementById('adminLoginBox').classList.add('hidden');
  document.getElementById('adminContent').classList.remove('hidden');
- document.getElementById('new_api').value=getAPI();
- document.getElementById('apiStatus').innerText="Current: "+getAPI();
  let users=await getUsers();
  let list=document.getElementById('pendingList');
  if(users.length==0){list.innerHTML='<p>No users</p>';return;}
  list.innerHTML='';
  users.forEach(u=>{
   list.innerHTML+=`<div style="background:white;padding:12px;border-radius:12px;margin-bottom:10px;border:1px solid #e2e8f0">
-  <b>${u.name}</b> - ${u.email}<br>Status: <b style="color:#f59e0b">${u.status}</b><br>Phone:${u.phone}<br>Sender:${u.sender}<br>Trx:${u.trx}<br>Referral From: <b style="color:#0ea5e9">${u.referralFrom||'None'}</b><br>Balance:$${u.balance}<br>
-  <button class="btn green" style="padding:7px 12px;margin-top:8px;font-size:12px;" onclick="approveUser('${u._id}','${u.email}')">Approve</button>
-  <button class="btn red" style="padding:7px 12px;margin-top:8px;font-size:12px;" onclick="deleteUser('${u._id}','${u.email}')">Reject</button></div>`;
+  <b>${u.name}</b> - ${u.email}<br>Status: <b>${u.status}</b><br>Phone:${u.phone}<br>Sender:${u.sender}<br>Trx:${u.trx}<br>Referral: ${u.referralFrom||'None'}<br>Balance:$${u.balance}<br>
+  <button class="btn green" style="padding:7px 12px;margin-top:8px;font-size:12px;" onclick="approveUser('${u._id}')">Approve</button>
+  <button class="btn red" style="padding:7px 12px;margin-top:8px;font-size:12px;" onclick="deleteUser('${u._id}')">Reject</button></div>`;
  });
 }
-window.approveUser=async function(id,email){
- let users=await getUsers(); let u=users.find(x=>x._id==id||x.email==email); if(!u) return; u.status='active';
- let local=getLocal(); let idx=local.findIndex(x=>x.email==u.email); if(idx>-1) local[idx]=u; else local.push(u); saveUsers(local);
- try{ if(id &&!id.startsWith('local_')){ let up={...u}; delete up._id; await fetch(getAPI()+"/users/"+id,{method:'PUT',headers:{'Content-Type':'application/json'},body:JSON.stringify(up)}); } }catch{}
+
+window.approveUser=async function(id){
+ let users=await getUsers(); let u=users.find(x=>x._id==id); u.status='active';
+ let up={...u}; delete up._id;
+ await fetch(API+"/users/"+id,{method:'PUT',headers:{'Content-Type':'application/json'},body:JSON.stringify(up)});
  alert('Approved'); adminLogin();
 }
-window.deleteUser=async function(id,email){
- try{ if(id &&!id.startsWith('local_')) await fetch(getAPI()+"/users/"+id,{method:'DELETE'}); }catch{}
- let local=getLocal().filter(x=>x.email!=email && x._id!=id); saveUsers(local); alert('Deleted/Rejected'); adminLogin();
+window.deleteUser=async function(id){
+ await fetch(API+"/users/"+id,{method:'DELETE'});
+ alert('Deleted'); adminLogin();
 }
+
 window.claimReward=async function(){
- if(!currentUser) return; let today=new Date().toDateString();
+ let today=new Date().toDateString();
  if(currentUser.lastClaim==today){document.getElementById('claimMsg').innerText='Already claimed today!';return;}
  currentUser.balance=parseFloat(currentUser.balance)+0.003; currentUser.lastClaim=today;
  document.getElementById('dashBalance').innerText=currentUser.balance.toFixed(3);
  document.getElementById('claimMsg').innerText='Claimed! Total $'+currentUser.balance.toFixed(3);
- let local=getLocal(); let idx=local.findIndex(x=>x.email==currentUser.email); if(idx>-1) local[idx]=currentUser; saveUsers(local);
- try{ if(currentUser._id &&!currentUser._id.startsWith('local_')){ let up={...currentUser}; let id=currentUser._id; delete up._id; await fetch(getAPI()+"/users/"+id,{method:'PUT',headers:{'Content-Type':'application/json'},body:JSON.stringify(up)}); } }catch{}
+ let up={...currentUser}; let id=currentUser._id; delete up._id;
+ await fetch(API+"/users/"+id,{method:'PUT',headers:{'Content-Type':'application/json'},body:JSON.stringify(up)});
 }
-function checkClaim(){ if(!currentUser) return; if(currentUser.lastClaim==new Date().toDateString()) document.getElementById('claimMsg').innerText='Already claimed today!'; else document.getElementById('claimMsg').innerText='Ready to claim $0.003'; }
+function checkClaim(){ if(currentUser.lastClaim==new Date().toDateString()) document.getElementById('claimMsg').innerText='Already claimed today!'; }
 function loadTasks(){
  let grid=document.getElementById('taskGrid'); grid.innerHTML=''; taskRatings={};
  let imgs=["https://picsum.photos/seed/1/200/200","https://picsum.photos/seed/2/200/200","https://picsum.photos/seed/3/200/200","https://picsum.photos/seed/4/200/200","https://picsum.photos/seed/5/200/200","https://picsum.photos/seed/6/200/200","https://picsum.photos/seed/7/200/200","https://picsum.photos/seed/8/200/200","https://picsum.photos/seed/9/200/200","https://picsum.photos/seed/10/200/200"];
  imgs.forEach((src,i)=>{
   let div=document.createElement('div'); div.className='task-item';
-  div.innerHTML=`<img src="${src}"><div class="stars" id="stars-${i}"><span onclick="rate(${i},1)">★</span><span onclick="rate(${i},2)">★</span><span onclick="rate(${i},3)">★</span><span onclick="rate(${i},4)">★</span><span onclick="rate(${i},5)">★</span></div><small>Pic ${i+1}</small>`;
+  div.innerHTML=`<img src="${src}"><div class="stars" id="stars-${i}"><span onclick="rate(${i},1)">★</span><span onclick="rate(${i},2)">★</span><span onclick="rate(${i},3)">★</span><span onclick="rate(${i},4)">★</span><span onclick="rate(${i},5)">★</span></div>`;
   grid.appendChild(div);
  });
- let msg=document.getElementById('taskMsg'); if(currentUser && currentUser.lastTask==new Date().toDateString()){ msg.style.color='#ef4444'; msg.innerText='You already completed task today!'; } else { msg.innerText=''; }
 }
 window.rate=function(idx,stars){ taskRatings[idx]=stars; let el=document.getElementById('stars-'+idx); [...el.children].forEach((s,i)=>{ if(i<stars) s.classList.add('active'); else s.classList.remove('active'); }); }
 window.submitTask=async function(){
- if(!currentUser) return; if(currentUser.lastTask==new Date().toDateString()){ document.getElementById('taskMsg').innerText='Already done today!'; return; }
- if(Object.keys(taskRatings).length<10){ document.getElementById('taskMsg').style.color='#ef4444'; document.getElementById('taskMsg').innerText='Please rate all 10 images with 5 stars!'; return; }
- let allFive=Object.values(taskRatings).every(v=>v==5); if(!allFive){ document.getElementById('taskMsg').style.color='#ef4444'; document.getElementById('taskMsg').innerText='Please give 5 stars to all images!'; return; }
+ if(Object.keys(taskRatings).length<10){ alert('Rate all 10'); return; }
+ let allFive=Object.values(taskRatings).every(v=>v==5); if(!allFive){ alert('Give 5 stars to all'); return; }
+ if(currentUser.lastTask==new Date().toDateString()){ alert('Already done today'); return; }
  currentUser.balance=parseFloat(currentUser.balance)+0.01; currentUser.lastTask=new Date().toDateString();
  document.getElementById('dashBalance').innerText=currentUser.balance.toFixed(3);
- document.getElementById('taskMsg').style.color='#16a34a'; document.getElementById('taskMsg').innerText='Task completed! $0.01 added. Total $'+currentUser.balance.toFixed(3);
- let local=getLocal(); let idx=local.findIndex(x=>x.email==currentUser.email); if(idx>-1) local[idx]=currentUser; saveUsers(local);
- try{ if(currentUser._id &&!currentUser._id.startsWith('local_')){ let up={...currentUser}; let id=currentUser._id; delete up._id; await fetch(getAPI()+"/users/"+id,{method:'PUT',headers:{'Content-Type':'application/json'},body:JSON.stringify(up)}); } }catch{}
+ let up={...currentUser}; let id=currentUser._id; delete up._id;
+ await fetch(API+"/users/"+id,{method:'PUT',headers:{'Content-Type':'application/json'},body:JSON.stringify(up)});
+ alert('Task Completed $0.01 Added');
 }
 function loadReferral(){
- if(!currentUser) return;
  let base=window.location.origin+window.location.pathname;
  document.getElementById('refLink').innerText=base+'?ref='+currentUser.email;
- let local=getLocal(); let myRefs=local.filter(u=>u.referralFrom==currentUser.email);
- if(myRefs.length==0) document.getElementById('refList').innerText='No referrals yet';
- else document.getElementById('refList').innerHTML=myRefs.map(u=>`• ${u.name} (${u.email}) - ${u.status}`).join('<br>');
 }
-window.copyRef=function(){ let t=document.getElementById('refLink').innerText; navigator.clipboard.writeText(t); alert('Referral link copied!'); }
+window.copyRef=function(){ navigator.clipboard.writeText(document.getElementById('refLink').innerText); alert('Copied!'); }
 window.withdraw=async function(){
- let method=document.getElementById('w_method').value; let num=document.getElementById('w_number').value.trim(); let amt=parseFloat(document.getElementById('w_amount').value);
- let err=document.getElementById('w_error'); let suc=document.getElementById('w_success'); err.style.display='none'; suc.style.display='none';
- if(!method||num.length<10||isNaN(amt)){err.innerText='Fill all fields';err.style.display='block';return;}
- if(amt<2){err.innerText='Min $2 required, you have $'+currentUser.balance.toFixed(3);err.style.display='block';return;}
- if(amt>currentUser.balance){err.innerText='Low balance';err.style.display='block';return;}
+ let amt=parseFloat(document.getElementById('w_amount').value);
+ if(amt<2||amt>currentUser.balance){alert('Min $2 and check balance');return;}
  currentUser.balance-=amt; document.getElementById('dashBalance').innerText=currentUser.balance.toFixed(3);
- let local=getLocal(); let idx=local.findIndex(x=>x.email==currentUser.email); if(idx>-1) local[idx]=currentUser; saveUsers(local);
- try{ if(currentUser._id &&!currentUser._id.startsWith('local_')){ let up={...currentUser}; let id=currentUser._id; delete up._id; await fetch(getAPI()+"/users/"+id,{method:'PUT',headers:{'Content-Type':'application/json'},body:JSON.stringify(up)}); } }catch{}
- suc.innerText='Withdraw request sent! '+method+' $'+amt+' to '+num; suc.style.display='block';
+ let up={...currentUser}; let id=currentUser._id; delete up._id;
+ await fetch(API+"/users/"+id,{method:'PUT',headers:{'Content-Type':'application/json'},body:JSON.stringify(up)});
+ alert('Withdraw request sent!');
 }
-window.logout=function(){ document.getElementById('dashboardPage').classList.add('hidden'); document.querySelectorAll('.inner-page').forEach(p=>p.classList.add('hidden')); document.getElementById('welcomeWrap').style.display='flex'; currentUser=null; closeP(); let box=document.getElementById('adminLoginBox'); if(box) box.classList.remove('hidden'); }
-window.updateApiAndRestore=async function(){
- let newApi=document.getElementById('new_api').value.trim().replace(/\/$/,''); if(!newApi.includes('crudcrud.com/api/')){alert('Sahi API link dalo');return;}
- localStorage.setItem('launchx_api',newApi); document.getElementById('apiStatus').innerText="Updating...";
- let local=getLocal(); for(let u of local){ try{ let copy={...u}; delete copy._id; await fetch(newApi+"/users",{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(copy)}); }catch{} }
- document.getElementById('apiStatus').innerText="Done! "+local.length+" restored"; adminLogin();
-}
+window.logout=function(){ location.reload(); }
 </script>
 </body>
 </html>
