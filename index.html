@@ -1,232 +1,115 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Gen Z Earning Platform</title>
 <style>
-*{margin:0;padding:0;box-sizing:border-box;font-family: Poppins, sans-serif;}
-body{background:#0f0f13;color:white;overflow-x:hidden;}
-.marquee{position:fixed;top:0;width:100%;background:#111;white-space:nowrap;overflow:hidden;padding:8px 0;z-index:100;border-bottom:1px solid #222;}
-.marquee span{display:inline-block;animation:scroll 15s linear infinite;font-weight:600;letter-spacing:2px;color:#00ff88;}
+*{margin:0;padding:0;box-sizing:border-box;font-family:Poppins,sans-serif}
+body{background:#0f0f13;color:white}
+.marquee{position:fixed;top:0;width:100%;background:#111;white-space:nowrap;overflow:hidden;padding:8px 0;z-index:100;border-bottom:1px solid #222}
+.marquee span{display:inline-block;animation:scroll 15s linear infinite;font-weight:600;letter-spacing:2px;color:#00ff88}
 @keyframes scroll{0%{transform:translateX(100%)}100%{transform:translateX(-100%)}}
-.container{min-height:100vh;display:flex;align-items:center;justify-content:center;padding-top:40px;}
-.card{background:#18181f;padding:30px;border-radius:20px;width:90%;max-width:420px;box-shadow:0 10px 30px rgba(0,0,0,.5);text-align:center;border:1px solid #2a2a35;}
-h1{margin-bottom:20px;}
-.btn{display:block;width:100%;padding:14px;margin:12px 0;border:none;border-radius:12px;font-size:16px;font-weight:700;cursor:pointer;color:white;transition:.2s;}
-.btn:hover{transform:scale(1.03);}
-.b1{background:linear-gradient(135deg,#ff416c,#ff4b2b);}
-.b2{background:linear-gradient(135deg,#36d1dc,#5b86e5);}
-.b3{background:linear-gradient(135deg,#00b09b,#96c93d);}
-.b4{background:linear-gradient(135deg,#f7971e,#ffd200);color:#000;}
-input{width:100%;padding:12px;margin:8px 0;border-radius:10px;border:1px solid #333;background:#0f0f13;color:white;}
-.hidden{display:none;}
-.timer{font-size:50px;color:#00ff88;margin:20px 0;}
-.task-img{width:100%;border-radius:12px;margin:10px 0;height:180px;object-fit:cover;}
-.rate-btn{background:#222;border:1px solid #444;padding:6px 12px;border-radius:8px;color:white;margin:4px;cursor:pointer;}
-.approved{background:#00ff88;color:black;}
+.container{min-height:100vh;display:flex;align-items:center;justify-content:center;padding-top:40px}
+.card{background:#18181f;padding:30px;border-radius:20px;width:90%;max-width:420px;box-shadow:0 10px 30px rgba(0,0,0,.5);text-align:center;border:1px solid #2a2a35}
+h1{margin-bottom:20px}
+.btn{display:block;width:100%;padding:14px;margin:12px 0;border:none;border-radius:12px;font-size:16px;font-weight:700;cursor:pointer;color:white}
+.b1{background:linear-gradient(135deg,#ff416c,#ff4b2b)} .b2{background:linear-gradient(135deg,#36d1dc,#5b86e5)}
+.b3{background:linear-gradient(135deg,#00b09b,#96c93d)} .b4{background:linear-gradient(135deg,#f7971e,#ffd200);color:#000}
+input{width:100%;padding:12px;margin:8px 0;border-radius:10px;border:1px solid #333;background:#0f0f13;color:white}
+.hidden{display:none !important}
+.timer{font-size:60px;color:#00ff88;margin:20px 0;font-weight:800}
 </style>
 </head>
 <body>
-<div class="marquee"><span>Earning platform for generation z • Earning platform for generation z • Earning platform for generation z •</span></div>
+<div class="marquee"><span>Earning platform for generation z • Earning platform for generation z •</span></div>
 
-<!-- WELCOME -->
-<div id="welcome" class="container">
-<div class="card">
-<h1>Welcome to GenZ Earn</h1>
-<p style="opacity:.7;margin-bottom:15px;">Generation Z Earning Platform</p>
+<div id="welcome" class="container"><div class="card"><h1>Welcome to GenZ Earn</h1>
 <button class="btn b1" onclick="showPage('create')">1. Create Account</button>
 <button class="btn b2" onclick="showPage('login')">2. Login into existing account</button>
 <button class="btn b3" onclick="window.open('https://wa.me/923316035482','_blank')">3. WhatsApp Support</button>
-<button class="btn b4" onclick="showPage('adminLogin')">4. Admin Panel</button>
-</div>
-</div>
+<button class="btn b4" onclick="showPage('adminLogin')">4. Admin Panel</button></div></div>
 
-<!-- CREATE ACCOUNT -->
-<div id="create" class="container hidden">
-<div class="card">
-<h2>Create Account</h2>
-<input id="c_name" placeholder="Name">
-<input id="c_number" placeholder="Number">
-<input id="c_email" placeholder="Email Address">
-<input id="c_pass" type="password" placeholder="Password">
-<button class="btn b1" onclick="createAccount()">Submit</button>
-<button class="btn" style="background:#333" onclick="showPage('welcome')">Back</button>
-</div>
-</div>
+<div id="create" class="container hidden"><div class="card"><h2>Create Account</h2>
+<input id="c_name" placeholder="Name"><input id="c_number" placeholder="Number"><input id="c_email" placeholder="Email"><input id="c_pass" type="password" placeholder="Password">
+<button class="btn b1" onclick="createAccount()">Submit</button><button class="btn" style="background:#333" onclick="showPage('welcome')">Back</button></div></div>
 
-<!-- VERIFICATION -->
-<div id="verify" class="container hidden">
-<div class="card">
-<h2>Verification</h2>
-<p>Please wait 20 seconds...</p>
-<div class="timer" id="timer">20</div>
-<p style="opacity:.6;">Your account is being secured</p>
-</div>
-</div>
+<div id="verify" class="container hidden"><div class="card"><h2>Verification</h2><p>Please wait 20 seconds...</p><div class="timer" id="timer">20</div></div></div>
 
-<!-- PREMIUM -->
-<div id="premium" class="container hidden">
-<div class="card">
-<h2>Premium Membership</h2>
-<p style="margin:10px 0;">50 Rs per Month</p>
-<div style="background:#111;padding:15px;border-radius:12px;margin:15px 0;text-align:left;">
-<b>Send on:</b><br>03316035482<br>Ahab Khan<br>(Easypaisa / JazzCash)
-</div>
-<input id="txn_id" placeholder="Enter Transaction ID">
-<button class="btn b1" onclick="submitTxn()">Submit Transaction ID</button>
-<p style="font-size:12px;opacity:.6;margin-top:10px;">After submit, admin will approve within few hours</p>
-</div>
-</div>
+<div id="premium" class="container hidden"><div class="card"><h2>Premium Membership</h2><p>50 Rs per Month</p>
+<div style="background:#111;padding:15px;border-radius:12px;margin:15px 0;text-align:left;"><b>Send on:</b><br>03316035482<br>Ahab Khan</div>
+<input id="txn_id" placeholder="Enter Transaction ID"><button class="btn b1" onclick="submitTxn()">Submit Transaction ID</button></div></div>
 
-<!-- LOGIN -->
-<div id="login" class="container hidden">
-<div class="card">
-<h2>Login</h2>
-<input id="l_email" placeholder="Email">
-<input id="l_pass" type="password" placeholder="Password">
-<button class="btn b2" onclick="loginUser()">Login</button>
-<button class="btn" style="background:#333" onclick="showPage('welcome')">Back</button>
-</div>
-</div>
+<div id="login" class="container hidden"><div class="card"><h2>Login</h2><input id="l_email" placeholder="Email"><input id="l_pass" type="password" placeholder="Password">
+<button class="btn b2" onclick="loginUser()">Login</button><button class="btn" style="background:#333" onclick="showPage('welcome')">Back</button></div></div>
 
-<!-- DASHBOARD -->
-<div id="dashboard" class="container hidden">
-<div class="card" style="max-width:500px;">
-<h2>User Dashboard</h2>
-<p id="dash_name"></p>
-<div style="background:#111;padding:15px;border-radius:12px;margin:15px 0;">
-<h3>Claim Reward: <span id="reward">$0.000</span></h3>
-<button class="btn b3" onclick="claimReward()">Claim $0.003</button>
-</div>
-<h3>Complete Task: Rate 10 Pictures</h3>
-<div id="tasks"></div>
-</div>
-</div>
+<div id="dashboard" class="container hidden"><div class="card"><h2>Dashboard</h2><p id="dash_name"></p><h3>Reward: <span id="reward">$0.000</span></h3>
+<div id="tasks"></div></div></div>
 
-<!-- ADMIN -->
-<div id="adminLogin" class="container hidden">
-<div class="card">
-<h2>Admin Login</h2>
-<input id="admin_pass" type="password" placeholder="Admin Password">
-<button class="btn b4" onclick="checkAdmin()">Enter</button>
-</div>
-</div>
-
-<div id="admin" class="container hidden">
-<div class="card" style="max-width:600px;">
-<h2>Admin Panel</h2>
-<button class="btn" style="background:#333" onclick="loadUsers()">Refresh Users</button>
-<div id="userList" style="text-align:left;margin-top:15px;"></div>
-<button class="btn" style="background:#333" onclick="showPage('welcome')">Logout</button>
-</div>
-</div>
+<div id="adminLogin" class="container hidden"><div class="card"><h2>Admin Login</h2><input id="admin_pass" type="password" placeholder="Password = Ahab123"><button class="btn b4" onclick="checkAdmin()">Enter</button></div></div>
+<div id="admin" class="container hidden"><div class="card" style="max-width:600px;"><h2>Admin Panel</h2><button class="btn" style="background:#333" onclick="loadUsers()">Refresh Users</button><div id="userList" style="text-align:left;margin-top:15px;"></div></div></div>
 
 <script>
 const API = "https://crudcrud.com/api/d99973ee6a6441cebd87e0bcb387a79e";
-let currentUser = null;
-let currentUserId = null;
+let currentUser = null; let currentUserId = null;
 
-function showPage(id){
- document.querySelectorAll('.container').forEach(c=>c.classList.add('hidden'));
- document.getElementById(id).classList.remove('hidden');
- if(id==='dashboard') loadTasks();
-}
+function showPage(id){ document.querySelectorAll('.container').forEach(c=>c.classList.add('hidden')); document.getElementById(id).classList.remove('hidden'); }
 
 async function createAccount(){
- const data={
-  name:document.getElementById('c_name').value,
-  number:document.getElementById('c_number').value,
-  email:document.getElementById('c_email').value,
-  password:document.getElementById('c_pass').value,
-  txnId:"",
-  status:"pending_txn",
-  reward:0,
-  created: new Date().toLocaleString()
+ const data = {
+  name: document.getElementById('c_name').value.trim(),
+  number: document.getElementById('c_number').value.trim(),
+  email: document.getElementById('c_email').value.trim(),
+  password: document.getElementById('c_pass').value.trim(),
+  txnId:"", status:"pending_txn", reward:0, created: new Date().toLocaleString()
  };
- if(!data.name || !data.email || !data.password){alert("Fill all fields");return;}
- const res = await fetch(API+"/users",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(data)});
- const saved = await res.json();
- currentUser = data; currentUserId = saved._id;
- localStorage.setItem('genz_user',JSON.stringify(saved));
+ if(!data.name || !data.email || !data.password){alert("Please fill all fields"); return;}
+
+ // 1. Pehle verification page FORAN dikhao
  showPage('verify');
- let t=20;
- const int = setInterval(()=>{t--;document.getElementById('timer').innerText=t;if(t<=0){clearInterval(int);showPage('premium');}},1000);
+ let t=20; document.getElementById('timer').innerText=t;
+ const int = setInterval(()=>{ t--; document.getElementById('timer').innerText=t; if(t<=0){clearInterval(int); showPage('premium'); } },1000);
+
+ // 2. Background me API pe save karne ki koshish karo
+ try{
+  const res = await fetch(API+"/users",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(data)});
+  const saved = await res.json();
+  currentUser = data; currentUserId = saved._id;
+  localStorage.setItem('genz_user',JSON.stringify(saved));
+  console.log("Saved to crudcrud:", saved);
+ }catch(e){
+  console.log("API failed, using local save", e);
+  currentUser = data; currentUserId = "local_"+Date.now();
+  localStorage.setItem('genz_user',JSON.stringify(currentUser));
+ }
 }
 
 async function submitTxn(){
- const txn = document.getElementById('txn_id').value;
+ const txn = document.getElementById('txn_id').value.trim();
  if(!txn){alert("Enter Transaction ID");return;}
- await fetch(API+"/users/"+currentUserId,{method:"PUT",headers:{"Content-Type":"application/json"},body:JSON.stringify({...currentUser,txnId:txn,status:"pending_approval",_id:undefined})});
- alert("Submitted! Admin will approve soon. Now login.");
+ if(currentUser){ currentUser.txnId=txn; currentUser.status="pending_approval"; }
+ try{ if(currentUserId && !currentUserId.startsWith("local_")) await fetch(API+"/users/"+currentUserId,{method:"PUT",headers:{"Content-Type":"application/json"},body:JSON.stringify({...currentUser,_id:undefined})}); }catch(e){}
+ alert("Transaction Submitted! Admin approval ke baad login kar sakoge.");
  showPage('login');
 }
 
 async function loginUser(){
- const email=document.getElementById('l_email').value;
- const pass=document.getElementById('l_pass').value;
- const res = await fetch(API+"/users");
- const users = await res.json();
- const found = users.find(u=>u.email===email && u.password===pass);
- if(!found){alert("User not found or wrong password");return;}
- if(found.status!=="approved"){alert("Your account status: "+found.status+" - Wait for admin approval");return;}
- currentUser=found; currentUserId=found._id;
- document.getElementById('dash_name').innerText = "Hi, "+found.name;
- document.getElementById('reward').innerText = "$"+(found.reward||0).toFixed(3);
- showPage('dashboard');
+ const email=document.getElementById('l_email').value.trim(); const pass=document.getElementById('l_pass').value.trim();
+ try{
+  const res=await fetch(API+"/users"); const users=await res.json();
+  const found=users.find(u=>u.email===email && u.password===pass);
+  if(!found){alert("User not found");return;}
+  if(found.status!=="approved"){alert("Status: "+found.status+" - Admin approval pending hai");return;}
+  currentUser=found; currentUserId=found._id;
+  document.getElementById('dash_name').innerText="Hi, "+found.name;
+  document.getElementById('reward').innerText="$"+(found.reward||0).toFixed(3);
+  showPage('dashboard'); loadTasks();
+ }catch(e){ alert("API expire ho gaya hai, naya link banao crudcrud.com se"); }
 }
-
-function loadTasks(){
- const box=document.getElementById('tasks');
- box.innerHTML="";
- for(let i=1;i<=10;i++){
-  const div=document.createElement('div');
-  div.innerHTML=`<img class="task-img" src="https://picsum.photos/400/200?random=${i}"><div><button class="rate-btn" onclick="this.classList.add('approved'); addReward()">⭐ Rate ${i}</button></div>`;
-  box.appendChild(div);
- }
-}
-
-async function addReward(){
- currentUser.reward = (currentUser.reward||0)+0.003;
- document.getElementById('reward').innerText="$"+currentUser.reward.toFixed(3);
- await fetch(API+"/users/"+currentUserId,{method:"PUT",headers:{"Content-Type":"application/json"},body:JSON.stringify({...currentUser,_id:undefined})});
-}
-
-function claimReward(){
- alert("Reward Claimed: $"+currentUser.reward.toFixed(3)+" - Will be sent after review!");
-}
-
-function checkAdmin(){
- if(document.getElementById('admin_pass').value==="Ahab123"){
-  showPage('admin'); loadUsers();
- }else alert("Wrong password");
-}
-
-async function loadUsers(){
- const res = await fetch(API+"/users");
- const users = await res.json();
- const list=document.getElementById('userList');
- list.innerHTML="";
- users.forEach(u=>{
-  const d=document.createElement('div');
-  d.style="background:#111;padding:10px;border-radius:10px;margin:8px 0;";
-  d.innerHTML=`<b>${u.name}</b> (${u.status})<br>${u.email} | ${u.number}<br>Txn: ${u.txnId||"No"}<br>
-  <button onclick="approveUser('${u._id}')" style="margin-top:5px;padding:6px 10px;border-radius:6px;border:none;background:#00ff88;cursor:pointer;">Approve</button>
-  <button onclick="deleteUser('${u._id}')" style="margin-top:5px;padding:6px 10px;border-radius:6px;border:none;background:#ff416c;color:white;cursor:pointer;">Delete</button>`;
-  list.appendChild(d);
- });
-}
-
-async function approveUser(id){
- const res=await fetch(API+"/users/"+id);
- const u=await res.json();
- await fetch(API+"/users/"+id,{method:"PUT",headers:{"Content-Type":"application/json"},body:JSON.stringify({...u,status:"approved",_id:undefined})});
- alert("Approved!"); loadUsers();
-}
-async function deleteUser(id){
- await fetch(API+"/users/"+id,{method:"DELETE"});
- loadUsers();
-}
+function loadTasks(){ const box=document.getElementById('tasks'); box.innerHTML=""; for(let i=1;i<=10;i++){ const d=document.createElement('div'); d.innerHTML=`<img src="https://picsum.photos/400/200?random=${i}" style="width:100%;border-radius:12px;margin:10px 0;"><button class="btn b3" style="padding:8px" onclick="this.innerText='Rated ✓';addReward()">Rate ${i} - Get $0.003</button>`; box.appendChild(d);} }
+async function addReward(){ if(!currentUser) return; currentUser.reward=(currentUser.reward||0)+0.003; document.getElementById('reward').innerText="$"+currentUser.reward.toFixed(3); }
+function checkAdmin(){ if(document.getElementById('admin_pass').value==="Ahab123"){showPage('admin'); loadUsers();}else alert("Wrong"); }
+async function loadUsers(){ try{ const res=await fetch(API+"/users"); const users=await res.json(); const list=document.getElementById('userList'); list.innerHTML=""; users.forEach(u=>{ const d=document.createElement('div'); d.style="background:#111;padding:10px;border-radius:10px;margin:8px 0;"; d.innerHTML=`<b>${u.name}</b> (${u.status})<br>${u.email}<br>Txn: ${u.txnId||"No"}<br><button onclick="approveUser('${u._id}')" style="background:#00ff88;border:none;padding:5px 10px;border-radius:5px;margin-top:5px;cursor:pointer;">Approve</button>`; list.appendChild(d); }); }catch(e){document.getElementById('userList').innerHTML="API expire ho gaya - crudcrud.com se naya API banao";} }
+async function approveUser(id){ const r=await fetch(API+"/users/"+id); const u=await r.json(); await fetch(API+"/users/"+id,{method:"PUT",headers:{"Content-Type":"application/json"},body:JSON.stringify({...u,status:"approved",_id:undefined})}); alert("Approved"); loadUsers(); }
 </script>
 </body>
 </html>
