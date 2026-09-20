@@ -11,7 +11,6 @@ body{background:#0f0f13;color:white}
 @keyframes scroll{0%{transform:translateX(100%)}100%{transform:translateX(-100%)}}
 .container{min-height:100vh;display:flex;align-items:center;justify-content:center;padding-top:40px}
 .card{background:#18181f;padding:30px;border-radius:20px;width:90%;max-width:420px;box-shadow:0 10px 30px rgba(0,0,0,.5);text-align:center;border:1px solid #2a2a35}
-h1{margin-bottom:20px}
 .btn{display:block;width:100%;padding:14px;margin:12px 0;border:none;border-radius:12px;font-size:16px;font-weight:700;cursor:pointer;color:white}
 .b1{background:linear-gradient(135deg,#ff416c,#ff4b2b)} .b2{background:linear-gradient(135deg,#36d1dc,#5b86e5)}
 .b3{background:linear-gradient(135deg,#00b09b,#96c93d)} .b4{background:linear-gradient(135deg,#f7971e,#ffd200);color:#000}
@@ -21,9 +20,9 @@ input{width:100%;padding:12px;margin:8px 0;border-radius:10px;border:1px solid #
 </style>
 </head>
 <body>
-<div class="marquee"><span>Earning platform for generation z • Earning platform for generation z •</span></div>
+<div class="marquee"><span>Earning platform for generation z • Earning platform for generation z • Earning platform for generation z •</span></div>
 
-<div id="welcome" class="container"><div class="card"><h1>Welcome to GenZ Earn</h1>
+<div id="welcome" class="container"><div class="card"><h1>Welcome to GenZ Earn</h1><p style="opacity:.7;margin-bottom:15px">Earning Platform for Generation Z</p>
 <button class="btn b1" onclick="showPage('create')">1. Create Account</button>
 <button class="btn b2" onclick="showPage('login')">2. Login into existing account</button>
 <button class="btn b3" onclick="window.open('https://wa.me/923316035482','_blank')">3. WhatsApp Support</button>
@@ -42,54 +41,32 @@ input{width:100%;padding:12px;margin:8px 0;border-radius:10px;border:1px solid #
 <div id="login" class="container hidden"><div class="card"><h2>Login</h2><input id="l_email" placeholder="Email"><input id="l_pass" type="password" placeholder="Password">
 <button class="btn b2" onclick="loginUser()">Login</button><button class="btn" style="background:#333" onclick="showPage('welcome')">Back</button></div></div>
 
-<div id="dashboard" class="container hidden"><div class="card"><h2>Dashboard</h2><p id="dash_name"></p><h3>Reward: <span id="reward">$0.000</span></h3>
-<div id="tasks"></div></div></div>
+<div id="dashboard" class="container hidden"><div class="card" style="max-width:500px;"><h2>User Dashboard</h2><p id="dash_name"></p>
+<div style="background:#111;padding:15px;border-radius:12px;margin:15px 0;"><h3>Claim Reward: <span id="reward">$0.000</span></h3><button class="btn b3" onclick="claimReward()">Claim $0.003</button></div>
+<h3>Complete Task: Rate 10 Pictures</h3><div id="tasks"></div>
+<button class="btn" style="background:#333" onclick="showPage('welcome')">Logout</button></div></div>
 
-<div id="adminLogin" class="container hidden"><div class="card"><h2>Admin Login</h2><input id="admin_pass" type="password" placeholder="Password = Ahab123"><button class="btn b4" onclick="checkAdmin()">Enter</button></div></div>
-<div id="admin" class="container hidden"><div class="card" style="max-width:600px;"><h2>Admin Panel</h2><button class="btn" style="background:#333" onclick="loadUsers()">Refresh Users</button><div id="userList" style="text-align:left;margin-top:15px;"></div></div></div>
+<div id="adminLogin" class="container hidden"><div class="card"><h2>Admin Login</h2><input id="admin_pass" type="password" placeholder="Admin Password = Ahab123"><button class="btn b4" onclick="checkAdmin()">Enter</button></div></div>
+<div id="admin" class="container hidden"><div class="card" style="max-width:600px;"><h2>Admin Panel</h2><button class="btn" style="background:#333" onclick="loadUsers()">Refresh Users</button><div id="userList" style="text-align:left;margin-top:15px;"></div><button class="btn" style="background:#333" onclick="showPage('welcome')">Logout</button></div></div>
 
 <script>
 const API = "https://crudcrud.com/api/d99973ee6a6441cebd87e0bcb387a79e";
 let currentUser = null; let currentUserId = null;
-
-function showPage(id){ document.querySelectorAll('.container').forEach(c=>c.classList.add('hidden')); document.getElementById(id).classList.remove('hidden'); }
+function showPage(id){ document.querySelectorAll('.container').forEach(c=>c.classList.add('hidden')); document.getElementById(id).classList.remove('hidden'); if(id==='dashboard') loadTasks(); }
 
 async function createAccount(){
- const data = {
-  name: document.getElementById('c_name').value.trim(),
-  number: document.getElementById('c_number').value.trim(),
-  email: document.getElementById('c_email').value.trim(),
-  password: document.getElementById('c_pass').value.trim(),
-  txnId:"", status:"pending_txn", reward:0, created: new Date().toLocaleString()
- };
- if(!data.name || !data.email || !data.password){alert("Please fill all fields"); return;}
-
- // 1. Pehle verification page FORAN dikhao
- showPage('verify');
- let t=20; document.getElementById('timer').innerText=t;
- const int = setInterval(()=>{ t--; document.getElementById('timer').innerText=t; if(t<=0){clearInterval(int); showPage('premium'); } },1000);
-
- // 2. Background me API pe save karne ki koshish karo
- try{
-  const res = await fetch(API+"/users",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(data)});
-  const saved = await res.json();
-  currentUser = data; currentUserId = saved._id;
-  localStorage.setItem('genz_user',JSON.stringify(saved));
-  console.log("Saved to crudcrud:", saved);
- }catch(e){
-  console.log("API failed, using local save", e);
-  currentUser = data; currentUserId = "local_"+Date.now();
-  localStorage.setItem('genz_user',JSON.stringify(currentUser));
- }
+ const data = { name:document.getElementById('c_name').value.trim(), number:document.getElementById('c_number').value.trim(), email:document.getElementById('c_email').value.trim(), password:document.getElementById('c_pass').value.trim(), txnId:"", status:"pending_txn", reward:0, created:new Date().toLocaleString() };
+ if(!data.name || !data.email || !data.password){alert("Fill all fields");return;}
+ showPage('verify'); let t=20; document.getElementById('timer').innerText=t;
+ const int=setInterval(()=>{t--;document.getElementById('timer').innerText=t;if(t<=0){clearInterval(int);showPage('premium');}},1000);
+ try{ const res=await fetch(API+"/users",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(data)}); const saved=await res.json(); currentUser=data; currentUserId=saved._id; }catch(e){ currentUser=data; currentUserId="local_"+Date.now(); }
 }
 
 async function submitTxn(){
- const txn = document.getElementById('txn_id').value.trim();
- if(!txn){alert("Enter Transaction ID");return;}
- if(currentUser){ currentUser.txnId=txn; currentUser.status="pending_approval"; }
+ const txn=document.getElementById('txn_id').value.trim(); if(!txn){alert("Enter Transaction ID");return;}
+ if(currentUser){currentUser.txnId=txn; currentUser.status="pending_approval";}
  try{ if(currentUserId && !currentUserId.startsWith("local_")) await fetch(API+"/users/"+currentUserId,{method:"PUT",headers:{"Content-Type":"application/json"},body:JSON.stringify({...currentUser,_id:undefined})}); }catch(e){}
- alert("Transaction Submitted! Admin approval ke baad login kar sakoge.");
- showPage('login');
+ alert("Submitted! Admin approval ke baad login hoga."); showPage('login');
 }
 
 async function loginUser(){
@@ -98,18 +75,18 @@ async function loginUser(){
   const res=await fetch(API+"/users"); const users=await res.json();
   const found=users.find(u=>u.email===email && u.password===pass);
   if(!found){alert("User not found");return;}
-  if(found.status!=="approved"){alert("Status: "+found.status+" - Admin approval pending hai");return;}
-  currentUser=found; currentUserId=found._id;
-  document.getElementById('dash_name').innerText="Hi, "+found.name;
-  document.getElementById('reward').innerText="$"+(found.reward||0).toFixed(3);
-  showPage('dashboard'); loadTasks();
- }catch(e){ alert("API expire ho gaya hai, naya link banao crudcrud.com se"); }
+  if(found.status!=="approved"){alert("Status: "+found.status+" - Admin ne abhi approve nahi kiya");return;}
+  currentUser=found; currentUserId=found._id; document.getElementById('dash_name').innerText="Hi, "+found.name; document.getElementById('reward').innerText="$"+(found.reward||0).toFixed(3); showPage('dashboard');
+ }catch(e){ alert("API expire ho gaya hai - naya API banao crudcrud.com se"); }
 }
+
 function loadTasks(){ const box=document.getElementById('tasks'); box.innerHTML=""; for(let i=1;i<=10;i++){ const d=document.createElement('div'); d.innerHTML=`<img src="https://picsum.photos/400/200?random=${i}" style="width:100%;border-radius:12px;margin:10px 0;"><button class="btn b3" style="padding:8px" onclick="this.innerText='Rated ✓';addReward()">Rate ${i} - Get $0.003</button>`; box.appendChild(d);} }
-async function addReward(){ if(!currentUser) return; currentUser.reward=(currentUser.reward||0)+0.003; document.getElementById('reward').innerText="$"+currentUser.reward.toFixed(3); }
-function checkAdmin(){ if(document.getElementById('admin_pass').value==="Ahab123"){showPage('admin'); loadUsers();}else alert("Wrong"); }
-async function loadUsers(){ try{ const res=await fetch(API+"/users"); const users=await res.json(); const list=document.getElementById('userList'); list.innerHTML=""; users.forEach(u=>{ const d=document.createElement('div'); d.style="background:#111;padding:10px;border-radius:10px;margin:8px 0;"; d.innerHTML=`<b>${u.name}</b> (${u.status})<br>${u.email}<br>Txn: ${u.txnId||"No"}<br><button onclick="approveUser('${u._id}')" style="background:#00ff88;border:none;padding:5px 10px;border-radius:5px;margin-top:5px;cursor:pointer;">Approve</button>`; list.appendChild(d); }); }catch(e){document.getElementById('userList').innerHTML="API expire ho gaya - crudcrud.com se naya API banao";} }
-async function approveUser(id){ const r=await fetch(API+"/users/"+id); const u=await r.json(); await fetch(API+"/users/"+id,{method:"PUT",headers:{"Content-Type":"application/json"},body:JSON.stringify({...u,status:"approved",_id:undefined})}); alert("Approved"); loadUsers(); }
+async function addReward(){ if(!currentUser) return; currentUser.reward=(currentUser.reward||0)+0.003; document.getElementById('reward').innerText="$"+currentUser.reward.toFixed(3); try{ await fetch(API+"/users/"+currentUserId,{method:"PUT",headers:{"Content-Type":"application/json"},body:JSON.stringify({...currentUser,_id:undefined})}); }catch(e){} }
+function claimReward(){ alert("Reward Claimed: $"+currentUser.reward.toFixed(3)); }
+function checkAdmin(){ if(document.getElementById('admin_pass').value==="Ahab123"){showPage('admin'); loadUsers();}else alert("Wrong password"); }
+async function loadUsers(){ try{ const res=await fetch(API+"/users"); const users=await res.json(); const list=document.getElementById('userList'); list.innerHTML=""; if(users.length===0) list.innerHTML="<p>No users yet</p>"; users.forEach(u=>{ const d=document.createElement('div'); d.style="background:#111;padding:10px;border-radius:10px;margin:8px 0;"; d.innerHTML=`<b>${u.name}</b> (${u.status})<br>${u.email} | ${u.number}<br>Txn: ${u.txnId||"No"}<br><button onclick="approveUser('${u._id}')" style="background:#00ff88;border:none;padding:5px 10px;border-radius:5px;margin-top:5px;cursor:pointer;">Approve</button> <button onclick="deleteUser('${u._id}')" style="background:#ff416c;color:white;border:none;padding:5px 10px;border-radius:5px;margin-top:5px;cursor:pointer;">Delete</button>`; list.appendChild(d); }); }catch(e){ document.getElementById('userList').innerHTML="API expire ho gaya - crudcrud.com se naya API banao"; } }
+async function approveUser(id){ const r=await fetch(API+"/users/"+id); const u=await r.json(); await fetch(API+"/users/"+id,{method:"PUT",headers:{"Content-Type":"application/json"},body:JSON.stringify({...u,status:"approved",_id:undefined})}); alert("Approved!"); loadUsers(); }
+async function deleteUser(id){ await fetch(API+"/users/"+id,{method:"DELETE"}); loadUsers(); }
 </script>
 </body>
 </html>
